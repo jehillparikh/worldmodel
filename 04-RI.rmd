@@ -133,10 +133,6 @@ where:
 - $Q^*(s, a)$ is the maximum expected return for taking action $a$ in state $s$.
 
 
-
-
-
-
 ## **Conclusion**
 
 Markov Decision Processes provide a structured way to **model sequential decision-making problems**, and the **Bellman equation** helps compute optimal strategies. Q-learning is a powerful method for learning action-value functions, while policy learning focuses on directly optimizing the decision-making strategy. These concepts form the foundation of **reinforcement learning algorithms**, including **value iteration, policy iteration, and deep reinforcement learning**.
