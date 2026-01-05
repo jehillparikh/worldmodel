@@ -1,5 +1,15 @@
-book_filename: "bookdown-demo"
+book_filename: "foundations-of-world-models"
 language:
   ui:
     chapter_name: "Chapter "
 delete_merged_file: true
+rmd_files: [
+  "index.Rmd",
+  "01-Introduction.Rmd",
+  "02-Image-Encoders.Rmd",
+  "03-Generative-Models.Rmd",
+  "04-Markov-Decision-Processes.Rmd",
+  "05-Reinforcement-Learning.Rmd",
+  "06-DINO-World-Models.Rmd",
+  "07-JEPA-Architecture.Rmd"
+]

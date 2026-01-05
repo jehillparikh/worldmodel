@@ -1,6 +1,6 @@
-# Chapter 6: DINO-WM
+# Chapter 6: DINO World Models
 
-```{r setup, include=FALSE}
+```{r setup-06, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 

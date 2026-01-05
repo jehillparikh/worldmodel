@@ -26,7 +26,7 @@ where:
 - $\pi(a | s)$ is the policy, which defines the probability of taking action $a$ in state $s$.
 - $\gamma \in [0,1]$ is the discount factor.
 
-## **State Transition Probability**
+## State Transition Probability
 
 The probability of moving from state $s$ to state $s'$ after taking action $a$ is given by:
 
@@ -38,7 +38,7 @@ This represents the **Markov Property**, meaning the next state **only depends o
 
 ---
 
-## **Policy in MDP**
+## Policy in MDP
 
 A **policy ($\pi$)** defines the agent's behavior by mapping states to actions. Policies can be:
 
@@ -54,7 +54,7 @@ A **policy ($\pi$)** defines the agent's behavior by mapping states to actions. 
   \pi(a | s) = \Pr(A_t = a | S_t = s)
   ```
 
-## **Optimal Policy ($\pi^*$)**
+## Optimal Policy ($\pi^*$)
 
 An optimal policy $\pi^*$ maximizes the expected return:
 
@@ -66,11 +66,11 @@ where $V^\pi(s)$ is the value function under policy $\pi$. The optimal policy le
 
 ---
 
-## **Bellman Equation**
+## Bellman Equation
 
 The **Bellman Equation** provides a recursive formula for **value functions**, helping determine the **optimal policy** that maximizes expected cumulative rewards.
 
-## **State-Value Function ($V(s)$)**
+## State-Value Function ($V(s)$)
 
 The **value function** of a state $s$ under a policy $\pi$ is:
 
@@ -93,7 +93,7 @@ where:
 
 ---
 
-## **Action-Value Function ($Q(s, a)$)**
+## Action-Value Function ($Q(s, a)$)
 
 The **Q-value function** measures the expected reward for taking an action $a$ in state $s$ and then following policy $\pi$:
 
@@ -107,7 +107,7 @@ The **Bellman equation for Q-values** is:
 Q^\pi(s, a) = R(s, a) + \gamma \sum_{s' \in S} P(s' | s, a) \sum_{a' \in A} \pi(a' | s') Q^\pi(s', a')
 ```
 
-## **Optimal Policy & Bellman Optimality Equation**
+## Optimal Policy & Bellman Optimality Equation
 
 The goal of reinforcement learning is to find the **optimal policy** that maximizes the expected cumulative reward. The **Bellman optimality equation** for the optimal state-value function is:
 
@@ -127,27 +127,27 @@ where:
 - $Q^*(s, a)$ is the maximum expected return for taking action $a$ in state $s$.
 
 
-## **Conclusion**
+## Conclusion
 
 Markov Decision Processes provide a structured way to **model sequential decision-making problems**, and the **Bellman equation** helps compute optimal strategies. Q-learning is a powerful method for learning action-value functions, while policy learning focuses on directly optimizing the decision-making strategy. These concepts form the foundation of **reinforcement learning algorithms**, including **value iteration, policy iteration, and deep reinforcement learning**.
 
 
-## **Reinforcement learning**
+## Reinforcement Learning
 
 Building on the previous discussion of **Markov Decision Processes (MDP)** and the **Bellman Equation**, we now explore various reinforcement learning (RL) methods. RL can be broadly categorized into **Model-Based RL** and **Model-Free RL**. These methods help agents learn optimal decision-making strategies within an environment. Additionally, we will briefly cover **Reward-Based Learning, Monte Carlo Tree Search (MCTS), Proximal Policy Optimization (PPO),** and other advanced RL techniques that extend the fundamental concepts of MDPs.
 
-# **Reward-Based Learning**
+# Reward-Based Learning
 
 Reward-Based Learning is a fundamental concept in reinforcement learning where an agent learns to make decisions by receiving rewards for its actions. The agent's objective is to maximize the total cumulative reward over time. The reward signal serves as feedback to guide the agent toward optimal behavior.
 
-## **Types of Rewards**
+## Types of Rewards
 
 - **Immediate Rewards ($R(s, a)$):** A reward received immediately after taking action $a$ in state $s$.
 - **Delayed Rewards:** A reward that is given after multiple steps, requiring the agent to learn long-term strategies.
 - **Sparse Rewards:** Rewards that occur infrequently, making learning more challenging.
 - **Dense Rewards:** Frequent rewards that provide continuous feedback.
 
-## **Reward Function**
+## Reward Function
 
 The reward function determines the numerical value assigned to each action and state transition. It can be defined as:
 
@@ -157,7 +157,7 @@ R: S \times A \to \mathbb{R}
 
 where $S$ is the set of states, $A$ is the set of actions, and the function returns a scalar reward value.
 
-## **Optimizing Rewards**
+## Optimizing Rewards
 
 To maximize cumulative rewards, agents use **return ($G_t$)**, which is the sum of discounted future rewards:
 
@@ -167,7 +167,7 @@ G_t = R_t + \gamma R_{t+1} + \gamma^2 R_{t+2} + ...
 
 where $\gamma$ (discount factor) determines the importance of future rewards.
 
-## **Exploration vs. Exploitation**
+## Exploration vs. Exploitation
 
 Reward-Based Learning must balance:
 - **Exploration:** Trying new actions to discover potentially better rewards.
@@ -178,7 +178,7 @@ Reward-Based Learning must balance:
 - **Upper Confidence Bound (UCB):** Prioritizes actions with uncertain rewards.
 - **Thompson Sampling:** Uses probability distributions to select actions.
 
-# **Model-Based Reinforcement Learning**
+# Model-Based Reinforcement Learning
 
 Model-Based RL refers to methods where an agent **learns a model** of the environment and uses it for decision-making. This typically involves:
 
@@ -192,7 +192,7 @@ Model-Based RL refers to methods where an agent **learns a model** of the enviro
 - **Model Predictive Control (MPC)**: Uses a learned model to simulate future states and optimize actions.
 - **Dyna-Q**: Combines model-free and model-based learning by integrating planning and learning.
 
-## **Monte Carlo Tree Search (MCTS)**
+## Monte Carlo Tree Search (MCTS)
 
 MCTS is a search-based decision-making algorithm used in **game AI** and **planning problems**. It simulates future states by exploring the decision tree and backing up estimated rewards, aligning closely with **MDP planning techniques**.
 
@@ -256,7 +256,7 @@ The key characteristic of MCTS being model-based is that it requires knowledge o
 - Robotics planning and decision-making
 
 
-# **Model-Free Reinforcement Learning**
+# Model-Free Reinforcement Learning
 
 Model-Free RL does not explicitly learn a model of the environment. Instead, the agent learns directly from experience by interacting with the environment and optimizing rewards. This method is useful when transition dynamics are unknown or too complex to model.
 
@@ -520,7 +520,7 @@ where \(A_t\) is the **advantage function**, which measures how much better an a
     
       
 
-## **REINFORCE (Monte Carlo Policy Gradient)**: Uses episode returns to update policies.
+## REINFORCE (Monte Carlo Policy Gradient)
 
 REINFORCE is a **Monte Carlo Policy Gradient** method used for learning a policy in **Reinforcement Learning** (RL). The key idea behind REINFORCE is to directly optimize the policy by using the **gradients** of the expected return with respect to the policy parameters. The algorithm is based on **Monte Carlo** methods, meaning it requires complete episodes to estimate the policy gradients. 
 
@@ -576,7 +576,7 @@ This gradient tells us how to adjust the parameters \(\theta\) to maximize the e
 
 
 
-## **Proximal Policy Optimization (PPO)**
+## Proximal Policy Optimization (PPO)
 
 PPO is a robust reinforcement learning algorithm that improves upon basic policy gradient methods like REINFORCE by introducing a clipped objective to stabilize training and improve sample efficiency. Its main advantage lies in its ability to limit large policy updates, which helps to maintain the stability of the learning process, especially in complex environments.
 
@@ -726,7 +726,7 @@ L(\theta_{\text{critic}}) = \mathbb{E} \left[ (\delta_t)^2 \right]
 
 
 
-# **Conclusion**
+# Conclusion
 
 Reinforcement Learning builds upon **Markov Decision Processes (MDP)** by developing model-based and model-free approaches. Reward-based learning is the core principle behind RL, guiding the agent to optimize decision-making. Methods such as **MCTS** and **PPO** have been instrumental in advancing AI applications in robotics, gaming, and autonomous control. Understanding these methods in relation to MDP concepts enables more efficient and scalable RL solutions.
 

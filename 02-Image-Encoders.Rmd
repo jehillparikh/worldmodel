@@ -71,7 +71,7 @@ efficient for long sequences.
 ![ENCODER](./Images/TRANSFORMER ENCORDER.png "TRANSFORMER ENCODER")
 ## Input to Transformers 
 
-There transformer models consist of the following inputs 
+Transformer models consist of the following inputs: 
 
 1. Token Embedding generated using word2vec or similar word embeddings 
 2. Segment Embedding 
@@ -103,18 +103,18 @@ the masked token.
 
 
 ![BERT Masked language Model](./Images/MASK_LM.png "Masked Language Model")
-##Decorder Models (e.g. GPT)
+## Decoder Models (e.g. GPT)
 
-GPT is a decorder model
+GPT is a decoder model
 
-## Encoder Decorder Models (e.g. BERT)
-
-
-BERT IS and example of encoder decorder model 
+## Encoder-Decoder Models (e.g. BERT)
 
 
+BERT is an example of an encoder-decoder model 
 
-## Summary of key of transformer Archtecture
+
+
+## Summary of Key Transformer Architecture
 
 ## Model Comparison
 
@@ -190,6 +190,7 @@ data <- data.frame(
 )
 
 kable(data, caption = "Applications of Vision Transformers (ViTs)")
+```
 
 
 

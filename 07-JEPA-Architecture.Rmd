@@ -1,6 +1,6 @@
-# Chapter 7: JEPA
+# Chapter 7: JEPA Architecture
 
-```{r setup, include=FALSE}
+```{r setup-07, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
