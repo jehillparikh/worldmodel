@@ -1,4 +1,4 @@
-# **Chapter: Reinforcement Learning - Theory and Applications**
+# Chapter 5: Reinforcement Learning - Theory and Applications
 
 ## **1. Introduction**
 

@@ -1,14 +1,157 @@
-p.caption {
-  color: #777;
-  margin-top: 10px;
+/* Modern Book Style */
+
+/* Typography */
+body {
+  font-family: "Merriweather", "Georgia", "Times New Roman", serif;
+  font-size: 18px;
+  line-height: 1.8;
+  color: #333;
+  background-color: #fff;
+  margin: 0;
 }
-p code {
-  white-space: inherit;
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
 }
+
+h1 {
+  font-size: 2.5em;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.3em;
+}
+
+h2 {
+  font-size: 2em;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.2em;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+/* Links */
+a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* Layout */
+.book .book-body .page-wrapper .page-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 40px;
+}
+
+/* Code Blocks */
 pre {
-  word-break: normal;
-  word-wrap: normal;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 15px;
+  overflow-x: auto;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.9em;
+  line-height: 1.5;
 }
+
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  background-color: #f1f3f5;
+  padding: 2px 4px;
+  border-radius: 4px;
+  color: #e83e8c;
+  font-size: 0.9em;
+}
+
 pre code {
-  white-space: inherit;
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+/* Blockquotes */
+blockquote {
+  margin: 2em 0;
+  padding: 1em 20px;
+  border-left: 5px solid #007bff;
+  background-color: #f1f8ff;
+  color: #555;
+  font-style: italic;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2em 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.95em;
+}
+
+th, td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #495057;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 2em auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+p.caption {
+  text-align: center;
+  font-size: 0.9em;
+  color: #6c757d;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* Math */
+.katex-display {
+  margin: 2em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* TOC (Table of Contents) overrides if needed */
+.book .book-summary {
+  background: #f8f9fa;
+  border-right: 1px solid #e9ecef;
+}
+
+.book .book-summary ul.summary li a {
+  color: #495057;
+}
+
+.book .book-summary ul.summary li.active > a {
+  color: #007bff;
+  font-weight: 600;
 }

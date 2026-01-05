@@ -1,0 +1,36 @@
+name: deploy-book
+
+on:
+  push:
+    branches: [main, master]
+
+jobs:
+  deploy-book:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Setup Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Install dependencies
+        run: |
+          install.packages(c("bookdown", "rmarkdown", "knitr"))
+        shell: Rscript {0}
+
+      - name: Build book
+        run: |
+          bookdown::render_book("index.Rmd")
+        shell: Rscript {0}
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_book

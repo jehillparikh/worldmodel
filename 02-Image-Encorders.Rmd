@@ -1,8 +1,4 @@
----
-date: 1970-01-01
----
-
-# Introduction
+# Chapter 2: Image Encoders
 
 Image encoders have evolved significantly with the emergence of
 \*\*self-supervised learning\*\* techniques. Recent advancements like
@@ -118,9 +114,6 @@ BERT IS and example of encoder decorder model
 
 
 
-
-
-
 ## Summary of key of transformer Archtecture
 
 ## Model Comparison
@@ -150,6 +143,55 @@ An image is split into patches, flattened, and passed through a
 where $W_E$ is the embedding matrix and $b_E$ is a bias term. These
 embeddings are then processed using self-attention layers to extract
 contextual information.
+
+
+## Applications of Vision Transformers (ViTs)
+
+```{r, echo=FALSE}
+library(knitr)
+
+data <- data.frame(
+  Application = c(
+    "Image Classification",
+    "Object Detection & Segmentation",
+    "Medical Image Analysis",
+    "Video Understanding & Action Recognition",
+    "Remote Sensing & Satellite Image Processing",
+    "Image Generation & Super-Resolution",
+    "Robotics & Autonomous Navigation",
+    "Face Recognition & Biometrics",
+    "Optical Character Recognition (OCR)",
+    "Fashion & Retail"
+  ),
+  Description = c(
+    "Categorizing images into different classes",
+    "Identifying and segmenting objects in images",
+    "Detecting diseases from medical scans",
+    "Recognizing actions in video frames",
+    "Land classification, disaster analysis",
+    "Enhancing image quality and generating realistic images",
+    "Scene understanding for self-driving cars & robots",
+    "Identity verification and surveillance",
+    "Extracting text from images and documents",
+    "Virtual try-ons, fashion recommendations"
+  ),
+  `Example Use Cases` = c(
+    "ViTs trained on ImageNet outperform ResNets",
+    "DETR (Facebook AI) for autonomous driving and surveillance",
+    "Cancer detection in pathology slides using ViTs",
+    "TimeSformer for video classification",
+    "Urban planning, flood detection",
+    "DALL·E and Stable Diffusion for AI-generated art",
+    "ViTs used in autonomous robot perception modules",
+    "ViT-based facial recognition in low-light conditions",
+    "Google's OCR for document scanning and language translation",
+    "Automated product tagging in e-commerce"
+  )
+)
+
+kable(data, caption = "Applications of Vision Transformers (ViTs)")
+
+
 
 # Contrastive Language-Image Pretraining (CLIP)
 
@@ -191,7 +233,7 @@ a temperature parameter that controls the sharpness of the distribution.
 
 -   Few-shot learning for downstream vision tasks
 
-CLIP's ability to understand images and text jointly makes it a powerful
+CLIPs ability to understand images and text jointly makes it a powerful
 model for many vision-language applications.
 
 # DINO: Self-Supervised Vision Encoding

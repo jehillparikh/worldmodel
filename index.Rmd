@@ -17,6 +17,10 @@ description: "This is a minimal example of using the bookdown package to write a
 > *"All models are wrong, but some are useful."*  
 > — George E. P. Box  
 
+
+![World Model](./Images/worldmodel.png  "world model")
+
+
 ## A New Paradigm in Artificial Intelligence
 
 Artificial Intelligence has undergone remarkable transformations in the past decade, from mastering complex games like **Go (Silver et al., 2016)** to generating **realistic images and text (Radford et al., 2021; Ramesh et al., 2022)**. However, many AI models today remain **reactive** rather than **truly intelligent**—they do not plan, anticipate, or imagine possible futures.  
