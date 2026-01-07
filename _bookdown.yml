@@ -6,10 +6,12 @@ delete_merged_file: true
 rmd_files: [
   "index.Rmd",
   "01-Introduction.Rmd",
-  "02-Image-Encoders.Rmd",
-  "03-Generative-Models.Rmd",
-  "04-Markov-Decision-Processes.Rmd",
-  "05-Reinforcement-Learning.Rmd",
-  "06-DINO-World-Models.Rmd",
-  "07-JEPA-Architecture.Rmd"
+  "02-Self-Attention.Rmd",
+  "03-Transformers.Rmd",
+  "04-Image-Encoders.Rmd",
+  "05-Generative-Models.Rmd",
+  "06-Markov-Decision-Processes.Rmd",
+  "07-Reinforcement-Learning.Rmd",
+  "08-DINO-World-Models.Rmd",
+  "09-JEPA-Architecture.Rmd"
 ]
