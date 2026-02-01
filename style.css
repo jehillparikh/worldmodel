@@ -1,6 +1,6 @@
 /* ============================================
    Foundations of World Models - Professional Book Style
-   GitBook-compatible split panel layout
+   Clean, minimal GitBook layout
    ============================================ */
 
 /* Google Fonts */
@@ -42,7 +42,7 @@ body {
 }
 
 /* ============================================
-   CRITICAL: GitBook Split Panel Layout Fix
+   GitBook Split Panel Layout
    ============================================ */
 
 /* Main book container */
@@ -203,38 +203,35 @@ body {
 }
 
 /* ============================================
-   Header/Toolbar
+   Header/Toolbar - CLEAN & MINIMAL
    ============================================ */
+
+/* Hide the entire header toolbar */
 .book .book-header {
-  position: fixed;
-  top: 0;
-  left: 300px;
-  right: 0;
-  height: 50px;
-  background: var(--color-bg);
-  border-bottom: 1px solid var(--color-border);
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
+  display: none !important;
 }
 
-.book .book-header .btn {
-  color: var(--color-text-muted);
-  padding: 8px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: color 0.15s;
+/* Hide all sharing buttons, edit buttons, etc. */
+.book .book-header .btn,
+.book .book-header .dropdown,
+.book .book-header .pull-right,
+.book .book-header .pull-left,
+.fa-share-alt,
+.fa-twitter,
+.fa-facebook,
+.fa-linkedin,
+.fa-edit,
+.fa-github,
+.dropdown-menu,
+.sharing-buttons,
+.book-header .font-settings,
+.book-header .btn-group {
+  display: none !important;
 }
 
-.book .book-header .btn:hover {
-  color: var(--color-primary);
-}
-
-/* Adjust content for header */
-.book.with-summary .book-body .page-wrapper .page-inner {
-  padding-top: 70px;
+/* Since header is hidden, no padding needed */
+.book .book-body .page-wrapper .page-inner {
+  padding-top: 40px;
 }
 
 /* ============================================
@@ -244,8 +241,8 @@ body {
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
-  width: 50px;
-  height: 50px;
+  width: 44px;
+  height: 44px;
   background: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: 50%;
@@ -254,7 +251,7 @@ body {
   justify-content: center;
   color: var(--color-text-muted);
   text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   transition: all 0.2s ease;
   z-index: 50;
 }
@@ -262,7 +259,7 @@ body {
 .book .book-body .navigation:hover {
   color: var(--color-primary);
   border-color: var(--color-primary-light);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
 }
 
 .book .book-body .navigation.navigation-prev {
@@ -274,7 +271,7 @@ body {
 }
 
 .book .book-body .navigation i {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 /* ============================================
@@ -505,10 +502,6 @@ p.caption, figcaption {
     left: 260px !important;
   }
 
-  .book .book-header {
-    left: 260px;
-  }
-
   .book .book-body .navigation.navigation-prev {
     left: 275px;
   }
@@ -528,16 +521,36 @@ p.caption, figcaption {
     left: 0 !important;
   }
 
-  .book .book-header {
-    left: 0;
-  }
-
   .book .book-body .navigation.navigation-prev {
     left: 15px;
   }
 
   .book .book-body .page-wrapper .page-inner {
-    padding: 70px 20px 40px;
+    padding: 30px 20px;
+  }
+
+  /* Show hamburger menu on mobile */
+  .book .book-header {
+    display: flex !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    z-index: 999;
+    padding: 0 15px;
+    align-items: center;
+  }
+
+  /* Only show the menu toggle button on mobile */
+  .book .book-header .btn.pull-left {
+    display: block !important;
+  }
+
+  .book .book-body .page-wrapper .page-inner {
+    padding-top: 70px;
   }
 }
 

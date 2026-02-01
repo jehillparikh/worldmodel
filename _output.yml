@@ -10,26 +10,15 @@ bookdown::gitbook:
       scroll_highlight: yes
       before: |
         <li><a href="./" style="font-weight: 700; font-size: 1.1em; padding: 10px 15px; display: block; border-bottom: 1px solid #e1e4e8;">Foundations of World Models</a></li>
-      after: |
-        <li style="margin-top: 10px;"><a href="https://github.com/jehillparikh/worldmodel" target="_blank" rel="noopener">
-        <i class="fa fa-github"></i> View on GitHub</a></li>
+      after: null
     toolbar:
       position: fixed
-    edit: https://github.com/jehillparikh/worldmodel/edit/main/%s
-    download: ["pdf", "epub"]
+    edit: null
+    download: null
     search:
       engine: lunr
       options: null
-    sharing:
-      facebook: no
-      github: yes
-      twitter: yes
-      linkedin: yes
-      weibo: no
-      instapaper: no
-      vk: no
-      whatsapp: no
-      all: []
+    sharing: null
     fontsettings:
       theme: white
       family: serif
