@@ -1,8 +1,33 @@
 book_filename: "foundations-of-world-models"
 language:
+  label:
+    fig: 'Figure '
+    tab: 'Table '
+    eq: 'Equation '
+    thm: 'Theorem '
+    lem: 'Lemma '
+    cor: 'Corollary '
+    prp: 'Proposition '
+    cnj: 'Conjecture '
+    def: 'Definition '
+    exm: 'Example '
+    exr: 'Exercise '
+    hyp: 'Hypothesis '
+    proof: 'Proof. '
+    remark: 'Remark. '
+    solution: 'Solution. '
   ui:
     chapter_name: "Chapter "
+    appendix_name: "Appendix "
+    edit: "Edit"
+    source: "Source"
+    download: "Download"
+    toc_title: "Table of Contents"
+
 delete_merged_file: true
+new_session: yes
+output_dir: "_book"
+
 rmd_files: [
   "index.Rmd",
   "01-Introduction.Rmd",

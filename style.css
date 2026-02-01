@@ -1,210 +1,895 @@
-/* Professional Book Style */
+/* ============================================
+   Foundations of World Models - Professional Book Style
+   A clean, modern academic design for technical content
+   ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Roboto:wght@300;400;500;700&family=Fira+Code:wght@400;500&display=swap');
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap');
 
+/* ============================================
+   CSS Variables - Design System
+   ============================================ */
 :root {
-  --font-body: 'Merriweather', serif;
-  --font-heading: 'Roboto', sans-serif;
-  --font-code: 'Fira Code', monospace;
+  /* Typography */
+  --font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-code: 'JetBrains Mono', 'SF Mono', 'Fira Code', Consolas, monospace;
 
-  --color-text: #2c3e50;
-  --color-heading: #1a252f;
-  --color-primary: #2980b9;
-  --color-accent: #e74c3c;
+  /* Font Sizes */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+
+  /* Colors - Refined Academic Palette */
+  --color-text: #1a1a2e;
+  --color-text-secondary: #4a4a68;
+  --color-text-muted: #6b7280;
+  --color-heading: #0f0f1a;
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-primary-light: #3b82f6;
+  --color-accent: #0891b2;
+
+  /* Backgrounds */
   --color-bg: #ffffff;
-  --color-bg-alt: #f8f9fa;
-  --color-border: #ecf0f1;
+  --color-bg-secondary: #f8fafc;
+  --color-bg-tertiary: #f1f5f9;
+  --color-bg-sidebar: #fafbfc;
+  --color-bg-code: #f6f8fa;
+  --color-bg-highlight: #eff6ff;
 
-  --spacing-unit: 1rem;
+  /* Borders & Shadows */
+  --color-border: #e2e8f0;
+  --color-border-light: #f1f5f9;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* Callout Colors */
+  --color-info-bg: #eff6ff;
+  --color-info-border: #3b82f6;
+  --color-warning-bg: #fefce8;
+  --color-warning-border: #eab308;
+  --color-success-bg: #f0fdf4;
+  --color-success-border: #22c55e;
+  --color-tip-bg: #f0fdfa;
+  --color-tip-border: #14b8a6;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+
+  /* Layout */
+  --max-width-content: 52rem;
+  --max-width-wide: 65rem;
+  --sidebar-width: 300px;
+
+  /* Borders */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   font-family: var(--font-body);
-  font-size: 18px;
-  line-height: 1.8;
+  font-size: var(--text-base);
+  line-height: 1.75;
   color: var(--color-text);
   background-color: var(--color-bg);
-  margin: 0;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  margin: 0;
+  padding: 0;
 }
 
-/* Typography */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+/* ============================================
+   Gitbook Layout Overrides
+   ============================================ */
+.book {
+  background: var(--color-bg);
+}
+
+.book .book-body {
+  background: var(--color-bg);
+}
+
+.book .book-body .page-wrapper {
+  background: var(--color-bg);
+}
+
+.book .book-body .page-wrapper .page-inner {
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  padding: var(--spacing-2xl) var(--spacing-xl);
+}
+
+@media (min-width: 1200px) {
+  .book .book-body .page-wrapper .page-inner {
+    padding: var(--spacing-3xl) var(--spacing-2xl);
+  }
+}
+
+/* ============================================
+   Sidebar Navigation
+   ============================================ */
+.book .book-summary {
+  background: var(--color-bg-sidebar);
+  border-right: 1px solid var(--color-border);
   font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  width: var(--sidebar-width);
+  overflow-y: auto;
+}
+
+.book .book-summary ul.summary {
+  padding: var(--spacing-md) 0;
+}
+
+.book .book-summary ul.summary li {
+  list-style: none;
+}
+
+.book .book-summary ul.summary li a,
+.book .book-summary ul.summary li span {
+  display: block;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  border-left: 3px solid transparent;
+  font-weight: 450;
+}
+
+.book .book-summary ul.summary li a:hover {
+  color: var(--color-primary);
+  background: var(--color-bg-highlight);
+  border-left-color: var(--color-primary-light);
+}
+
+.book .book-summary ul.summary li.active > a,
+.book .book-summary ul.summary li.active > span {
+  color: var(--color-primary);
+  background: var(--color-bg);
+  border-left-color: var(--color-primary);
+  font-weight: 600;
+}
+
+.book .book-summary ul.summary li.divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: var(--spacing-md) var(--spacing-lg);
+}
+
+/* Sidebar Header */
+.book .book-summary ul.summary li:first-child a {
   font-weight: 700;
+  font-size: var(--text-base);
   color: var(--color-heading);
-  margin-top: 2em;
-  margin-bottom: 0.75em;
-  line-height: 1.25;
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Chapter numbers */
+.book .book-summary ul.summary li.chapter span.section-number {
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-right: var(--spacing-xs);
+}
+
+/* ============================================
+   Typography - Headings
+   ============================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-heading);
+  line-height: 1.3;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+  letter-spacing: -0.02em;
 }
 
 h1 {
-  font-size: 2.5em;
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-md);
   border-bottom: 2px solid var(--color-border);
-  padding-bottom: 0.3em;
-  color: var(--color-primary);
+  letter-spacing: -0.03em;
 }
 
 h2 {
-  font-size: 2em;
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: 0.2em;
+  font-size: var(--text-2xl);
+  margin-top: var(--spacing-3xl);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 h3 {
-  font-size: 1.5em;
-  font-weight: 500;
+  font-size: var(--text-xl);
+  margin-top: var(--spacing-2xl);
+  font-weight: 600;
+}
+
+h4 {
+  font-size: var(--text-lg);
+  margin-top: var(--spacing-xl);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+h5 {
+  font-size: var(--text-base);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin-top: var(--spacing-xl);
+}
+
+h6 {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin-top: var(--spacing-lg);
+}
+
+/* ============================================
+   Typography - Body Text
+   ============================================ */
+p {
+  margin-top: 0;
+  margin-bottom: var(--spacing-lg);
+  text-align: left;
+  hyphens: auto;
+}
+
+/* First paragraph after heading - no indent */
+h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
+  text-indent: 0;
 }
 
 /* Links */
 a {
   color: var(--color-primary);
   text-decoration: none;
-  transition: all 0.2s ease;
-  border-bottom: 1px dotted transparent;
+  border-bottom: 1px solid transparent;
+  transition: all var(--transition-fast);
 }
 
 a:hover {
-  color: #1c5980;
-  border-bottom-color: #1c5980;
+  color: var(--color-primary-dark);
+  border-bottom-color: var(--color-primary-dark);
 }
 
-/* Layout */
-.book .book-body .page-wrapper .page-inner {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 40px 60px;
+/* Strong & Emphasis */
+strong, b {
+  font-weight: 600;
+  color: var(--color-heading);
 }
 
-/* Code Blocks */
-pre {
-  background-color: #f4f6f7;
-  border: 1px solid #e1e4e8;
-  border-radius: 8px;
-  padding: 20px;
-  overflow-x: auto;
-  font-family: var(--font-code);
-  font-size: 0.85em;
-  line-height: 1.6;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-}
-
-code {
-  font-family: var(--font-code);
-  background-color: rgba(27, 31, 35, 0.05);
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
-  font-size: 0.9em;
-  color: #e83e8c;
-}
-
-pre code {
-  background-color: transparent;
-  color: inherit;
-  padding: 0;
-  font-size: 1em;
-}
-
-/* Blockquotes */
-blockquote {
-  margin: 2em 0;
-  padding: 1.5em 2em;
-  border-left: 4px solid var(--color-primary);
-  background-color: #f0f7fb;
-  color: #555;
+em, i {
   font-style: italic;
-  border-radius: 0 8px 8px 0;
 }
 
-blockquote p:last-child {
+/* Small text */
+small {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* ============================================
+   Lists
+   ============================================ */
+ul, ol {
+  margin: 0 0 var(--spacing-lg) 0;
+  padding-left: var(--spacing-xl);
+}
+
+li {
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.7;
+}
+
+li > ul,
+li > ol {
+  margin-top: var(--spacing-sm);
   margin-bottom: 0;
 }
 
-/* Tables */
-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin: 2.5em 0;
-  font-family: var(--font-heading);
-  font-size: 0.95em;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+/* Custom bullet styling */
+ul li::marker {
+  color: var(--color-primary);
 }
 
-th,
-td {
-  padding: 15px 20px;
-  border-bottom: 1px solid var(--color-border);
-  text-align: left;
+ol li::marker {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* ============================================
+   Blockquotes
+   ============================================ */
+blockquote {
+  margin: var(--spacing-xl) 0;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-left: 4px solid var(--color-primary);
+  background: var(--color-bg-secondary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
+blockquote p {
+  margin: 0;
+}
+
+blockquote p + p {
+  margin-top: var(--spacing-md);
+}
+
+blockquote cite,
+blockquote footer {
+  display: block;
+  margin-top: var(--spacing-md);
+  font-size: var(--text-sm);
+  font-style: normal;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+blockquote cite::before {
+  content: "— ";
+}
+
+/* ============================================
+   Code Blocks
+   ============================================ */
+code {
+  font-family: var(--font-code);
+  font-size: 0.9em;
+  background: var(--color-bg-code);
+  padding: 0.2em 0.4em;
+  border-radius: var(--radius-sm);
+  color: #c7254e;
+  word-break: break-word;
+}
+
+pre {
+  font-family: var(--font-code);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  background: var(--color-bg-code);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  margin: var(--spacing-xl) 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  border-radius: 0;
+}
+
+/* Syntax highlighting enhancements */
+pre .comment { color: #6a737d; }
+pre .keyword { color: #d73a49; }
+pre .string { color: #032f62; }
+pre .number { color: #005cc5; }
+pre .function { color: #6f42c1; }
+
+/* ============================================
+   Tables
+   ============================================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--spacing-xl) 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+thead {
+  background: var(--color-bg-tertiary);
 }
 
 th {
-  background-color: #f8f9fa;
   font-weight: 600;
+  text-align: left;
+  padding: var(--spacing-md) var(--spacing-lg);
   color: var(--color-heading);
-  text-transform: uppercase;
-  font-size: 0.85em;
-  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--color-border);
+  white-space: nowrap;
+}
+
+td {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border-light);
+  vertical-align: top;
 }
 
 tr:last-child td {
   border-bottom: none;
 }
 
-tr:hover {
-  background-color: #fcfcfc;
+tbody tr:hover {
+  background: var(--color-bg-secondary);
 }
 
-/* Images */
+/* Table caption */
+caption,
+.table-caption {
+  caption-side: bottom;
+  text-align: left;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-style: italic;
+  padding: var(--spacing-md) 0 0 0;
+}
+
+/* ============================================
+   Images & Figures
+   ============================================ */
 img {
   max-width: 100%;
   height: auto;
   display: block;
-  margin: 3em auto;
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  margin: var(--spacing-xl) auto;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
 }
 
-p.caption {
+.figure,
+figure {
+  margin: var(--spacing-2xl) 0;
   text-align: center;
-  font-size: 0.9em;
-  color: #7f8c8d;
-  margin-top: 15px;
-  font-family: var(--font-heading);
 }
 
-/* Math */
-.katex-display {
-  margin: 2.5em 0;
-  padding: 1em;
-  background-color: #fff;
-  border-radius: 8px;
+.figure img,
+figure img {
+  margin: 0 auto var(--spacing-md);
+}
+
+figcaption,
+p.caption,
+.caption {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-style: italic;
+  text-align: center;
+  margin-top: var(--spacing-sm);
+  line-height: 1.5;
+}
+
+/* ============================================
+   Math & Equations
+   ============================================ */
+.katex-display,
+.MathJax_Display {
+  margin: var(--spacing-xl) 0 !important;
   overflow-x: auto;
+  overflow-y: hidden;
+  padding: var(--spacing-md) 0;
 }
 
-/* Navigation */
-.book .book-summary {
-  background: #f8f9fa;
-  border-right: 1px solid var(--color-border);
+.katex {
+  font-size: 1.1em !important;
+}
+
+/* Equation numbers */
+.katex-display > .katex > .katex-html > .tag {
+  position: absolute;
+  right: 0;
+}
+
+/* ============================================
+   Callouts & Admonitions
+   ============================================ */
+.callout,
+.alert,
+.admonition {
+  margin: var(--spacing-xl) 0;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  border-left: 4px solid;
+}
+
+.callout-note,
+.alert-info {
+  background: var(--color-info-bg);
+  border-left-color: var(--color-info-border);
+}
+
+.callout-warning,
+.alert-warning {
+  background: var(--color-warning-bg);
+  border-left-color: var(--color-warning-border);
+}
+
+.callout-tip,
+.alert-success {
+  background: var(--color-tip-bg);
+  border-left-color: var(--color-tip-border);
+}
+
+.callout-title,
+.alert-heading {
   font-family: var(--font-heading);
-}
-
-.book .book-summary ul.summary li a {
-  color: #555;
-  padding: 10px 15px;
-}
-
-.book .book-summary ul.summary li.active>a {
-  color: var(--color-primary);
-  background: rgba(41, 128, 185, 0.1);
   font-weight: 600;
-  border-left: 4px solid var(--color-primary);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--spacing-sm);
+}
+
+/* ============================================
+   Navigation
+   ============================================ */
+.book .book-body .navigation {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+  z-index: 100;
+}
+
+.book .book-body .navigation:hover {
+  color: var(--color-primary);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary-light);
+}
+
+.book .book-body .navigation.navigation-prev {
+  left: 15px;
+}
+
+.book .book-body .navigation.navigation-next {
+  right: 15px;
+}
+
+.book .book-body .navigation i {
+  font-size: 20px;
+}
+
+/* ============================================
+   Header & Book Title
+   ============================================ */
+.book-header {
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--spacing-md) var(--spacing-lg);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.book-header h1 {
+  font-size: var(--text-lg);
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+/* ============================================
+   Chapter Title Styling
+   ============================================ */
+.section.level1 > h1:first-child,
+.chapter > h1:first-child {
+  font-size: var(--text-4xl);
+  margin-bottom: var(--spacing-2xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 3px solid var(--color-primary);
+}
+
+/* Chapter number styling */
+.section.level1 > h1:first-child .header-section-number,
+.chapter > h1:first-child .header-section-number {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* ============================================
+   Horizontal Rules
+   ============================================ */
+hr {
+  border: none;
+  height: 1px;
+  background: var(--color-border);
+  margin: var(--spacing-2xl) 0;
+}
+
+/* Decorative section break */
+hr.section-break {
+  height: auto;
+  background: transparent;
+  text-align: center;
+}
+
+hr.section-break::before {
+  content: "* * *";
+  color: var(--color-text-muted);
+  letter-spacing: 1em;
+}
+
+/* ============================================
+   Definition Lists
+   ============================================ */
+dl {
+  margin: var(--spacing-lg) 0;
+}
+
+dt {
+  font-weight: 600;
+  color: var(--color-heading);
+  margin-top: var(--spacing-md);
+}
+
+dd {
+  margin-left: var(--spacing-xl);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ============================================
+   Footnotes
+   ============================================ */
+.footnotes {
+  margin-top: var(--spacing-3xl);
+  padding-top: var(--spacing-xl);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.footnotes ol {
+  padding-left: var(--spacing-lg);
+}
+
+.footnotes li {
+  margin-bottom: var(--spacing-md);
+}
+
+sup.footnote-ref a {
+  font-size: var(--text-xs);
+  color: var(--color-primary);
+  text-decoration: none;
+  padding: 0 2px;
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+  .book .book-summary,
+  .book .book-body .navigation,
+  .book-header {
+    display: none !important;
+  }
+
+  .book .book-body .page-wrapper .page-inner {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+
+  pre, blockquote, table, figure {
+    page-break-inside: avoid;
+  }
+
+  a {
+    color: var(--color-text);
+    text-decoration: underline;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 250px;
+  }
+
+  .book .book-body .page-wrapper .page-inner {
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  h1 {
+    font-size: var(--text-3xl);
+  }
+
+  h2 {
+    font-size: var(--text-xl);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --text-base: 1rem;
+  }
+
+  .book .book-body .page-wrapper .page-inner {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  h1 {
+    font-size: var(--text-2xl);
+  }
+
+  h2 {
+    font-size: var(--text-xl);
+  }
+
+  h3 {
+    font-size: var(--text-lg);
+  }
+
+  pre {
+    padding: var(--spacing-md);
+    font-size: var(--text-xs);
+  }
+
+  table {
+    font-size: var(--text-xs);
+  }
+
+  th, td {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .book .book-body .navigation {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* ============================================
+   Selection Styling
+   ============================================ */
+::selection {
+  background: var(--color-primary-light);
+  color: white;
+}
+
+::-moz-selection {
+  background: var(--color-primary-light);
+  color: white;
+}
+
+/* ============================================
+   Scrollbar Styling (WebKit)
+   ============================================ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* ============================================
+   Focus States (Accessibility)
+   ============================================ */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   Dark Mode Support (Optional)
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #e2e8f0;
+    --color-text-secondary: #94a3b8;
+    --color-text-muted: #64748b;
+    --color-heading: #f1f5f9;
+    --color-primary: #60a5fa;
+    --color-primary-dark: #3b82f6;
+    --color-primary-light: #93c5fd;
+
+    --color-bg: #0f172a;
+    --color-bg-secondary: #1e293b;
+    --color-bg-tertiary: #334155;
+    --color-bg-sidebar: #0f172a;
+    --color-bg-code: #1e293b;
+    --color-bg-highlight: #1e3a5f;
+
+    --color-border: #334155;
+    --color-border-light: #1e293b;
+  }
+
+  img {
+    opacity: 0.9;
+  }
+
+  code {
+    color: #f472b6;
+  }
 }

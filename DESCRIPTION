@@ -1,6 +1,21 @@
-Package: placeholder
+Package: foundationsofworldmodels
 Type: Book
-Title: Does not matter.
-Version: 0.0.1
-Imports: bookdown
-Remotes: rstudio/bookdown
+Title: Foundations of World Models
+Version: 1.0.0
+Authors@R: person("Jehill", "Parikh", role = c("aut", "cre"))
+Description: A comprehensive technical guide to World Models - the next frontier
+    in artificial intelligence. This book explores the theoretical foundations
+    and practical implementations of AI systems that can understand, predict,
+    and plan in complex environments through internal simulations.
+License: CC BY-NC-SA 4.0
+URL: https://jehillparikh.github.io/worldmodel/
+BugReports: https://github.com/jehillparikh/worldmodel/issues
+Imports:
+    bookdown,
+    rmarkdown,
+    knitr,
+    ggplot2
+Suggests:
+    dplyr,
+    tidyr
+Encoding: UTF-8
