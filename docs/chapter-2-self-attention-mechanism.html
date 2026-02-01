@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models</title>
+  <title>Chapter 2 Chapter 2: Self-Attention Mechanism | Foundations of World Models</title>
   <meta name="description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models" />
+  <meta property="og:title" content="Chapter 2 Chapter 2: Self-Attention Mechanism | Foundations of World Models" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
   <meta property="og:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="github-repo" content="jehillparikh/worldmodel" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models" />
+  <meta name="twitter:title" content="Chapter 2 Chapter 2: Self-Attention Mechanism | Foundations of World Models" />
   
   <meta name="twitter:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="twitter:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reward-based-learning.html"/>
-<link rel="next" href="model-free-reinforcement-learning.html"/>
+<link rel="prev" href="introduction.html"/>
+<link rel="next" href="chapter-3-transformers.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -424,80 +424,90 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-based-reinforcement-learning" class="section level1 hasAnchor" number="8">
-<h1><span class="header-section-number">Chapter 8</span> Model-Based Reinforcement Learning<a href="model-based-reinforcement-learning.html#model-based-reinforcement-learning" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Model-Based RL refers to methods where an agent <strong>learns a model</strong> of the environment and uses it for decision-making. This typically involves:</p>
-<ol style="list-style-type: decimal">
-<li><strong>Learning the Transition Model (<span class="math inline">\(P(s&#39; | s, a)\)</span>)</strong>: Predicting the next state given the current state and action.</li>
-<li><strong>Learning the Reward Model (<span class="math inline">\(R(s, a)\)</span>)</strong>: Estimating the reward for taking an action in a given state.</li>
-<li><strong>Planning</strong>: Using the learned model to simulate trajectories and improve decision-making.</li>
-</ol>
-<div id="popular-model-based-rl-approaches" class="section level3 hasAnchor" number="8.0.1">
-<h3><span class="header-section-number">8.0.1</span> <strong>Popular Model-Based RL Approaches</strong><a href="model-based-reinforcement-learning.html#popular-model-based-rl-approaches" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="chapter-2-self-attention-mechanism" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Chapter 2: Self-Attention Mechanism<a href="chapter-2-self-attention-mechanism.html#chapter-2-self-attention-mechanism" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<blockquote>
+<p><em>“Attention is all you need.”</em><br />
+— Vaswani et al., 2017</p>
+</blockquote>
+<p>The <strong>Self-Attention Mechanism</strong> is the engine that powers the Transformer revolution. Unlike Recurrent Neural Networks (RNNs) that process data sequentially, self-attention allows a model to look at an entire sequence at once and determine which parts are relevant to each other. This capability to capture <strong>long-range dependencies</strong> is what makes modern AI models so powerful.</p>
+<div id="the-core-mechanism" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> The Core Mechanism<a href="chapter-2-self-attention-mechanism.html#the-core-mechanism" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>At its heart, self-attention is a database retrieval operation. For every token in a sequence, we ask: <em>“How relevant are other tokens to me?”</em></p>
+<p>This is achieved using three vectors derived from the input embedding <span class="math inline">\(X\)</span>:
+1. <strong>Query (<span class="math inline">\(Q\)</span>)</strong>: What I am looking for.
+2. <strong>Key (<span class="math inline">\(K\)</span>)</strong>: What I offer to be searched.
+3. <strong>Value (<span class="math inline">\(V\)</span>)</strong>: The actual content I contain.</p>
+<p>Mathematically, these are computed as linear projections:
+<span class="math display">\[Q = XW_Q, \quad K = XW_K, \quad V = XW_V\]</span>
+where <span class="math inline">\(W_Q, W_K, W_V\)</span> are learnable weight matrices.</p>
+<div id="scaled-dot-product-attention" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Scaled Dot-Product Attention<a href="chapter-2-self-attention-mechanism.html#scaled-dot-product-attention" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The relevance score between a query and a key is calculated using a dot product. A high dot product indicates high similarity (relevance).</p>
+<p><span class="math display">\[
+\text{Attention}(Q, K, V) = \text{softmax} \left( \frac{QK^T}{\sqrt{d_k}} \right) V
+\]</span></p>
 <ul>
-<li><strong>Dynamic Programming (DP)</strong>: Uses Bellman equations to iteratively compute value functions, assuming a known model.</li>
-<li><strong>Model Predictive Control (MPC)</strong>: Uses a learned model to simulate future states and optimize actions.</li>
-<li><strong>Dyna-Q</strong>: Combines model-free and model-based learning by integrating planning and learning.</li>
+<li><strong><span class="math inline">\(QK^T\)</span></strong>: Computes the similarity scores between every query and every key.</li>
+<li><strong><span class="math inline">\(\sqrt{d_k}\)</span></strong>: Scaling factor to prevent gradients from vanishing in the softmax function.</li>
+<li><strong>Softmax</strong>: Normalizes scores into probabilities (summing to 1).</li>
+<li><strong><span class="math inline">\(V\)</span></strong>: The final output is a weighted sum of values, where relevant tokens contribute more.</li>
+</ul>
+<div class="float">
+<img src="Images/mha_img_original.png" title="Scaled Dot-Product Attention" alt="Attention" />
+<div class="figcaption">Attention</div>
+</div>
+</div>
+</div>
+<div id="multi-head-attention" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Multi-Head Attention<a href="chapter-2-self-attention-mechanism.html#multi-head-attention" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A single attention head might focus on one type of relationship (e.g., subject-verb agreement). To capture multiple nuances, we use <strong>Multi-Head Attention (MHA)</strong>.</p>
+<p>MHA runs several self-attention operations in parallel, each with its own set of weight matrices. The outputs are concatenated and projected:</p>
+<p><span class="math display">\[
+\text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, \dots, \text{head}_h) W_O
+\]</span></p>
+<p>This allows the model to attend to information from different representation subspaces at different positions.</p>
+</div>
+<div id="efficient-attention-recent-developments" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Efficient Attention &amp; Recent Developments<a href="chapter-2-self-attention-mechanism.html#efficient-attention-recent-developments" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>While the original mechanism is powerful, it has a quadratic complexity <span class="math inline">\(O(N^2)\)</span> with respect to sequence length. Recent innovations aim to make attention more efficient and scalable.</p>
+<div id="flashattention" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> FlashAttention<a href="chapter-2-self-attention-mechanism.html#flashattention" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>FlashAttention</strong> (Dao et al., 2022) is an IO-aware exact attention algorithm that significantly speeds up training and reduces memory usage.</p>
+<ul>
+<li><strong>The Problem</strong>: Standard attention implementation requires writing large intermediate matrices (like the <span class="math inline">\(N \times N\)</span> attention matrix) to the GPU’s high-bandwidth memory (HBM), which is slow.</li>
+<li><strong>The Solution</strong>: FlashAttention uses <strong>tiling</strong> to compute attention in blocks. It loads small blocks of <span class="math inline">\(Q, K, V\)</span> from HBM to the fast on-chip SRAM, computes attention, and writes only the final result back to HBM.</li>
+<li><strong>Recomputation</strong>: Instead of storing the large attention matrix for backward pass, it recomputes it on-the-fly, which is faster than reading it from HBM.</li>
+<li><strong>Impact</strong>: This results in up to <strong>3x faster training</strong> and allows for much longer context windows (e.g., 32k tokens) without running out of memory.</li>
 </ul>
 </div>
-<div id="monte-carlo-tree-search-mcts" class="section level2 hasAnchor" number="8.1">
-<h2><span class="header-section-number">8.1</span> Monte Carlo Tree Search (MCTS)<a href="model-based-reinforcement-learning.html#monte-carlo-tree-search-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>MCTS is a search-based decision-making algorithm used in <strong>game AI</strong> and <strong>planning problems</strong>. It simulates future states by exploring the decision tree and backing up estimated rewards, aligning closely with <strong>MDP planning techniques</strong>.</p>
-<p>In MCTS, the algorithm uses a model of the environment (specifically, the transition dynamics of states) to simulate future outcomes. During the search process, the algorithm builds a tree of possible future states, which are explored through simulations (rollouts). These simulations rely on the model to predict the outcomes of actions, and the results of the simulations are used to evaluate the best actions to take at each decision point.</p>
-<p>The key characteristic of MCTS being model-based is that it requires knowledge of the environment’s dynamics to simulate the future. This model could either be explicitly provided (like in a chess game, where the rules of the game are well-defined) or learned through interactions (as in some planning problems for robotics)</p>
-<div id="mcts-steps" class="section level3 hasAnchor" number="8.1.1">
-<h3><span class="header-section-number">8.1.1</span> <strong>MCTS Steps</strong><a href="model-based-reinforcement-learning.html#mcts-steps" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ol style="list-style-type: decimal">
-<li><strong>Selection</strong>: Start from the root and select the most promising node based on a strategy (e.g., Upper Confidence Bound (UCB1)).</li>
-<li><strong>Expansion</strong>: Add a new node to the tree when a promising unexplored action is found.</li>
-<li><strong>Simulation (Rollout)</strong>: Play out random simulations to estimate the value of the new state.</li>
-<li><strong>Backpropagation</strong>: Update the values of visited nodes based on the simulation outcome.</li>
-</ol>
-</div>
-<div id="steps-of-mcts" class="section level3 hasAnchor" number="8.1.2">
-<h3><span class="header-section-number">8.1.2</span> Steps of MCTS<a href="model-based-reinforcement-learning.html#steps-of-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ol style="list-style-type: decimal">
-<li><p><strong>Selection</strong>: Starting from the root node, recursively select the child node that maximizes the <strong>Upper Confidence Bound for Trees (UCT)</strong>.</p>
-<p>The UCT formula is given by:</p>
-<p><span class="math display">\[
-\text{UCT}(v) = \frac{w(v)}{n(v)} + c \sqrt{\frac{\ln N}{n(v)}}
-\]</span></p>
-<p>Where:</p>
+<div id="kv-cache-key-value-cache" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> KV Cache (Key-Value Cache)<a href="chapter-2-self-attention-mechanism.html#kv-cache-key-value-cache" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In autoregressive generation (like GPT), the model generates one token at a time. For each new token, it needs to attend to all previous tokens.</p>
 <ul>
-<li><span class="math inline">\(w(v)\)</span> is the total reward for node <span class="math inline">\(v\)</span>.</li>
-<li><span class="math inline">\(n(v)\)</span> is the number of times node <span class="math inline">\(v\)</span> has been visited.</li>
-<li><span class="math inline">\(N\)</span> is the number of times the parent node has been visited.</li>
-<li><span class="math inline">\(c\)</span> is the exploration constant that balances exploration and exploitation.</li>
-</ul></li>
-<li><p><strong>Expansion</strong>: If the selected node is not a terminal state and has untried actions, add a new child node representing an untried action.</p></li>
-<li><p><strong>Simulation (Rollout)</strong>: Simulate a random sequence of actions from the current node until a terminal state is reached. The outcome of the simulation gives an estimate of the value of the node.</p>
-<p>The return from a simulation is denoted by:</p>
-<p><span class="math display">\[
-G_t = \sum_{k=t}^{T} \gamma^{k-t} R_k
-\]</span></p>
-<p>Where:</p>
-<ul>
-<li><span class="math inline">\(G_t\)</span> is the total reward (return) from time <span class="math inline">\(t\)</span> onwards.</li>
-<li><span class="math inline">\(\gamma\)</span> is the discount factor.</li>
-<li><span class="math inline">\(R_k\)</span> is the reward at time step <span class="math inline">\(k\)</span>.</li>
-</ul></li>
-<li><p><strong>Backpropagation</strong>: After the simulation, backpropagate the results by updating the values and visit counts of all nodes in the path from the current node to the root.</p>
-<p>The update rule for a node’s value is:</p>
-<p><span class="math display">\[
-w(v) \leftarrow w(v) + G_t
-\]</span>
-<span class="math display">\[
-n(v) \leftarrow n(v) + 1
-\]</span></p></li>
-</ol>
-</div>
-<div id="applications-of-mcts" class="section level3 hasAnchor" number="8.1.3">
-<h3><span class="header-section-number">8.1.3</span> <strong>Applications of MCTS</strong><a href="model-based-reinforcement-learning.html#applications-of-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li>AlphaGo (DeepMind)</li>
-<li>Chess and board games</li>
-<li>Robotics planning and decision-making</li>
+<li><strong>Inefficiency</strong>: Naively, we would recompute the Key and Value vectors for the entire history at every step. This is redundant and computationally expensive (<span class="math inline">\(O(N^2)\)</span> total for generating <span class="math inline">\(N\)</span> tokens).</li>
+<li><strong>Optimization</strong>: We cache the Key and Value vectors of previous tokens in GPU memory. At each step, we only compute <span class="math inline">\(Q, K, V\)</span> for the <em>new</em> token and append the new <span class="math inline">\(K\)</span> and <span class="math inline">\(V\)</span> to the cache.</li>
+<li><strong>Result</strong>: This reduces the complexity of generating a token to <span class="math inline">\(O(N)\)</span> (linear with context length) and significantly speeds up inference.</li>
 </ul>
+</div>
+<div id="pagedattention-vllm" class="section level3 hasAnchor" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> PagedAttention (vLLM)<a href="chapter-2-self-attention-mechanism.html#pagedattention-vllm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As context lengths grew, managing the KV Cache became a bottleneck. The cache can be huge (gigabytes per request) and fragmented in memory.</p>
+<ul>
+<li><strong>The Problem</strong>: Traditional memory allocation reserves contiguous blocks for the KV cache. Since we don’t know the final output length, we often over-allocate (wasting memory) or face fragmentation.</li>
+<li><strong>The Solution</strong>: Inspired by virtual memory in operating systems, <strong>PagedAttention</strong> (used in vLLM) breaks the KV cache into non-contiguous blocks (“pages”).</li>
+<li><strong>Mechanism</strong>: A block table maps logical tokens to physical memory blocks. This allows the system to allocate memory dynamically on demand.</li>
+<li><strong>Impact</strong>: This leads to near-zero memory waste and allows serving many more concurrent requests (higher throughput) with the same hardware.</li>
+</ul>
+</div>
+<div id="linear-attention" class="section level3 hasAnchor" number="2.3.4">
+<h3><span class="header-section-number">2.3.4</span> Linear Attention<a href="chapter-2-self-attention-mechanism.html#linear-attention" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Various approaches (e.g., Linformer, Performer) approximate the softmax attention map to achieve linear complexity <span class="math inline">\(O(N)\)</span>, making it feasible to process extremely long documents or genomic sequences.</p>
+</div>
+<div id="sliding-window-attention" class="section level3 hasAnchor" number="2.3.5">
+<h3><span class="header-section-number">2.3.5</span> Sliding Window Attention<a href="chapter-2-self-attention-mechanism.html#sliding-window-attention" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Used in models like <strong>Mistral</strong> and <strong>Longformer</strong>, this restricts attention to a local window around each token. This reduces computation while still allowing global information to propagate through multiple layers.</p>
+
 </div>
 </div>
 </div>
@@ -506,8 +516,8 @@ n(v) \leftarrow n(v) + 1
           </div>
         </div>
       </div>
-<a href="reward-based-learning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="model-free-reinforcement-learning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapter-3-transformers.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -539,7 +549,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/jehillparikh/worldmodel/edit/main/06-Markov-Decision-Processes.Rmd",
+"link": "https://github.com/jehillparikh/worldmodel/edit/main/02-Self-Attention.Rmd",
 "text": "Edit"
 },
 "history": {

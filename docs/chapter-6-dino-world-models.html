@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models</title>
+  <title>Chapter 12 Chapter 6: DINO World Models | Foundations of World Models</title>
   <meta name="description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models" />
+  <meta property="og:title" content="Chapter 12 Chapter 6: DINO World Models | Foundations of World Models" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
   <meta property="og:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="github-repo" content="jehillparikh/worldmodel" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models" />
+  <meta name="twitter:title" content="Chapter 12 Chapter 6: DINO World Models | Foundations of World Models" />
   
   <meta name="twitter:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="twitter:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reward-based-learning.html"/>
-<link rel="next" href="model-free-reinforcement-learning.html"/>
+<link rel="prev" href="chapter-5-reinforcement-learning---theory-and-applications.html"/>
+<link rel="next" href="chapter-7-jepa-architecture.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -424,81 +424,113 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-based-reinforcement-learning" class="section level1 hasAnchor" number="8">
-<h1><span class="header-section-number">Chapter 8</span> Model-Based Reinforcement Learning<a href="model-based-reinforcement-learning.html#model-based-reinforcement-learning" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Model-Based RL refers to methods where an agent <strong>learns a model</strong> of the environment and uses it for decision-making. This typically involves:</p>
+<div id="chapter-6-dino-world-models" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Chapter 6: DINO World Models<a href="chapter-6-dino-world-models.html#chapter-6-dino-world-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction-2" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> Introduction<a href="chapter-6-dino-world-models.html#introduction-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="what-is-dino-wm" class="section level3 hasAnchor" number="12.1.1">
+<h3><span class="header-section-number">12.1.1</span> What is DINO-WM?<a href="chapter-6-dino-world-models.html#what-is-dino-wm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>DINO-WM (DINO World Model) is a groundbreaking approach that leverages <strong>pre-trained visual features</strong> to enable <strong>zero-shot planning</strong>. Traditional world models often require extensive <strong>task-specific training</strong>, expert demonstrations, or reward modeling. DINO-WM, on the other hand, <strong>learns from offline datasets</strong> and enables task-agnostic reasoning by optimizing action sequences based on <strong>DINOv2 visual embeddings</strong>.</p>
+</div>
+<div id="why-is-this-important" class="section level3 hasAnchor" number="12.1.2">
+<h3><span class="header-section-number">12.1.2</span> Why is This Important?<a href="chapter-6-dino-world-models.html#why-is-this-important" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Generalization remains a fundamental challenge in <strong>robotics and embodied AI</strong>. Many existing models struggle to perform in unseen environments or new tasks without <strong>retraining</strong>. DINO-WM eliminates this bottleneck by using <strong>pre-trained spatial representations</strong>, allowing robots to adapt to <strong>novel scenarios without additional learning</strong>.</p>
+</div>
+</div>
+<div id="key-contributions" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> Key Contributions<a href="chapter-6-dino-world-models.html#key-contributions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="training-on-offline-datasets" class="section level3 hasAnchor" number="12.2.1">
+<h3><span class="header-section-number">12.2.1</span> 1. Training on Offline Datasets<a href="chapter-6-dino-world-models.html#training-on-offline-datasets" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Unlike traditional reinforcement learning methods that require continuous interaction with an environment, <strong>DINO-WM learns purely from pre-collected behavioral trajectories</strong>. This reduces dependency on real-time data collection and makes the model more <strong>scalable</strong>.</p>
+</div>
+<div id="zero-shot-behavior-optimization" class="section level3 hasAnchor" number="12.2.2">
+<h3><span class="header-section-number">12.2.2</span> 2. Zero-Shot Behavior Optimization<a href="chapter-6-dino-world-models.html#zero-shot-behavior-optimization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>DINO-WM does not rely on explicit reward functions. Instead, it <strong>optimizes action sequences</strong> using <strong>visual feature predictions</strong>, making it possible to achieve observational goals <strong>without task-specific tuning</strong>.</p>
+</div>
+<div id="task-agnostic-planning" class="section level3 hasAnchor" number="12.2.3">
+<h3><span class="header-section-number">12.2.3</span> 3. Task-Agnostic Planning<a href="chapter-6-dino-world-models.html#task-agnostic-planning" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Instead of training on <strong>specific tasks</strong>, DINO-WM treats <strong>goal features</strong> as <strong>prediction targets</strong>, enabling <strong>generalization across multiple environments</strong>. This allows the system to work seamlessly in:
+- Arbitrarily configured <strong>mazes</strong>
+- <strong>Push manipulation</strong> tasks with diverse object shapes
+- <strong>Multi-particle scenarios</strong> such as granular material handling</p>
+</div>
+</div>
+<div id="how-dino-wm-works" class="section level2 hasAnchor" number="12.3">
+<h2><span class="header-section-number">12.3</span> How DINO-WM Works<a href="chapter-6-dino-world-models.html#how-dino-wm-works" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="architecture-and-implementation" class="section level3 hasAnchor" number="12.3.1">
+<h3><span class="header-section-number">12.3.1</span> Architecture and Implementation<a href="chapter-6-dino-world-models.html#architecture-and-implementation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>DINO-WM operates using a <strong>three-step process</strong>:</p>
 <ol style="list-style-type: decimal">
-<li><strong>Learning the Transition Model (<span class="math inline">\(P(s&#39; | s, a)\)</span>)</strong>: Predicting the next state given the current state and action.</li>
-<li><strong>Learning the Reward Model (<span class="math inline">\(R(s, a)\)</span>)</strong>: Estimating the reward for taking an action in a given state.</li>
-<li><strong>Planning</strong>: Using the learned model to simulate trajectories and improve decision-making.</li>
+<li><strong>Feature Extraction:</strong> Uses <strong>DINOv2</strong> patch embeddings to <strong>represent visual observations</strong>.</li>
+<li><strong>Latent Dynamics Modeling:</strong> Predicts <strong>future embeddings</strong> using a <strong>Vision Transformer (ViT)</strong>.</li>
+<li><strong>Action Optimization:</strong> Employs <strong>model-predictive control (MPC)</strong> to optimize action sequences towards a goal.</li>
 </ol>
-<div id="popular-model-based-rl-approaches" class="section level3 hasAnchor" number="8.0.1">
-<h3><span class="header-section-number">8.0.1</span> <strong>Popular Model-Based RL Approaches</strong><a href="model-based-reinforcement-learning.html#popular-model-based-rl-approaches" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="learning-algorithm" class="section level3 hasAnchor" number="12.3.2">
+<h3><span class="header-section-number">12.3.2</span> Learning Algorithm<a href="chapter-6-dino-world-models.html#learning-algorithm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>DINO-WM employs a self-supervised learning approach to model the environment’s dynamics. The key components include:</p>
 <ul>
-<li><strong>Dynamic Programming (DP)</strong>: Uses Bellman equations to iteratively compute value functions, assuming a known model.</li>
-<li><strong>Model Predictive Control (MPC)</strong>: Uses a learned model to simulate future states and optimize actions.</li>
-<li><strong>Dyna-Q</strong>: Combines model-free and model-based learning by integrating planning and learning.</li>
+<li><strong>Observation Encoding:</strong> Each observation is transformed into a <strong>latent feature space</strong> using DINOv2 embeddings.</li>
+<li><strong>Transition Model:</strong> A <strong>transformer-based world model</strong> is trained to predict the next latent state given past states and actions.</li>
+<li><strong>Loss Function:</strong> The learning objective minimizes the prediction error between the predicted latent state and the actual latent state from the dataset.</li>
+<li><strong>Planning via Model Predictive Control (MPC):</strong> At test time, the system searches for an optimal action sequence that minimizes the distance to a goal state.</li>
+</ul>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="chapter-6-dino-world-models.html#cb22-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb22-2"><a href="chapter-6-dino-world-models.html#cb22-2" tabindex="-1"></a><span class="co"># Simulating an example trajectory using a simplified world model</span></span>
+<span id="cb22-3"><a href="chapter-6-dino-world-models.html#cb22-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb22-4"><a href="chapter-6-dino-world-models.html#cb22-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">sin</span>(x)</span>
+<span id="cb22-5"><a href="chapter-6-dino-world-models.html#cb22-5" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x, y)</span>
+<span id="cb22-6"><a href="chapter-6-dino-world-models.html#cb22-6" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="chapter-6-dino-world-models.html#cb22-7" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb22-8"><a href="chapter-6-dino-world-models.html#cb22-8" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb22-9"><a href="chapter-6-dino-world-models.html#cb22-9" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Example Trajectory in a Learned World Model&quot;</span>) <span class="sc">+</span></span>
+<span id="cb22-10"><a href="chapter-6-dino-world-models.html#cb22-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="08-DINO-World-Models_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>
+<div id="experimental-setup" class="section level3 hasAnchor" number="12.3.3">
+<h3><span class="header-section-number">12.3.3</span> Experimental Setup<a href="chapter-6-dino-world-models.html#experimental-setup" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>DINO-WM was tested across <strong>six diverse environments</strong>, including:
+- <strong>Maze navigation</strong>
+- <strong>Sliding manipulation</strong>
+- <strong>Robotic arm control</strong>
+- <strong>Deformable object interaction</strong></p>
+<p>Results showed that <strong>DINO-WM outperforms existing methods</strong> by a significant margin, achieving <strong>45% higher success rates</strong> in goal-reaching tasks.</p>
+</div>
+</div>
+<div id="results-insights" class="section level2 hasAnchor" number="12.4">
+<h2><span class="header-section-number">12.4</span> Results &amp; Insights<a href="chapter-6-dino-world-models.html#results-insights" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="comparative-performance" class="section level3 hasAnchor" number="12.4.1">
+<h3><span class="header-section-number">12.4.1</span> Comparative Performance<a href="chapter-6-dino-world-models.html#comparative-performance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>DINO-WM was evaluated against <strong>state-of-the-art models</strong> such as <strong>DreamerV3</strong> and <strong>IRIS</strong>, demonstrating <strong>superior performance</strong> in:
+- <strong>Visual fidelity of predictions</strong> (LPIPS score improved by 56%)
+- <strong>Generalization across unseen tasks</strong>
+- <strong>Robustness in diverse physical simulations</strong></p>
+</div>
+<div id="key-findings" class="section level3 hasAnchor" number="12.4.2">
+<h3><span class="header-section-number">12.4.2</span> Key Findings<a href="chapter-6-dino-world-models.html#key-findings" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>DINO-WM scales efficiently</strong> as dataset size increases.</li>
+<li><strong>Pre-trained visual representations</strong> significantly improve <strong>model accuracy</strong>.</li>
+<li><strong>Task-agnostic embeddings</strong> enable rapid adaptation to new environments.</li>
 </ul>
 </div>
-<div id="monte-carlo-tree-search-mcts" class="section level2 hasAnchor" number="8.1">
-<h2><span class="header-section-number">8.1</span> Monte Carlo Tree Search (MCTS)<a href="model-based-reinforcement-learning.html#monte-carlo-tree-search-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>MCTS is a search-based decision-making algorithm used in <strong>game AI</strong> and <strong>planning problems</strong>. It simulates future states by exploring the decision tree and backing up estimated rewards, aligning closely with <strong>MDP planning techniques</strong>.</p>
-<p>In MCTS, the algorithm uses a model of the environment (specifically, the transition dynamics of states) to simulate future outcomes. During the search process, the algorithm builds a tree of possible future states, which are explored through simulations (rollouts). These simulations rely on the model to predict the outcomes of actions, and the results of the simulations are used to evaluate the best actions to take at each decision point.</p>
-<p>The key characteristic of MCTS being model-based is that it requires knowledge of the environment’s dynamics to simulate the future. This model could either be explicitly provided (like in a chess game, where the rules of the game are well-defined) or learned through interactions (as in some planning problems for robotics)</p>
-<div id="mcts-steps" class="section level3 hasAnchor" number="8.1.1">
-<h3><span class="header-section-number">8.1.1</span> <strong>MCTS Steps</strong><a href="model-based-reinforcement-learning.html#mcts-steps" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="conclusion-2" class="section level2 hasAnchor" number="12.5">
+<h2><span class="header-section-number">12.5</span> Conclusion<a href="chapter-6-dino-world-models.html#conclusion-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>DINO-WM <strong>redefines world modeling</strong> by leveraging <strong>pre-trained DINOv2 embeddings</strong> to enable <strong>zero-shot behavior optimization</strong>. This <strong>task-agnostic</strong> approach unlocks <strong>new possibilities in robotics, simulation, and AI-driven planning</strong>.</p>
+<div id="future-directions" class="section level3 hasAnchor" number="12.5.1">
+<h3><span class="header-section-number">12.5.1</span> Future Directions<a href="chapter-6-dino-world-models.html#future-directions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
-<li><strong>Selection</strong>: Start from the root and select the most promising node based on a strategy (e.g., Upper Confidence Bound (UCB1)).</li>
-<li><strong>Expansion</strong>: Add a new node to the tree when a promising unexplored action is found.</li>
-<li><strong>Simulation (Rollout)</strong>: Play out random simulations to estimate the value of the new state.</li>
-<li><strong>Backpropagation</strong>: Update the values of visited nodes based on the simulation outcome.</li>
+<li><strong>Extending DINO-WM to real-world robotics</strong> for interactive and embodied AI.</li>
+<li><strong>Hierarchical planning integration</strong> for more complex decision-making.</li>
+<li><strong>Exploring reinforcement learning augmentation</strong> to combine <strong>online</strong> and <strong>offline</strong> learning strategies.</li>
 </ol>
 </div>
-<div id="steps-of-mcts" class="section level3 hasAnchor" number="8.1.2">
-<h3><span class="header-section-number">8.1.2</span> Steps of MCTS<a href="model-based-reinforcement-learning.html#steps-of-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ol style="list-style-type: decimal">
-<li><p><strong>Selection</strong>: Starting from the root node, recursively select the child node that maximizes the <strong>Upper Confidence Bound for Trees (UCT)</strong>.</p>
-<p>The UCT formula is given by:</p>
-<p><span class="math display">\[
-\text{UCT}(v) = \frac{w(v)}{n(v)} + c \sqrt{\frac{\ln N}{n(v)}}
-\]</span></p>
-<p>Where:</p>
-<ul>
-<li><span class="math inline">\(w(v)\)</span> is the total reward for node <span class="math inline">\(v\)</span>.</li>
-<li><span class="math inline">\(n(v)\)</span> is the number of times node <span class="math inline">\(v\)</span> has been visited.</li>
-<li><span class="math inline">\(N\)</span> is the number of times the parent node has been visited.</li>
-<li><span class="math inline">\(c\)</span> is the exploration constant that balances exploration and exploitation.</li>
-</ul></li>
-<li><p><strong>Expansion</strong>: If the selected node is not a terminal state and has untried actions, add a new child node representing an untried action.</p></li>
-<li><p><strong>Simulation (Rollout)</strong>: Simulate a random sequence of actions from the current node until a terminal state is reached. The outcome of the simulation gives an estimate of the value of the node.</p>
-<p>The return from a simulation is denoted by:</p>
-<p><span class="math display">\[
-G_t = \sum_{k=t}^{T} \gamma^{k-t} R_k
-\]</span></p>
-<p>Where:</p>
-<ul>
-<li><span class="math inline">\(G_t\)</span> is the total reward (return) from time <span class="math inline">\(t\)</span> onwards.</li>
-<li><span class="math inline">\(\gamma\)</span> is the discount factor.</li>
-<li><span class="math inline">\(R_k\)</span> is the reward at time step <span class="math inline">\(k\)</span>.</li>
-</ul></li>
-<li><p><strong>Backpropagation</strong>: After the simulation, backpropagate the results by updating the values and visit counts of all nodes in the path from the current node to the root.</p>
-<p>The update rule for a node’s value is:</p>
-<p><span class="math display">\[
-w(v) \leftarrow w(v) + G_t
-\]</span>
-<span class="math display">\[
-n(v) \leftarrow n(v) + 1
-\]</span></p></li>
-</ol>
 </div>
-<div id="applications-of-mcts" class="section level3 hasAnchor" number="8.1.3">
-<h3><span class="header-section-number">8.1.3</span> <strong>Applications of MCTS</strong><a href="model-based-reinforcement-learning.html#applications-of-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li>AlphaGo (DeepMind)</li>
-<li>Chess and board games</li>
-<li>Robotics planning and decision-making</li>
-</ul>
-</div>
+<div id="references" class="section level2 hasAnchor" number="12.6">
+<h2><span class="header-section-number">12.6</span> References<a href="chapter-6-dino-world-models.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For further exploration, visit the project website: <a href="https://dino-wm.github.io">DINO-WM</a>.</p>
+
 </div>
 </div>
             </section>
@@ -506,8 +538,8 @@ n(v) \leftarrow n(v) + 1
           </div>
         </div>
       </div>
-<a href="reward-based-learning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="model-free-reinforcement-learning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="chapter-5-reinforcement-learning---theory-and-applications.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapter-7-jepa-architecture.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -539,7 +571,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/jehillparikh/worldmodel/edit/main/06-Markov-Decision-Processes.Rmd",
+"link": "https://github.com/jehillparikh/worldmodel/edit/main/08-DINO-World-Models.Rmd",
 "text": "Edit"
 },
 "history": {

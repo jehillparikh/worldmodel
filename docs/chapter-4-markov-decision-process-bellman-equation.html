@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models</title>
+  <title>Chapter 6 Chapter 4: Markov Decision Process &amp; Bellman Equation | Foundations of World Models</title>
   <meta name="description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models" />
+  <meta property="og:title" content="Chapter 6 Chapter 4: Markov Decision Process &amp; Bellman Equation | Foundations of World Models" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
   <meta property="og:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="github-repo" content="jehillparikh/worldmodel" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models" />
+  <meta name="twitter:title" content="Chapter 6 Chapter 4: Markov Decision Process &amp; Bellman Equation | Foundations of World Models" />
   
   <meta name="twitter:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="twitter:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reward-based-learning.html"/>
-<link rel="next" href="model-free-reinforcement-learning.html"/>
+<link rel="prev" href="chapter-5-generative-models.html"/>
+<link rel="next" href="reward-based-learning.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -424,81 +424,98 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-based-reinforcement-learning" class="section level1 hasAnchor" number="8">
-<h1><span class="header-section-number">Chapter 8</span> Model-Based Reinforcement Learning<a href="model-based-reinforcement-learning.html#model-based-reinforcement-learning" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Model-Based RL refers to methods where an agent <strong>learns a model</strong> of the environment and uses it for decision-making. This typically involves:</p>
-<ol style="list-style-type: decimal">
-<li><strong>Learning the Transition Model (<span class="math inline">\(P(s&#39; | s, a)\)</span>)</strong>: Predicting the next state given the current state and action.</li>
-<li><strong>Learning the Reward Model (<span class="math inline">\(R(s, a)\)</span>)</strong>: Estimating the reward for taking an action in a given state.</li>
-<li><strong>Planning</strong>: Using the learned model to simulate trajectories and improve decision-making.</li>
-</ol>
-<div id="popular-model-based-rl-approaches" class="section level3 hasAnchor" number="8.0.1">
-<h3><span class="header-section-number">8.0.1</span> <strong>Popular Model-Based RL Approaches</strong><a href="model-based-reinforcement-learning.html#popular-model-based-rl-approaches" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="chapter-4-markov-decision-process-bellman-equation" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Chapter 4: Markov Decision Process &amp; Bellman Equation<a href="chapter-4-markov-decision-process-bellman-equation.html#chapter-4-markov-decision-process-bellman-equation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>A <strong>Markov Decision Process (MDP)</strong> is a framework for modeling decision-making where outcomes are partly random and partly controlled by an agent. MDPs are widely used in <strong>reinforcement learning (RL), robotics, finance, and game theory</strong>.</p>
+<p>An MDP consists of the following components:</p>
 <ul>
-<li><strong>Dynamic Programming (DP)</strong>: Uses Bellman equations to iteratively compute value functions, assuming a known model.</li>
-<li><strong>Model Predictive Control (MPC)</strong>: Uses a learned model to simulate future states and optimize actions.</li>
-<li><strong>Dyna-Q</strong>: Combines model-free and model-based learning by integrating planning and learning.</li>
+<li><strong>States (<span class="math inline">\(S\)</span>):</strong> A set of all possible states the agent can be in.</li>
+<li><strong>Actions (<span class="math inline">\(A\)</span>):</strong> A set of all possible actions the agent can take.</li>
+<li><strong>Transition Probability (<span class="math inline">\(P\)</span>):</strong> The probability of moving from one state to another given an action.</li>
+<li><strong>Reward Function (<span class="math inline">\(R\)</span>):</strong> The reward received for taking an action in a particular state.</li>
+<li><strong>Policy (<span class="math inline">\(\pi\)</span>):</strong> A strategy that defines the action selection process in each state.</li>
+<li><strong>Discount Factor (<span class="math inline">\(\gamma\)</span>):</strong> A factor that determines how much future rewards are valued compared to immediate rewards.</li>
+</ul>
+<p>Mathematically, an MDP is represented as a tuple:</p>
+<pre class="math"><code>(S, A, P, R, \pi, \gamma)</code></pre>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(S\)</span> is the set of states.</li>
+<li><span class="math inline">\(A\)</span> is the set of actions.</li>
+<li><span class="math inline">\(P(s&#39; | s, a)\)</span> is the probability of transitioning from state <span class="math inline">\(s\)</span> to state <span class="math inline">\(s&#39;\)</span> when taking action <span class="math inline">\(a\)</span>.</li>
+<li><span class="math inline">\(R(s, a)\)</span> is the reward received after taking action <span class="math inline">\(a\)</span> in state <span class="math inline">\(s\)</span>.</li>
+<li><span class="math inline">\(\pi(a | s)\)</span> is the policy, which defines the probability of taking action <span class="math inline">\(a\)</span> in state <span class="math inline">\(s\)</span>.</li>
+<li><span class="math inline">\(\gamma \in [0,1]\)</span> is the discount factor.</li>
+</ul>
+<div id="state-transition-probability" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> State Transition Probability<a href="chapter-4-markov-decision-process-bellman-equation.html#state-transition-probability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The probability of moving from state <span class="math inline">\(s\)</span> to state <span class="math inline">\(s&#39;\)</span> after taking action <span class="math inline">\(a\)</span> is given by:</p>
+<pre class="math"><code>P(s&#39; | s, a) = \Pr(S_{t+1} = s&#39; | S_t = s, A_t = a)</code></pre>
+<p>This represents the <strong>Markov Property</strong>, meaning the next state <strong>only depends on the current state and action</strong>, not the previous history.</p>
+<hr />
+</div>
+<div id="policy-in-mdp" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Policy in MDP<a href="chapter-4-markov-decision-process-bellman-equation.html#policy-in-mdp" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A <strong>policy (<span class="math inline">\(\pi\)</span>)</strong> defines the agent’s behavior by mapping states to actions. Policies can be:</p>
+<ul>
+<li><p><strong>Deterministic Policy (<span class="math inline">\(\pi: S \to A\)</span>)</strong>: The agent always takes a specific action in a given state.</p>
+<pre class="math"><code>a = \pi(s)</code></pre></li>
+<li><p><strong>Stochastic Policy (<span class="math inline">\(\pi: S \times A \to [0,1]\)</span>)</strong>: The agent chooses actions probabilistically.</p>
+<pre class="math"><code>\pi(a | s) = \Pr(A_t = a | S_t = s)</code></pre></li>
 </ul>
 </div>
-<div id="monte-carlo-tree-search-mcts" class="section level2 hasAnchor" number="8.1">
-<h2><span class="header-section-number">8.1</span> Monte Carlo Tree Search (MCTS)<a href="model-based-reinforcement-learning.html#monte-carlo-tree-search-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>MCTS is a search-based decision-making algorithm used in <strong>game AI</strong> and <strong>planning problems</strong>. It simulates future states by exploring the decision tree and backing up estimated rewards, aligning closely with <strong>MDP planning techniques</strong>.</p>
-<p>In MCTS, the algorithm uses a model of the environment (specifically, the transition dynamics of states) to simulate future outcomes. During the search process, the algorithm builds a tree of possible future states, which are explored through simulations (rollouts). These simulations rely on the model to predict the outcomes of actions, and the results of the simulations are used to evaluate the best actions to take at each decision point.</p>
-<p>The key characteristic of MCTS being model-based is that it requires knowledge of the environment’s dynamics to simulate the future. This model could either be explicitly provided (like in a chess game, where the rules of the game are well-defined) or learned through interactions (as in some planning problems for robotics)</p>
-<div id="mcts-steps" class="section level3 hasAnchor" number="8.1.1">
-<h3><span class="header-section-number">8.1.1</span> <strong>MCTS Steps</strong><a href="model-based-reinforcement-learning.html#mcts-steps" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ol style="list-style-type: decimal">
-<li><strong>Selection</strong>: Start from the root and select the most promising node based on a strategy (e.g., Upper Confidence Bound (UCB1)).</li>
-<li><strong>Expansion</strong>: Add a new node to the tree when a promising unexplored action is found.</li>
-<li><strong>Simulation (Rollout)</strong>: Play out random simulations to estimate the value of the new state.</li>
-<li><strong>Backpropagation</strong>: Update the values of visited nodes based on the simulation outcome.</li>
-</ol>
+<div id="optimal-policy-pi" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Optimal Policy (<span class="math inline">\(\pi^*\)</span>)<a href="chapter-4-markov-decision-process-bellman-equation.html#optimal-policy-pi" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>An optimal policy <span class="math inline">\(\pi^*\)</span> maximizes the expected return:</p>
+<pre class="math"><code>\pi^* = \arg\max_\pi V^\pi(s), \forall s \in S</code></pre>
+<p>where <span class="math inline">\(V^\pi(s)\)</span> is the value function under policy <span class="math inline">\(\pi\)</span>. The optimal policy leads to the highest cumulative rewards over time.</p>
+<hr />
 </div>
-<div id="steps-of-mcts" class="section level3 hasAnchor" number="8.1.2">
-<h3><span class="header-section-number">8.1.2</span> Steps of MCTS<a href="model-based-reinforcement-learning.html#steps-of-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ol style="list-style-type: decimal">
-<li><p><strong>Selection</strong>: Starting from the root node, recursively select the child node that maximizes the <strong>Upper Confidence Bound for Trees (UCT)</strong>.</p>
-<p>The UCT formula is given by:</p>
-<p><span class="math display">\[
-\text{UCT}(v) = \frac{w(v)}{n(v)} + c \sqrt{\frac{\ln N}{n(v)}}
-\]</span></p>
-<p>Where:</p>
+<div id="bellman-equation" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Bellman Equation<a href="chapter-4-markov-decision-process-bellman-equation.html#bellman-equation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <strong>Bellman Equation</strong> provides a recursive formula for <strong>value functions</strong>, helping determine the <strong>optimal policy</strong> that maximizes expected cumulative rewards.</p>
+</div>
+<div id="state-value-function-vs" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> State-Value Function (<span class="math inline">\(V(s)\)</span>)<a href="chapter-4-markov-decision-process-bellman-equation.html#state-value-function-vs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <strong>value function</strong> of a state <span class="math inline">\(s\)</span> under a policy <span class="math inline">\(\pi\)</span> is:</p>
+<pre class="math"><code>V^\pi(s) = \mathbb{E} \left[ \sum_{t=0}^{\infty} \gamma^t R_t \mid S_0 = s, \pi \right]</code></pre>
+<p>Using the <strong>Bellman equation</strong>, we express the recursive relationship:</p>
+<pre class="math"><code>V^\pi(s) = \sum_{a \in A} \pi(a | s) \sum_{s&#39; \in S} P(s&#39; | s, a) \left[ R(s, a) + \gamma V^\pi(s&#39;) \right]</code></pre>
+<p>where:</p>
 <ul>
-<li><span class="math inline">\(w(v)\)</span> is the total reward for node <span class="math inline">\(v\)</span>.</li>
-<li><span class="math inline">\(n(v)\)</span> is the number of times node <span class="math inline">\(v\)</span> has been visited.</li>
-<li><span class="math inline">\(N\)</span> is the number of times the parent node has been visited.</li>
-<li><span class="math inline">\(c\)</span> is the exploration constant that balances exploration and exploitation.</li>
-</ul></li>
-<li><p><strong>Expansion</strong>: If the selected node is not a terminal state and has untried actions, add a new child node representing an untried action.</p></li>
-<li><p><strong>Simulation (Rollout)</strong>: Simulate a random sequence of actions from the current node until a terminal state is reached. The outcome of the simulation gives an estimate of the value of the node.</p>
-<p>The return from a simulation is denoted by:</p>
-<p><span class="math display">\[
-G_t = \sum_{k=t}^{T} \gamma^{k-t} R_k
-\]</span></p>
-<p>Where:</p>
-<ul>
-<li><span class="math inline">\(G_t\)</span> is the total reward (return) from time <span class="math inline">\(t\)</span> onwards.</li>
+<li><span class="math inline">\(\pi(a | s)\)</span> is the probability of taking action <span class="math inline">\(a\)</span> in state <span class="math inline">\(s\)</span>.</li>
+<li><span class="math inline">\(P(s&#39; | s, a)\)</span> is the probability of transitioning to state <span class="math inline">\(s&#39;\)</span> given state <span class="math inline">\(s\)</span> and action <span class="math inline">\(a\)</span>.</li>
+<li><span class="math inline">\(R(s, a)\)</span> is the immediate reward.</li>
 <li><span class="math inline">\(\gamma\)</span> is the discount factor.</li>
-<li><span class="math inline">\(R_k\)</span> is the reward at time step <span class="math inline">\(k\)</span>.</li>
-</ul></li>
-<li><p><strong>Backpropagation</strong>: After the simulation, backpropagate the results by updating the values and visit counts of all nodes in the path from the current node to the root.</p>
-<p>The update rule for a node’s value is:</p>
-<p><span class="math display">\[
-w(v) \leftarrow w(v) + G_t
-\]</span>
-<span class="math display">\[
-n(v) \leftarrow n(v) + 1
-\]</span></p></li>
-</ol>
+</ul>
+<hr />
 </div>
-<div id="applications-of-mcts" class="section level3 hasAnchor" number="8.1.3">
-<h3><span class="header-section-number">8.1.3</span> <strong>Applications of MCTS</strong><a href="model-based-reinforcement-learning.html#applications-of-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="action-value-function-qs-a" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Action-Value Function (<span class="math inline">\(Q(s, a)\)</span>)<a href="chapter-4-markov-decision-process-bellman-equation.html#action-value-function-qs-a" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <strong>Q-value function</strong> measures the expected reward for taking an action <span class="math inline">\(a\)</span> in state <span class="math inline">\(s\)</span> and then following policy <span class="math inline">\(\pi\)</span>:</p>
+<pre class="math"><code>Q^\pi(s, a) = \mathbb{E} \left[ \sum_{t=0}^{\infty} \gamma^t R_t \mid S_0 = s, A_0 = a, \pi \right]</code></pre>
+<p>The <strong>Bellman equation for Q-values</strong> is:</p>
+<pre class="math"><code>Q^\pi(s, a) = R(s, a) + \gamma \sum_{s&#39; \in S} P(s&#39; | s, a) \sum_{a&#39; \in A} \pi(a&#39; | s&#39;) Q^\pi(s&#39;, a&#39;)</code></pre>
+</div>
+<div id="optimal-policy-bellman-optimality-equation" class="section level2 hasAnchor" number="6.7">
+<h2><span class="header-section-number">6.7</span> Optimal Policy &amp; Bellman Optimality Equation<a href="chapter-4-markov-decision-process-bellman-equation.html#optimal-policy-bellman-optimality-equation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The goal of reinforcement learning is to find the <strong>optimal policy</strong> that maximizes the expected cumulative reward. The <strong>Bellman optimality equation</strong> for the optimal state-value function is:</p>
+<pre class="math"><code>V^*(s) = \max_{a \in A} \sum_{s&#39; \in S} P(s&#39; | s, a) \left[ R(s, a) + \gamma V^*(s&#39;) \right]</code></pre>
+<p>Similarly, the <strong>Bellman optimality equation for Q-values</strong> is:</p>
+<pre class="math"><code>Q^*(s, a) = R(s, a) + \gamma \sum_{s&#39; \in S} P(s&#39; | s, a) \max_{a&#39; \in A} Q^*(s&#39;, a&#39;)</code></pre>
+<p>where:</p>
 <ul>
-<li>AlphaGo (DeepMind)</li>
-<li>Chess and board games</li>
-<li>Robotics planning and decision-making</li>
+<li><span class="math inline">\(V^*(s)\)</span> is the maximum possible value of state <span class="math inline">\(s\)</span>.</li>
+<li><span class="math inline">\(Q^*(s, a)\)</span> is the maximum expected return for taking action <span class="math inline">\(a\)</span> in state <span class="math inline">\(s\)</span>.</li>
 </ul>
 </div>
+<div id="conclusion" class="section level2 hasAnchor" number="6.8">
+<h2><span class="header-section-number">6.8</span> Conclusion<a href="chapter-4-markov-decision-process-bellman-equation.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Markov Decision Processes provide a structured way to <strong>model sequential decision-making problems</strong>, and the <strong>Bellman equation</strong> helps compute optimal strategies. Q-learning is a powerful method for learning action-value functions, while policy learning focuses on directly optimizing the decision-making strategy. These concepts form the foundation of <strong>reinforcement learning algorithms</strong>, including <strong>value iteration, policy iteration, and deep reinforcement learning</strong>.</p>
+</div>
+<div id="reinforcement-learning" class="section level2 hasAnchor" number="6.9">
+<h2><span class="header-section-number">6.9</span> Reinforcement Learning<a href="chapter-4-markov-decision-process-bellman-equation.html#reinforcement-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Building on the previous discussion of <strong>Markov Decision Processes (MDP)</strong> and the <strong>Bellman Equation</strong>, we now explore various reinforcement learning (RL) methods. RL can be broadly categorized into <strong>Model-Based RL</strong> and <strong>Model-Free RL</strong>. These methods help agents learn optimal decision-making strategies within an environment. Additionally, we will briefly cover <strong>Reward-Based Learning, Monte Carlo Tree Search (MCTS), Proximal Policy Optimization (PPO),</strong> and other advanced RL techniques that extend the fundamental concepts of MDPs.</p>
 </div>
 </div>
             </section>
@@ -506,8 +523,8 @@ n(v) \leftarrow n(v) + 1
           </div>
         </div>
       </div>
-<a href="reward-based-learning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="model-free-reinforcement-learning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="chapter-5-generative-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="reward-based-learning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

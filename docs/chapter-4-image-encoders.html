@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models</title>
+  <title>Chapter 4 Chapter 4: Image Encoders | Foundations of World Models</title>
   <meta name="description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models" />
+  <meta property="og:title" content="Chapter 4 Chapter 4: Image Encoders | Foundations of World Models" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
   <meta property="og:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="github-repo" content="jehillparikh/worldmodel" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models" />
+  <meta name="twitter:title" content="Chapter 4 Chapter 4: Image Encoders | Foundations of World Models" />
   
   <meta name="twitter:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="twitter:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reward-based-learning.html"/>
-<link rel="next" href="model-free-reinforcement-learning.html"/>
+<link rel="prev" href="chapter-3-transformers.html"/>
+<link rel="next" href="chapter-5-generative-models.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -424,80 +424,260 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-based-reinforcement-learning" class="section level1 hasAnchor" number="8">
-<h1><span class="header-section-number">Chapter 8</span> Model-Based Reinforcement Learning<a href="model-based-reinforcement-learning.html#model-based-reinforcement-learning" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Model-Based RL refers to methods where an agent <strong>learns a model</strong> of the environment and uses it for decision-making. This typically involves:</p>
-<ol style="list-style-type: decimal">
-<li><strong>Learning the Transition Model (<span class="math inline">\(P(s&#39; | s, a)\)</span>)</strong>: Predicting the next state given the current state and action.</li>
-<li><strong>Learning the Reward Model (<span class="math inline">\(R(s, a)\)</span>)</strong>: Estimating the reward for taking an action in a given state.</li>
-<li><strong>Planning</strong>: Using the learned model to simulate trajectories and improve decision-making.</li>
-</ol>
-<div id="popular-model-based-rl-approaches" class="section level3 hasAnchor" number="8.0.1">
-<h3><span class="header-section-number">8.0.1</span> <strong>Popular Model-Based RL Approaches</strong><a href="model-based-reinforcement-learning.html#popular-model-based-rl-approaches" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="chapter-4-image-encoders" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Chapter 4: Image Encoders<a href="chapter-4-image-encoders.html#chapter-4-image-encoders" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Image encoders have evolved significantly with the emergence of <strong>self-supervised learning</strong> techniques. Building on the <strong>Transformer</strong> architecture discussed in the previous chapter, we now explore how these mechanisms are applied to vision. Recent advancements like <strong>DINO</strong> and <strong>DINOv2</strong> have demonstrated strong performance in learning feature representations without labeled data.</p>
+<div id="vision-transformers-vits" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Vision Transformers (ViTs)<a href="chapter-4-image-encoders.html#vision-transformers-vits" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>ViTs apply <strong>self-attention</strong> to image data, treating images as sequences of patches rather than using convolutional operations.</p>
+<div class="float">
+<img src="Images/Vision%20Transformer%20.png" title="Vision Transformer" alt="Vision Transformer" />
+<div class="figcaption">Vision Transformer</div>
+</div>
+<div id="patch-extraction-and-encoding" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Patch Extraction and Encoding<a href="chapter-4-image-encoders.html#patch-extraction-and-encoding" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>An image is split into patches, flattened, and passed through a <strong>linear projection</strong>:</p>
+<p><span class="math display">\[X_{patch} = W_E \cdot X_{input} + b_E\]</span></p>
+<p>where <span class="math inline">\(W_E\)</span> is the embedding matrix and <span class="math inline">\(b_E\)</span> is a bias term. These embeddings are then processed using self-attention layers to extract contextual information.</p>
+</div>
+<div id="applications-of-vision-transformers-vits" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Applications of Vision Transformers (ViTs)<a href="chapter-4-image-encoders.html#applications-of-vision-transformers-vits" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table>
+<caption><span id="tab:vit-applications">Table 4.1: </span>Applications of Vision Transformers (ViTs)</caption>
+<colgroup>
+<col width="27%" />
+<col width="35%" />
+<col width="37%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Application</th>
+<th align="left">Description</th>
+<th align="left">Example.Use.Cases</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Image Classification</td>
+<td align="left">Categorizing images into different classes</td>
+<td align="left">ViTs trained on ImageNet outperform ResNets</td>
+</tr>
+<tr class="even">
+<td align="left">Object Detection &amp; Segmentation</td>
+<td align="left">Identifying and segmenting objects in images</td>
+<td align="left">DETR (Facebook AI) for autonomous driving and surveillance</td>
+</tr>
+<tr class="odd">
+<td align="left">Medical Image Analysis</td>
+<td align="left">Detecting diseases from medical scans</td>
+<td align="left">Cancer detection in pathology slides using ViTs</td>
+</tr>
+<tr class="even">
+<td align="left">Video Understanding &amp; Action Recognition</td>
+<td align="left">Recognizing actions in video frames</td>
+<td align="left">TimeSformer for video classification</td>
+</tr>
+<tr class="odd">
+<td align="left">Remote Sensing &amp; Satellite Image Processing</td>
+<td align="left">Land classification, disaster analysis</td>
+<td align="left">Urban planning, flood detection</td>
+</tr>
+<tr class="even">
+<td align="left">Image Generation &amp; Super-Resolution</td>
+<td align="left">Enhancing image quality and generating realistic images</td>
+<td align="left">DALL-E and Stable Diffusion for AI-generated art</td>
+</tr>
+<tr class="odd">
+<td align="left">Robotics &amp; Autonomous Navigation</td>
+<td align="left">Scene understanding for self-driving cars &amp; robots</td>
+<td align="left">ViTs used in autonomous robot perception modules</td>
+</tr>
+<tr class="even">
+<td align="left">Face Recognition &amp; Biometrics</td>
+<td align="left">Identity verification and surveillance</td>
+<td align="left">ViT-based facial recognition in low-light conditions</td>
+</tr>
+<tr class="odd">
+<td align="left">Optical Character Recognition (OCR)</td>
+<td align="left">Extracting text from images and documents</td>
+<td align="left">Google’s OCR for document scanning and language translation</td>
+</tr>
+<tr class="even">
+<td align="left">Fashion &amp; Retail</td>
+<td align="left">Virtual try-ons, fashion recommendations</td>
+<td align="left">Automated product tagging in e-commerce</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="contrastive-language-image-pretraining-clip" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Contrastive Language-Image Pretraining (CLIP)<a href="chapter-4-image-encoders.html#contrastive-language-image-pretraining-clip" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>CLIP is a multimodal self-supervised learning model designed to learn joint representations of images and text. It is trained on a large dataset of image-text pairs using a contrastive learning approach.</p>
+<div id="architecture" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Architecture<a href="chapter-4-image-encoders.html#architecture" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>CLIP consists of two main components:</p>
 <ul>
-<li><strong>Dynamic Programming (DP)</strong>: Uses Bellman equations to iteratively compute value functions, assuming a known model.</li>
-<li><strong>Model Predictive Control (MPC)</strong>: Uses a learned model to simulate future states and optimize actions.</li>
-<li><strong>Dyna-Q</strong>: Combines model-free and model-based learning by integrating planning and learning.</li>
+<li>An <strong>image encoder</strong> (ResNet or Vision Transformer)</li>
+<li>A <strong>text encoder</strong> (Transformer-based model)</li>
+</ul>
+<p>Both encoders project images and text into a shared embedding space, where semantically similar images and text have higher similarity scores.</p>
+<div class="float">
+<img src="Images/CLIP.png" title="CLIP Model" alt="CLIP Model" />
+<div class="figcaption">CLIP Model</div>
+</div>
+</div>
+<div id="training-objective" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Training Objective<a href="chapter-4-image-encoders.html#training-objective" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>CLIP uses a contrastive learning objective where it maximizes the cosine similarity between matching image-text pairs while minimizing similarity between mismatched pairs:</p>
+<p><span class="math display">\[\mathcal{L}_{CLIP} = - \sum_{i} \log \frac{e^{\cos(I_i, T_i)/\tau}}{\sum_j e^{\cos(I_i, T_j)/\tau}}\]</span></p>
+<p>where <span class="math inline">\(I_i\)</span> and <span class="math inline">\(T_i\)</span> are corresponding image-text pairs, and <span class="math inline">\(\tau\)</span> is a temperature parameter that controls the sharpness of the distribution.</p>
+</div>
+<div id="applications-of-clip" class="section level3 hasAnchor" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> Applications of CLIP<a href="chapter-4-image-encoders.html#applications-of-clip" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>Zero-shot image classification</strong></li>
+<li><strong>Image retrieval and search</strong></li>
+<li><strong>Generating text-based descriptions of images</strong></li>
+<li><strong>Few-shot learning for downstream vision tasks</strong></li>
+</ul>
+<p>CLIP’s ability to understand images and text jointly makes it a powerful model for many vision-language applications.</p>
+</div>
+</div>
+<div id="dino-self-supervised-vision-encoding" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> DINO: Self-Supervised Vision Encoding<a href="chapter-4-image-encoders.html#dino-self-supervised-vision-encoding" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>DINO (Self-Distillation without Labels) is a <strong>self-supervised learning method</strong> that trains a <strong>student</strong> network to predict the output of a momentum <strong>teacher</strong> network.</p>
+<div class="float">
+<img src="Images/DINO.png" title="DINO" alt="DINO Architecture" />
+<div class="figcaption">DINO Architecture</div>
+</div>
+<div id="key-features-of-dino" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Key Features of DINO<a href="chapter-4-image-encoders.html#key-features-of-dino" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Works with both CNNs and ViTs</li>
+<li>Learns representations using <strong>contrastive learning</strong></li>
+<li>Uses a momentum teacher-student setup</li>
+<li>Multi-crop augmentation for efficient feature learning</li>
+<li>Achieves competitive performance in unsupervised representation learning</li>
 </ul>
 </div>
-<div id="monte-carlo-tree-search-mcts" class="section level2 hasAnchor" number="8.1">
-<h2><span class="header-section-number">8.1</span> Monte Carlo Tree Search (MCTS)<a href="model-based-reinforcement-learning.html#monte-carlo-tree-search-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>MCTS is a search-based decision-making algorithm used in <strong>game AI</strong> and <strong>planning problems</strong>. It simulates future states by exploring the decision tree and backing up estimated rewards, aligning closely with <strong>MDP planning techniques</strong>.</p>
-<p>In MCTS, the algorithm uses a model of the environment (specifically, the transition dynamics of states) to simulate future outcomes. During the search process, the algorithm builds a tree of possible future states, which are explored through simulations (rollouts). These simulations rely on the model to predict the outcomes of actions, and the results of the simulations are used to evaluate the best actions to take at each decision point.</p>
-<p>The key characteristic of MCTS being model-based is that it requires knowledge of the environment’s dynamics to simulate the future. This model could either be explicitly provided (like in a chess game, where the rules of the game are well-defined) or learned through interactions (as in some planning problems for robotics)</p>
-<div id="mcts-steps" class="section level3 hasAnchor" number="8.1.1">
-<h3><span class="header-section-number">8.1.1</span> <strong>MCTS Steps</strong><a href="model-based-reinforcement-learning.html#mcts-steps" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="dino-training-process" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> DINO Training Process<a href="chapter-4-image-encoders.html#dino-training-process" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The DINO training process uses a self-supervised learning (SSL) approach that can be interpreted as a form of knowledge distillation without labels. It involves a student network and a teacher network that have the same architecture but different parameters.</p>
+<div id="training-steps" class="section level4 hasAnchor" number="4.3.2.1">
+<h4><span class="header-section-number">4.3.2.1</span> Training Steps<a href="chapter-4-image-encoders.html#training-steps" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <ol style="list-style-type: decimal">
-<li><strong>Selection</strong>: Start from the root and select the most promising node based on a strategy (e.g., Upper Confidence Bound (UCB1)).</li>
-<li><strong>Expansion</strong>: Add a new node to the tree when a promising unexplored action is found.</li>
-<li><strong>Simulation (Rollout)</strong>: Play out random simulations to estimate the value of the new state.</li>
-<li><strong>Backpropagation</strong>: Update the values of visited nodes based on the simulation outcome.</li>
+<li><p><strong>Input and Augmentation</strong>: An input image is passed through two different random transformations, creating two distorted views. These views are fed into the student and teacher networks.</p></li>
+<li><p><strong>Student and Teacher Networks</strong>: The student network (<span class="math inline">\(g_{\theta_s}\)</span>) and the teacher network (<span class="math inline">\(g_{\theta_t}\)</span>) process the augmented images, outputting feature maps. The teacher network’s output is centered by subtracting the mean over the batch.</p></li>
+<li><p><strong>Loss Calculation</strong>: DINO minimizes the cross-entropy loss between teacher and student outputs:</p></li>
+</ol>
+<p><span class="math display">\[\mathcal{L}_{DINO} = - \sum_{i} p_i^T \log p_i^S\]</span></p>
+<p>where <span class="math inline">\(p_i^T\)</span> and <span class="math inline">\(p_i^S\)</span> are teacher and student predictions.</p>
+<ol start="4" style="list-style-type: decimal">
+<li><strong>Teacher Update</strong>: The teacher network’s parameters are updated using an exponential moving average (EMA) of the student network’s parameters:</li>
+</ol>
+<p><span class="math display">\[\theta_t \leftarrow m \cdot \theta_t + (1 - m) \cdot \theta_s\]</span></p>
+<ol start="5" style="list-style-type: decimal">
+<li><p><strong>Centering and Sharpening</strong>: The teacher network’s output is centered with a mean computed over the batch, and output sharpening is achieved by using a low temperature value in the teacher’s softmax normalization.</p></li>
+<li><p><strong>Multi-Crop Training</strong>: The student is fed multiple crops of an image, and it must align its local feature representations with those predicted by the teacher network for the global views of the image.</p></li>
 </ol>
 </div>
-<div id="steps-of-mcts" class="section level3 hasAnchor" number="8.1.2">
-<h3><span class="header-section-number">8.1.2</span> Steps of MCTS<a href="model-based-reinforcement-learning.html#steps-of-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ol style="list-style-type: decimal">
-<li><p><strong>Selection</strong>: Starting from the root node, recursively select the child node that maximizes the <strong>Upper Confidence Bound for Trees (UCT)</strong>.</p>
-<p>The UCT formula is given by:</p>
-<p><span class="math display">\[
-\text{UCT}(v) = \frac{w(v)}{n(v)} + c \sqrt{\frac{\ln N}{n(v)}}
-\]</span></p>
-<p>Where:</p>
-<ul>
-<li><span class="math inline">\(w(v)\)</span> is the total reward for node <span class="math inline">\(v\)</span>.</li>
-<li><span class="math inline">\(n(v)\)</span> is the number of times node <span class="math inline">\(v\)</span> has been visited.</li>
-<li><span class="math inline">\(N\)</span> is the number of times the parent node has been visited.</li>
-<li><span class="math inline">\(c\)</span> is the exploration constant that balances exploration and exploitation.</li>
-</ul></li>
-<li><p><strong>Expansion</strong>: If the selected node is not a terminal state and has untried actions, add a new child node representing an untried action.</p></li>
-<li><p><strong>Simulation (Rollout)</strong>: Simulate a random sequence of actions from the current node until a terminal state is reached. The outcome of the simulation gives an estimate of the value of the node.</p>
-<p>The return from a simulation is denoted by:</p>
-<p><span class="math display">\[
-G_t = \sum_{k=t}^{T} \gamma^{k-t} R_k
-\]</span></p>
-<p>Where:</p>
-<ul>
-<li><span class="math inline">\(G_t\)</span> is the total reward (return) from time <span class="math inline">\(t\)</span> onwards.</li>
-<li><span class="math inline">\(\gamma\)</span> is the discount factor.</li>
-<li><span class="math inline">\(R_k\)</span> is the reward at time step <span class="math inline">\(k\)</span>.</li>
-</ul></li>
-<li><p><strong>Backpropagation</strong>: After the simulation, backpropagate the results by updating the values and visit counts of all nodes in the path from the current node to the root.</p>
-<p>The update rule for a node’s value is:</p>
-<p><span class="math display">\[
-w(v) \leftarrow w(v) + G_t
-\]</span>
-<span class="math display">\[
-n(v) \leftarrow n(v) + 1
-\]</span></p></li>
-</ol>
 </div>
-<div id="applications-of-mcts" class="section level3 hasAnchor" number="8.1.3">
-<h3><span class="header-section-number">8.1.3</span> <strong>Applications of MCTS</strong><a href="model-based-reinforcement-learning.html#applications-of-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="dinov2-improved-vision-encoding" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> DINOv2: Improved Vision Encoding<a href="chapter-4-image-encoders.html#dinov2-improved-vision-encoding" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>DINOv2 extends DINO with <strong>Masked Image Modeling (MIM)</strong> and <strong>Self-Supervised Instance Discrimination</strong>, improving its ability to capture both local and global features.</p>
+<div id="key-improvements-in-dinov2" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Key Improvements in DINOv2<a href="chapter-4-image-encoders.html#key-improvements-in-dinov2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>AlphaGo (DeepMind)</li>
-<li>Chess and board games</li>
-<li>Robotics planning and decision-making</li>
+<li>Introduces <strong>masked image modeling (MIM)</strong> to learn local textures</li>
+<li>Uses <strong>multi-crop augmentation</strong> to enhance representation learning</li>
+<li>No reliance on <strong>text supervision</strong> (unlike CLIP)</li>
+<li>Improved transferability to <strong>dense prediction tasks</strong> (e.g., segmentation)</li>
+<li>Asymmetric teacher-student design for more effective training</li>
+<li>Incorporates KoLeo regularization to improve feature uniformity</li>
 </ul>
+</div>
+<div id="masked-image-modeling-mim" class="section level3 hasAnchor" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> Masked Image Modeling (MIM)<a href="chapter-4-image-encoders.html#masked-image-modeling-mim" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>MIM extends the concept of MLM to images by randomly masking patches in an image and training the model to reconstruct the missing information. The objective function for MIM is:</p>
+<p><span class="math display">\[\mathcal{L}_{MIM} = - \sum_{i \in M} \log P(I_i | I_{\backslash i})\]</span></p>
+<p>where <span class="math inline">\(I_i\)</span> represents the masked image patch, and <span class="math inline">\(I_{\backslash i}\)</span> denotes the observed patches.</p>
+</div>
+<div id="training-objectives" class="section level3 hasAnchor" number="4.4.3">
+<h3><span class="header-section-number">4.4.3</span> Training Objectives<a href="chapter-4-image-encoders.html#training-objectives" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>DINOv2 uses a <strong>hybrid objective</strong>:</p>
+<p><span class="math display">\[\mathcal{L}_{DINOv2} = \lambda_1 \mathcal{L}_{MIM} + \lambda_2 \mathcal{L}_{Instance}\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(\mathcal{L}_{MIM}\)</span> is the loss for <strong>masked image modeling</strong>, focusing on reconstructing masked patches</li>
+<li><span class="math inline">\(\mathcal{L}_{Instance}\)</span> is the loss for <strong>instance discrimination</strong>, ensuring robust feature alignment across augmentations</li>
+</ul>
+<p>DINOv2 leverages a <strong>vision-only training approach</strong>, making it highly effective for self-supervised learning in image-based tasks.</p>
+</div>
+</div>
+<div id="applications-of-dino-and-dinov2" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Applications of DINO and DINOv2<a href="chapter-4-image-encoders.html#applications-of-dino-and-dinov2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>DINO and DINOv2 represent significant advances in <strong>self-supervised learning for vision tasks</strong>. Their ability to learn rich representations <strong>without labeled data</strong> makes them valuable for diverse applications:</p>
+<div id="core-applications" class="section level3 hasAnchor" number="4.5.1">
+<h3><span class="header-section-number">4.5.1</span> Core Applications<a href="chapter-4-image-encoders.html#core-applications" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Application</th>
+<th align="left">Description</th>
+<th align="left">Key Results</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Image Classification</strong></td>
+<td align="left">Categorizing images without labels</td>
+<td align="left">80.1% top-1 accuracy on ImageNet with ViT-Base</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Feature Extraction</strong></td>
+<td align="left">Learning robust visual features</td>
+<td align="left">78.3% top-1 with k-NN classifier (ViT-S/8)</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Object Discovery</strong></td>
+<td align="left">Semantic segmentation from features</td>
+<td align="left">Separates objects without supervision</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Image Retrieval</strong></td>
+<td align="left">Finding similar images</td>
+<td align="left">Outperforms supervised methods on GLDv2</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Copy Detection</strong></td>
+<td align="left">Identifying distorted copies</td>
+<td align="left">Highly competitive performance</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Transfer Learning</strong></td>
+<td align="left">Adapting to downstream tasks</td>
+<td align="left">1-2% improvement over supervised pre-training</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="medical-imaging-with-rad-dino" class="section level3 hasAnchor" number="4.5.2">
+<h3><span class="header-section-number">4.5.2</span> Medical Imaging with RAD-DINO<a href="chapter-4-image-encoders.html#medical-imaging-with-rad-dino" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>RAD-DINO, a model pre-trained using the DINOv2 framework, demonstrates that high-quality biomedical image encoders can be trained using only unimodal imaging data, without relying on text supervision.</p>
+<ul>
+<li><strong>Image Classification</strong>: Achieves similar or superior performance compared to language-supervised models</li>
+<li><strong>Semantic Segmentation</strong>: Performs well without large, densely annotated training datasets</li>
+<li><strong>Report Generation</strong>: Excels at generating accurate text reports from images</li>
+<li><strong>Demographic Prediction</strong>: More accurately predicts patient demographic information (e.g., sex, age)</li>
+</ul>
+
 </div>
 </div>
 </div>
@@ -506,8 +686,8 @@ n(v) \leftarrow n(v) + 1
           </div>
         </div>
       </div>
-<a href="reward-based-learning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="model-free-reinforcement-learning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="chapter-3-transformers.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapter-5-generative-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -539,7 +719,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/jehillparikh/worldmodel/edit/main/06-Markov-Decision-Processes.Rmd",
+"link": "https://github.com/jehillparikh/worldmodel/edit/main/04-Image-Encoders.Rmd",
 "text": "Edit"
 },
 "history": {

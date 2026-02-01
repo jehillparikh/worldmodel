@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models</title>
+  <title>Chapter 3 Chapter 3: Transformers | Foundations of World Models</title>
   <meta name="description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models" />
+  <meta property="og:title" content="Chapter 3 Chapter 3: Transformers | Foundations of World Models" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
   <meta property="og:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="github-repo" content="jehillparikh/worldmodel" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models" />
+  <meta name="twitter:title" content="Chapter 3 Chapter 3: Transformers | Foundations of World Models" />
   
   <meta name="twitter:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="twitter:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reward-based-learning.html"/>
-<link rel="next" href="model-free-reinforcement-learning.html"/>
+<link rel="prev" href="chapter-2-self-attention-mechanism.html"/>
+<link rel="next" href="chapter-4-image-encoders.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -424,80 +424,102 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-based-reinforcement-learning" class="section level1 hasAnchor" number="8">
-<h1><span class="header-section-number">Chapter 8</span> Model-Based Reinforcement Learning<a href="model-based-reinforcement-learning.html#model-based-reinforcement-learning" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Model-Based RL refers to methods where an agent <strong>learns a model</strong> of the environment and uses it for decision-making. This typically involves:</p>
-<ol style="list-style-type: decimal">
-<li><strong>Learning the Transition Model (<span class="math inline">\(P(s&#39; | s, a)\)</span>)</strong>: Predicting the next state given the current state and action.</li>
-<li><strong>Learning the Reward Model (<span class="math inline">\(R(s, a)\)</span>)</strong>: Estimating the reward for taking an action in a given state.</li>
-<li><strong>Planning</strong>: Using the learned model to simulate trajectories and improve decision-making.</li>
-</ol>
-<div id="popular-model-based-rl-approaches" class="section level3 hasAnchor" number="8.0.1">
-<h3><span class="header-section-number">8.0.1</span> <strong>Popular Model-Based RL Approaches</strong><a href="model-based-reinforcement-learning.html#popular-model-based-rl-approaches" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="chapter-3-transformers" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Chapter 3: Transformers<a href="chapter-3-transformers.html#chapter-3-transformers" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The <strong>Transformer</strong> architecture, introduced in the landmark paper <em>“Attention Is All You Need”</em>, discarded recurrence and convolution entirely in favor of attention mechanisms. It has since become the foundation for virtually all state-of-the-art models in NLP, Vision, and beyond.</p>
+<div id="the-architecture" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> The Architecture<a href="chapter-3-transformers.html#the-architecture" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The original Transformer is an <strong>Encoder-Decoder</strong> model designed for machine translation.</p>
+<div id="the-encoder" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> The Encoder<a href="chapter-3-transformers.html#the-encoder" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The encoder processes the input sequence and compresses it into a context-rich representation. It consists of a stack of identical layers, each containing:
+1. <strong>Multi-Head Self-Attention</strong>
+2. <strong>Feed-Forward Network (FFN)</strong>
+3. <strong>Layer Normalization &amp; Residual Connections</strong></p>
+</div>
+<div id="the-decoder" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> The Decoder<a href="chapter-3-transformers.html#the-decoder" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The decoder generates the output sequence one token at a time. In addition to the components found in the encoder, it includes a <strong>Masked Self-Attention</strong> layer (to prevent looking at future tokens) and Cross-Attention (to attend to the encoder’s output).</p>
+<div class="float">
+<img src="Images/Transformer_arch.png" title="The Transformer Architecture" alt="Transformer Architecture" />
+<div class="figcaption">Transformer Architecture</div>
+</div>
+</div>
+</div>
+<div id="evolution-of-architectures" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Evolution of Architectures<a href="chapter-3-transformers.html#evolution-of-architectures" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>While the original model used both encoder and decoder, modern models often specialize:</p>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Examples</th>
+<th align="left">Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Encoder-Only</strong></td>
+<td align="left">Bidirectional understanding of the whole input.</td>
+<td align="left">BERT, RoBERTa</td>
+<td align="left">Classification, NER, Sentiment Analysis</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Decoder-Only</strong></td>
+<td align="left">Unidirectional (left-to-right) generation.</td>
+<td align="left">GPT-4, Llama 3</td>
+<td align="left">Text Generation, Chatbots, Code Completion</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Encoder-Decoder</strong></td>
+<td align="left">Maps input sequence to output sequence.</td>
+<td align="left">T5, BART</td>
+<td align="left">Translation, Summarization</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="key-innovations-updates" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Key Innovations &amp; Updates<a href="chapter-3-transformers.html#key-innovations-updates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The standard Transformer has evolved significantly since 2017.</p>
+<div id="mixture-of-experts-moe" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Mixture of Experts (MoE)<a href="chapter-3-transformers.html#mixture-of-experts-moe" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As models grew larger, training costs skyrocketed. <strong>Mixture of Experts (MoE)</strong> (e.g., <strong>Mixtral 8x7B</strong>, <strong>Switch Transformer</strong>) addresses this by activating only a subset of parameters for each token.</p>
 <ul>
-<li><strong>Dynamic Programming (DP)</strong>: Uses Bellman equations to iteratively compute value functions, assuming a known model.</li>
-<li><strong>Model Predictive Control (MPC)</strong>: Uses a learned model to simulate future states and optimize actions.</li>
-<li><strong>Dyna-Q</strong>: Combines model-free and model-based learning by integrating planning and learning.</li>
+<li><strong>Sparse Activation</strong>: Instead of using one dense FFN, the model has multiple “expert” networks (e.g., 8 experts). For every token, a <strong>router network</strong> (or gating network) selects the top-k experts (usually k=1 or 2) to process that specific token.</li>
+<li><strong>Routing Mechanism</strong>: The router computes a probability distribution over experts. The token is sent to the experts with the highest probabilities.
+<span class="math display">\[ G(x) = \text{Softmax}(x \cdot W_g) \]</span></li>
+<li><strong>Load Balancing</strong>: A critical challenge is ensuring all experts are used equally. If one expert is popular, it becomes a bottleneck. Auxiliary loss functions are used to encourage balanced routing.</li>
+<li><strong>Efficiency</strong>: This allows models to have massive parameter counts (trillions) while keeping inference costs low (comparable to much smaller dense models).</li>
 </ul>
 </div>
-<div id="monte-carlo-tree-search-mcts" class="section level2 hasAnchor" number="8.1">
-<h2><span class="header-section-number">8.1</span> Monte Carlo Tree Search (MCTS)<a href="model-based-reinforcement-learning.html#monte-carlo-tree-search-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>MCTS is a search-based decision-making algorithm used in <strong>game AI</strong> and <strong>planning problems</strong>. It simulates future states by exploring the decision tree and backing up estimated rewards, aligning closely with <strong>MDP planning techniques</strong>.</p>
-<p>In MCTS, the algorithm uses a model of the environment (specifically, the transition dynamics of states) to simulate future outcomes. During the search process, the algorithm builds a tree of possible future states, which are explored through simulations (rollouts). These simulations rely on the model to predict the outcomes of actions, and the results of the simulations are used to evaluate the best actions to take at each decision point.</p>
-<p>The key characteristic of MCTS being model-based is that it requires knowledge of the environment’s dynamics to simulate the future. This model could either be explicitly provided (like in a chess game, where the rules of the game are well-defined) or learned through interactions (as in some planning problems for robotics)</p>
-<div id="mcts-steps" class="section level3 hasAnchor" number="8.1.1">
-<h3><span class="header-section-number">8.1.1</span> <strong>MCTS Steps</strong><a href="model-based-reinforcement-learning.html#mcts-steps" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ol style="list-style-type: decimal">
-<li><strong>Selection</strong>: Start from the root and select the most promising node based on a strategy (e.g., Upper Confidence Bound (UCB1)).</li>
-<li><strong>Expansion</strong>: Add a new node to the tree when a promising unexplored action is found.</li>
-<li><strong>Simulation (Rollout)</strong>: Play out random simulations to estimate the value of the new state.</li>
-<li><strong>Backpropagation</strong>: Update the values of visited nodes based on the simulation outcome.</li>
-</ol>
-</div>
-<div id="steps-of-mcts" class="section level3 hasAnchor" number="8.1.2">
-<h3><span class="header-section-number">8.1.2</span> Steps of MCTS<a href="model-based-reinforcement-learning.html#steps-of-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ol style="list-style-type: decimal">
-<li><p><strong>Selection</strong>: Starting from the root node, recursively select the child node that maximizes the <strong>Upper Confidence Bound for Trees (UCT)</strong>.</p>
-<p>The UCT formula is given by:</p>
-<p><span class="math display">\[
-\text{UCT}(v) = \frac{w(v)}{n(v)} + c \sqrt{\frac{\ln N}{n(v)}}
-\]</span></p>
-<p>Where:</p>
+<div id="grouped-query-attention-gqa-multi-query-attention-mqa" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Grouped-Query Attention (GQA) &amp; Multi-Query Attention (MQA)<a href="chapter-3-transformers.html#grouped-query-attention-gqa-multi-query-attention-mqa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Standard Multi-Head Attention (MHA) has a separate Key and Value head for every Query head. This results in a large KV cache size, slowing down inference.</p>
 <ul>
-<li><span class="math inline">\(w(v)\)</span> is the total reward for node <span class="math inline">\(v\)</span>.</li>
-<li><span class="math inline">\(n(v)\)</span> is the number of times node <span class="math inline">\(v\)</span> has been visited.</li>
-<li><span class="math inline">\(N\)</span> is the number of times the parent node has been visited.</li>
-<li><span class="math inline">\(c\)</span> is the exploration constant that balances exploration and exploitation.</li>
-</ul></li>
-<li><p><strong>Expansion</strong>: If the selected node is not a terminal state and has untried actions, add a new child node representing an untried action.</p></li>
-<li><p><strong>Simulation (Rollout)</strong>: Simulate a random sequence of actions from the current node until a terminal state is reached. The outcome of the simulation gives an estimate of the value of the node.</p>
-<p>The return from a simulation is denoted by:</p>
-<p><span class="math display">\[
-G_t = \sum_{k=t}^{T} \gamma^{k-t} R_k
-\]</span></p>
-<p>Where:</p>
-<ul>
-<li><span class="math inline">\(G_t\)</span> is the total reward (return) from time <span class="math inline">\(t\)</span> onwards.</li>
-<li><span class="math inline">\(\gamma\)</span> is the discount factor.</li>
-<li><span class="math inline">\(R_k\)</span> is the reward at time step <span class="math inline">\(k\)</span>.</li>
-</ul></li>
-<li><p><strong>Backpropagation</strong>: After the simulation, backpropagate the results by updating the values and visit counts of all nodes in the path from the current node to the root.</p>
-<p>The update rule for a node’s value is:</p>
-<p><span class="math display">\[
-w(v) \leftarrow w(v) + G_t
-\]</span>
-<span class="math display">\[
-n(v) \leftarrow n(v) + 1
-\]</span></p></li>
-</ol>
-</div>
-<div id="applications-of-mcts" class="section level3 hasAnchor" number="8.1.3">
-<h3><span class="header-section-number">8.1.3</span> <strong>Applications of MCTS</strong><a href="model-based-reinforcement-learning.html#applications-of-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li>AlphaGo (DeepMind)</li>
-<li>Chess and board games</li>
-<li>Robotics planning and decision-making</li>
+<li><strong>Multi-Query Attention (MQA)</strong>: Uses <strong>one</strong> Key and Value head shared across <strong>all</strong> Query heads. This drastically reduces memory usage but can degrade performance.</li>
+<li><strong>Grouped-Query Attention (GQA)</strong>: A middle ground used in <strong>Llama 2</strong> and <strong>Llama 3</strong>. It groups Query heads (e.g., 8 groups) and assigns one Key/Value head to each group. This offers a better trade-off between performance and efficiency.</li>
 </ul>
+</div>
+<div id="rotary-positional-embeddings-rope" class="section level3 hasAnchor" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Rotary Positional Embeddings (RoPE)<a href="chapter-3-transformers.html#rotary-positional-embeddings-rope" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The original Transformer used absolute sinusoidal positional encodings. <strong>RoPE</strong> (Su et al., 2021) encodes relative position by rotating the query and key vectors in the embedding space. This allows models to generalize better to sequence lengths longer than those seen during training.</p>
+</div>
+<div id="alibi-attention-with-linear-biases" class="section level3 hasAnchor" number="3.3.4">
+<h3><span class="header-section-number">3.3.4</span> ALiBi (Attention with Linear Biases)<a href="chapter-3-transformers.html#alibi-attention-with-linear-biases" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>ALiBi eliminates positional embeddings entirely by adding a static bias to the attention scores based on the distance between tokens. This simple change allows for extrapolation to much longer sequences.</p>
+</div>
+<div id="rmsnorm-swiglu" class="section level3 hasAnchor" number="3.3.5">
+<h3><span class="header-section-number">3.3.5</span> RMSNorm &amp; SwiGLU<a href="chapter-3-transformers.html#rmsnorm-swiglu" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Modern LLMs (like Llama) often replace LayerNorm with <strong>RMSNorm</strong> (Root Mean Square Normalization) for stability and use <strong>SwiGLU</strong> activation functions in the FFN for better performance.</p>
+
 </div>
 </div>
 </div>
@@ -506,8 +528,8 @@ n(v) \leftarrow n(v) + 1
           </div>
         </div>
       </div>
-<a href="reward-based-learning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="model-free-reinforcement-learning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="chapter-2-self-attention-mechanism.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapter-4-image-encoders.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -539,7 +561,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/jehillparikh/worldmodel/edit/main/06-Markov-Decision-Processes.Rmd",
+"link": "https://github.com/jehillparikh/worldmodel/edit/main/03-Transformers.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -1,0 +1,100 @@
+# Chapter 5: Generative Models
+
+> *"What I cannot create, I do not understand."*
+> — Richard Feynman
+
+To build a World Model, an agent must not only see the world but also **imagine** it. Generative models provide the machinery for this imagination. They allow an agent to simulate future states, hallucinate potential outcomes, and dream of scenarios it has never encountered.
+
+In this chapter, we explore the three pillars of modern generative modeling: **Generative Adversarial Networks (GANs)**, **Variational Autoencoders (VAEs)**, and the current state-of-the-art, **Diffusion Models**.
+
+## Generative Adversarial Networks (GANs)
+
+Introduced by Goodfellow et al. in 2014, GANs revolutionized the field by framing generation as a game between two adversaries.
+
+### The Minimax Game
+
+A GAN consists of two neural networks:
+
+1. **Generator ($G$)**: Creates synthetic data from random noise $z$.
+2. **Discriminator ($D$)**: Tries to distinguish real data $x$ from fake data $G(z)$.
+
+The training process is a zero-sum game where $G$ tries to fool $D$, and $D$ tries to catch $G$. The objective function is:
+
+$$
+\min_G \max_D V(D, G) = \mathbb{E}_{x \sim p_{data}(x)}[\log D(x)] + \mathbb{E}_{z \sim p_z(z)}[\log(1 - D(G(z)))]
+$$
+
+### Evolution of GAN Architectures
+
+- **DCGAN (2015)**: Introduced Convolutional layers to GANs, making image generation stable.
+- **CycleGAN (2017)**: Enabled unpaired image-to-image translation (e.g., turning horses into zebras) using cycle consistency.
+- **StyleGAN (2019)**: Achieved photorealistic quality by controlling "style" at different levels of detail (coarse to fine).
+
+### Limitations
+
+Despite their brilliance, GANs suffer from **Mode Collapse** (generating the same image repeatedly) and **Training Instability** (balancing the two networks is difficult).
+
+## Variational Autoencoders (VAEs)
+
+VAEs (Kingma & Welling, 2013) take a probabilistic approach. Instead of a game, they learn a **latent space** that compresses data into a probability distribution.
+
+### The Architecture
+
+1. **Encoder**: Maps input $x$ to a latent distribution $q(z|x) = \mathcal{N}(\mu, \sigma^2)$.
+2. **Reparameterization Trick**: Samples $z = \mu + \sigma \cdot \epsilon$ (where $\epsilon \sim \mathcal{N}(0, I)$) to allow backpropagation.
+3. **Decoder**: Reconstructs $x$ from $z$.
+
+### The Evidence Lower Bound (ELBO)
+
+VAEs optimize the ELBO, which balances reconstruction quality with latent space regularity:
+
+$$
+\mathcal{L}_{VAE} = \underbrace{\mathbb{E}_{q(z|x)}[\log p(x|z)]}_{\text{Reconstruction Loss}} - \underbrace{D_{KL}(q(z|x) || p(z))}_{\text{Regularization (KL Divergence)}}
+$$
+
+While VAEs are stable and have a structured latent space (ideal for World Models), they often produce **blurry images** compared to GANs.
+
+## Diffusion Models
+
+Diffusion Models (Ho et al., 2020; Song et al., 2021) have recently emerged as the new standard, powering tools like DALL-E 3 and Sora. They combine the stability of likelihood-based models with the high fidelity of GANs.
+
+### The Intuition
+
+Diffusion models work by slowly destroying data and then learning to reverse the process.
+
+1. **Forward Process**: Gradually add Gaussian noise to an image until it becomes pure noise.
+2. **Reverse Process**: Train a neural network to predict the noise added at each step and remove it.
+
+### Mathematical Formulation
+
+The forward process adds noise according to a variance schedule $\beta_t$:
+
+$$
+q(x_t | x_{t-1}) = \mathcal{N}(x_t; \sqrt{1 - \beta_t} x_{t-1}, \beta_t I)
+$$
+
+The reverse process is learned by a network $\epsilon_\theta(x_t, t)$ that predicts the noise. The simplified loss function is essentially the Mean Squared Error between the true noise and predicted noise:
+
+$$
+\mathcal{L}_{simple} = \mathbb{E}_{t, x_0, \epsilon} \left[ \| \epsilon - \epsilon_\theta(x_t, t) \|^2 \right]
+$$
+
+### Score-Based Generative Models
+
+A parallel perspective, introduced by Song et al., views generation as moving data points along the **gradient of the log-probability density** (the "score").
+
+$$
+s_\theta(x) \approx \nabla_x \log p(x)
+$$
+
+By following this gradient (using Langevin Dynamics), we can transform random noise into a high-probability data point (a realistic image).
+
+## Summary
+
+| Model | Pros | Cons | Role in World Models |
+|:------|:-----|:-----|:---------------------|
+| **GANs** | Fast, High Fidelity | Unstable, Mode Collapse | Used for real-time simulation (e.g., GameGAN) |
+| **VAEs** | Structured Latent Space, Fast Inference | Blurry Outputs | The backbone of latent dynamics models (e.g., Dreamer) |
+| **Diffusion** | Best Quality, Stable Training | Slow Inference | Used for high-fidelity video generation (e.g., Sora, Gen-2) |
+
+In the next chapter, we move from **generating** states to **acting** in them, laying the mathematical groundwork for decision-making with **Markov Decision Processes**.

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models</title>
+  <title>Chapter 5 Chapter 5: Generative Models | Foundations of World Models</title>
   <meta name="description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models" />
+  <meta property="og:title" content="Chapter 5 Chapter 5: Generative Models | Foundations of World Models" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
   <meta property="og:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="github-repo" content="jehillparikh/worldmodel" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 Model-Based Reinforcement Learning | Foundations of World Models" />
+  <meta name="twitter:title" content="Chapter 5 Chapter 5: Generative Models | Foundations of World Models" />
   
   <meta name="twitter:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="twitter:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reward-based-learning.html"/>
-<link rel="next" href="model-free-reinforcement-learning.html"/>
+<link rel="prev" href="chapter-4-image-encoders.html"/>
+<link rel="next" href="chapter-4-markov-decision-process-bellman-equation.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -424,81 +424,133 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-based-reinforcement-learning" class="section level1 hasAnchor" number="8">
-<h1><span class="header-section-number">Chapter 8</span> Model-Based Reinforcement Learning<a href="model-based-reinforcement-learning.html#model-based-reinforcement-learning" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Model-Based RL refers to methods where an agent <strong>learns a model</strong> of the environment and uses it for decision-making. This typically involves:</p>
+<div id="chapter-5-generative-models" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Chapter 5: Generative Models<a href="chapter-5-generative-models.html#chapter-5-generative-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<blockquote>
+<p><em>“What I cannot create, I do not understand.”</em>
+— Richard Feynman</p>
+</blockquote>
+<p>To build a World Model, an agent must not only see the world but also <strong>imagine</strong> it. Generative models provide the machinery for this imagination. They allow an agent to simulate future states, hallucinate potential outcomes, and dream of scenarios it has never encountered.</p>
+<p>In this chapter, we explore the three pillars of modern generative modeling: <strong>Generative Adversarial Networks (GANs)</strong>, <strong>Variational Autoencoders (VAEs)</strong>, and the current state-of-the-art, <strong>Diffusion Models</strong>.</p>
+<div id="generative-adversarial-networks-gans" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Generative Adversarial Networks (GANs)<a href="chapter-5-generative-models.html#generative-adversarial-networks-gans" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Introduced by Goodfellow et al. in 2014, GANs revolutionized the field by framing generation as a game between two adversaries.</p>
+<div id="the-minimax-game" class="section level3 hasAnchor" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> The Minimax Game<a href="chapter-5-generative-models.html#the-minimax-game" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A GAN consists of two neural networks:</p>
 <ol style="list-style-type: decimal">
-<li><strong>Learning the Transition Model (<span class="math inline">\(P(s&#39; | s, a)\)</span>)</strong>: Predicting the next state given the current state and action.</li>
-<li><strong>Learning the Reward Model (<span class="math inline">\(R(s, a)\)</span>)</strong>: Estimating the reward for taking an action in a given state.</li>
-<li><strong>Planning</strong>: Using the learned model to simulate trajectories and improve decision-making.</li>
+<li><strong>Generator (<span class="math inline">\(G\)</span>)</strong>: Creates synthetic data from random noise <span class="math inline">\(z\)</span>.</li>
+<li><strong>Discriminator (<span class="math inline">\(D\)</span>)</strong>: Tries to distinguish real data <span class="math inline">\(x\)</span> from fake data <span class="math inline">\(G(z)\)</span>.</li>
 </ol>
-<div id="popular-model-based-rl-approaches" class="section level3 hasAnchor" number="8.0.1">
-<h3><span class="header-section-number">8.0.1</span> <strong>Popular Model-Based RL Approaches</strong><a href="model-based-reinforcement-learning.html#popular-model-based-rl-approaches" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The training process is a zero-sum game where <span class="math inline">\(G\)</span> tries to fool <span class="math inline">\(D\)</span>, and <span class="math inline">\(D\)</span> tries to catch <span class="math inline">\(G\)</span>. The objective function is:</p>
+<p><span class="math display">\[
+\min_G \max_D V(D, G) = \mathbb{E}_{x \sim p_{data}(x)}[\log D(x)] + \mathbb{E}_{z \sim p_z(z)}[\log(1 - D(G(z)))]
+\]</span></p>
+</div>
+<div id="evolution-of-gan-architectures" class="section level3 hasAnchor" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> Evolution of GAN Architectures<a href="chapter-5-generative-models.html#evolution-of-gan-architectures" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><strong>Dynamic Programming (DP)</strong>: Uses Bellman equations to iteratively compute value functions, assuming a known model.</li>
-<li><strong>Model Predictive Control (MPC)</strong>: Uses a learned model to simulate future states and optimize actions.</li>
-<li><strong>Dyna-Q</strong>: Combines model-free and model-based learning by integrating planning and learning.</li>
+<li><strong>DCGAN (2015)</strong>: Introduced Convolutional layers to GANs, making image generation stable.</li>
+<li><strong>CycleGAN (2017)</strong>: Enabled unpaired image-to-image translation (e.g., turning horses into zebras) using cycle consistency.</li>
+<li><strong>StyleGAN (2019)</strong>: Achieved photorealistic quality by controlling “style” at different levels of detail (coarse to fine).</li>
 </ul>
 </div>
-<div id="monte-carlo-tree-search-mcts" class="section level2 hasAnchor" number="8.1">
-<h2><span class="header-section-number">8.1</span> Monte Carlo Tree Search (MCTS)<a href="model-based-reinforcement-learning.html#monte-carlo-tree-search-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>MCTS is a search-based decision-making algorithm used in <strong>game AI</strong> and <strong>planning problems</strong>. It simulates future states by exploring the decision tree and backing up estimated rewards, aligning closely with <strong>MDP planning techniques</strong>.</p>
-<p>In MCTS, the algorithm uses a model of the environment (specifically, the transition dynamics of states) to simulate future outcomes. During the search process, the algorithm builds a tree of possible future states, which are explored through simulations (rollouts). These simulations rely on the model to predict the outcomes of actions, and the results of the simulations are used to evaluate the best actions to take at each decision point.</p>
-<p>The key characteristic of MCTS being model-based is that it requires knowledge of the environment’s dynamics to simulate the future. This model could either be explicitly provided (like in a chess game, where the rules of the game are well-defined) or learned through interactions (as in some planning problems for robotics)</p>
-<div id="mcts-steps" class="section level3 hasAnchor" number="8.1.1">
-<h3><span class="header-section-number">8.1.1</span> <strong>MCTS Steps</strong><a href="model-based-reinforcement-learning.html#mcts-steps" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="limitations" class="section level3 hasAnchor" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> Limitations<a href="chapter-5-generative-models.html#limitations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Despite their brilliance, GANs suffer from <strong>Mode Collapse</strong> (generating the same image repeatedly) and <strong>Training Instability</strong> (balancing the two networks is difficult).</p>
+</div>
+</div>
+<div id="variational-autoencoders-vaes" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Variational Autoencoders (VAEs)<a href="chapter-5-generative-models.html#variational-autoencoders-vaes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>VAEs (Kingma &amp; Welling, 2013) take a probabilistic approach. Instead of a game, they learn a <strong>latent space</strong> that compresses data into a probability distribution.</p>
+<div id="the-architecture-1" class="section level3 hasAnchor" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> The Architecture<a href="chapter-5-generative-models.html#the-architecture-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
-<li><strong>Selection</strong>: Start from the root and select the most promising node based on a strategy (e.g., Upper Confidence Bound (UCB1)).</li>
-<li><strong>Expansion</strong>: Add a new node to the tree when a promising unexplored action is found.</li>
-<li><strong>Simulation (Rollout)</strong>: Play out random simulations to estimate the value of the new state.</li>
-<li><strong>Backpropagation</strong>: Update the values of visited nodes based on the simulation outcome.</li>
+<li><strong>Encoder</strong>: Maps input <span class="math inline">\(x\)</span> to a latent distribution <span class="math inline">\(q(z|x) = \mathcal{N}(\mu, \sigma^2)\)</span>.</li>
+<li><strong>Reparameterization Trick</strong>: Samples <span class="math inline">\(z = \mu + \sigma \cdot \epsilon\)</span> (where <span class="math inline">\(\epsilon \sim \mathcal{N}(0, I)\)</span>) to allow backpropagation.</li>
+<li><strong>Decoder</strong>: Reconstructs <span class="math inline">\(x\)</span> from <span class="math inline">\(z\)</span>.</li>
 </ol>
 </div>
-<div id="steps-of-mcts" class="section level3 hasAnchor" number="8.1.2">
-<h3><span class="header-section-number">8.1.2</span> Steps of MCTS<a href="model-based-reinforcement-learning.html#steps-of-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="the-evidence-lower-bound-elbo" class="section level3 hasAnchor" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> The Evidence Lower Bound (ELBO)<a href="chapter-5-generative-models.html#the-evidence-lower-bound-elbo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>VAEs optimize the ELBO, which balances reconstruction quality with latent space regularity:</p>
+<p><span class="math display">\[
+\mathcal{L}_{VAE} = \underbrace{\mathbb{E}_{q(z|x)}[\log p(x|z)]}_{\text{Reconstruction Loss}} - \underbrace{D_{KL}(q(z|x) || p(z))}_{\text{Regularization (KL Divergence)}}
+\]</span></p>
+<p>While VAEs are stable and have a structured latent space (ideal for World Models), they often produce <strong>blurry images</strong> compared to GANs.</p>
+</div>
+</div>
+<div id="diffusion-models" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Diffusion Models<a href="chapter-5-generative-models.html#diffusion-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Diffusion Models (Ho et al., 2020; Song et al., 2021) have recently emerged as the new standard, powering tools like DALL-E 3 and Sora. They combine the stability of likelihood-based models with the high fidelity of GANs.</p>
+<div id="the-intuition" class="section level3 hasAnchor" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> The Intuition<a href="chapter-5-generative-models.html#the-intuition" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Diffusion models work by slowly destroying data and then learning to reverse the process.</p>
 <ol style="list-style-type: decimal">
-<li><p><strong>Selection</strong>: Starting from the root node, recursively select the child node that maximizes the <strong>Upper Confidence Bound for Trees (UCT)</strong>.</p>
-<p>The UCT formula is given by:</p>
-<p><span class="math display">\[
-\text{UCT}(v) = \frac{w(v)}{n(v)} + c \sqrt{\frac{\ln N}{n(v)}}
-\]</span></p>
-<p>Where:</p>
-<ul>
-<li><span class="math inline">\(w(v)\)</span> is the total reward for node <span class="math inline">\(v\)</span>.</li>
-<li><span class="math inline">\(n(v)\)</span> is the number of times node <span class="math inline">\(v\)</span> has been visited.</li>
-<li><span class="math inline">\(N\)</span> is the number of times the parent node has been visited.</li>
-<li><span class="math inline">\(c\)</span> is the exploration constant that balances exploration and exploitation.</li>
-</ul></li>
-<li><p><strong>Expansion</strong>: If the selected node is not a terminal state and has untried actions, add a new child node representing an untried action.</p></li>
-<li><p><strong>Simulation (Rollout)</strong>: Simulate a random sequence of actions from the current node until a terminal state is reached. The outcome of the simulation gives an estimate of the value of the node.</p>
-<p>The return from a simulation is denoted by:</p>
-<p><span class="math display">\[
-G_t = \sum_{k=t}^{T} \gamma^{k-t} R_k
-\]</span></p>
-<p>Where:</p>
-<ul>
-<li><span class="math inline">\(G_t\)</span> is the total reward (return) from time <span class="math inline">\(t\)</span> onwards.</li>
-<li><span class="math inline">\(\gamma\)</span> is the discount factor.</li>
-<li><span class="math inline">\(R_k\)</span> is the reward at time step <span class="math inline">\(k\)</span>.</li>
-</ul></li>
-<li><p><strong>Backpropagation</strong>: After the simulation, backpropagate the results by updating the values and visit counts of all nodes in the path from the current node to the root.</p>
-<p>The update rule for a node’s value is:</p>
-<p><span class="math display">\[
-w(v) \leftarrow w(v) + G_t
-\]</span>
-<span class="math display">\[
-n(v) \leftarrow n(v) + 1
-\]</span></p></li>
+<li><strong>Forward Process</strong>: Gradually add Gaussian noise to an image until it becomes pure noise.</li>
+<li><strong>Reverse Process</strong>: Train a neural network to predict the noise added at each step and remove it.</li>
 </ol>
 </div>
-<div id="applications-of-mcts" class="section level3 hasAnchor" number="8.1.3">
-<h3><span class="header-section-number">8.1.3</span> <strong>Applications of MCTS</strong><a href="model-based-reinforcement-learning.html#applications-of-mcts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li>AlphaGo (DeepMind)</li>
-<li>Chess and board games</li>
-<li>Robotics planning and decision-making</li>
-</ul>
+<div id="mathematical-formulation" class="section level3 hasAnchor" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> Mathematical Formulation<a href="chapter-5-generative-models.html#mathematical-formulation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The forward process adds noise according to a variance schedule <span class="math inline">\(\beta_t\)</span>:</p>
+<p><span class="math display">\[
+q(x_t | x_{t-1}) = \mathcal{N}(x_t; \sqrt{1 - \beta_t} x_{t-1}, \beta_t I)
+\]</span></p>
+<p>The reverse process is learned by a network <span class="math inline">\(\epsilon_\theta(x_t, t)\)</span> that predicts the noise. The simplified loss function is essentially the Mean Squared Error between the true noise and predicted noise:</p>
+<p><span class="math display">\[
+\mathcal{L}_{simple} = \mathbb{E}_{t, x_0, \epsilon} \left[ \| \epsilon - \epsilon_\theta(x_t, t) \|^2 \right]
+\]</span></p>
 </div>
+<div id="score-based-generative-models" class="section level3 hasAnchor" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> Score-Based Generative Models<a href="chapter-5-generative-models.html#score-based-generative-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A parallel perspective, introduced by Song et al., views generation as moving data points along the <strong>gradient of the log-probability density</strong> (the “score”).</p>
+<p><span class="math display">\[
+s_\theta(x) \approx \nabla_x \log p(x)
+\]</span></p>
+<p>By following this gradient (using Langevin Dynamics), we can transform random noise into a high-probability data point (a realistic image).</p>
+</div>
+</div>
+<div id="summary" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Summary<a href="chapter-5-generative-models.html#summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="14%" />
+<col width="14%" />
+<col width="53%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Model</th>
+<th align="left">Pros</th>
+<th align="left">Cons</th>
+<th align="left">Role in World Models</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>GANs</strong></td>
+<td align="left">Fast, High Fidelity</td>
+<td align="left">Unstable, Mode Collapse</td>
+<td align="left">Used for real-time simulation (e.g., GameGAN)</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>VAEs</strong></td>
+<td align="left">Structured Latent Space, Fast Inference</td>
+<td align="left">Blurry Outputs</td>
+<td align="left">The backbone of latent dynamics models (e.g., Dreamer)</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Diffusion</strong></td>
+<td align="left">Best Quality, Stable Training</td>
+<td align="left">Slow Inference</td>
+<td align="left">Used for high-fidelity video generation (e.g., Sora, Gen-2)</td>
+</tr>
+</tbody>
+</table>
+<p>In the next chapter, we move from <strong>generating</strong> states to <strong>acting</strong> in them, laying the mathematical groundwork for decision-making with <strong>Markov Decision Processes</strong>.</p>
+
 </div>
 </div>
             </section>
@@ -506,8 +558,8 @@ n(v) \leftarrow n(v) + 1
           </div>
         </div>
       </div>
-<a href="reward-based-learning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="model-free-reinforcement-learning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="chapter-4-image-encoders.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapter-4-markov-decision-process-bellman-equation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -539,7 +591,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/jehillparikh/worldmodel/edit/main/06-Markov-Decision-Processes.Rmd",
+"link": "https://github.com/jehillparikh/worldmodel/edit/main/05-Generative-Models.Rmd",
 "text": "Edit"
 },
 "history": {
