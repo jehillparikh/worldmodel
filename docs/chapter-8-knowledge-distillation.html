@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 11 Chapter 5: Reinforcement Learning - Theory and Applications | Foundations of World Models</title>
+  <title>Chapter 14 Chapter 8: Knowledge Distillation | Foundations of World Models</title>
   <meta name="description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 11 Chapter 5: Reinforcement Learning - Theory and Applications | Foundations of World Models" />
+  <meta property="og:title" content="Chapter 14 Chapter 8: Knowledge Distillation | Foundations of World Models" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
   <meta property="og:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="github-repo" content="jehillparikh/worldmodel" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 11 Chapter 5: Reinforcement Learning - Theory and Applications | Foundations of World Models" />
+  <meta name="twitter:title" content="Chapter 14 Chapter 8: Knowledge Distillation | Foundations of World Models" />
   
   <meta name="twitter:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="twitter:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="conclusion-1.html"/>
-<link rel="next" href="chapter-6-dino-world-models.html"/>
+<link rel="prev" href="chapter-7-jepa-architecture.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -531,512 +531,535 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="chapter-5-reinforcement-learning---theory-and-applications" class="section level1 hasAnchor" number="11">
-<h1><span class="header-section-number">Chapter 11</span> Chapter 5: Reinforcement Learning - Theory and Applications<a href="chapter-5-reinforcement-learning---theory-and-applications.html#chapter-5-reinforcement-learning---theory-and-applications" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="chapter-8-knowledge-distillation" class="section level1 hasAnchor" number="14">
+<h1><span class="header-section-number">Chapter 14</span> Chapter 8: Knowledge Distillation<a href="chapter-8-knowledge-distillation.html#chapter-8-knowledge-distillation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <blockquote>
-<p><em>“The key to artificial intelligence has always been the representation.”</em>
-— Jeff Hawkins</p>
+<p><em>“The goal is to transfer the dark knowledge from a large model to a small model.”</em>
+— Geoffrey Hinton</p>
 </blockquote>
-<p>Reinforcement Learning (RL) is the science of decision-making under uncertainty. Unlike supervised learning where we learn from labeled examples, RL agents learn by interacting with an environment, receiving feedback through rewards, and discovering optimal behaviors through trial and error.</p>
-<div id="fundamentals-of-reinforcement-learning" class="section level2 hasAnchor" number="11.1">
-<h2><span class="header-section-number">11.1</span> Fundamentals of Reinforcement Learning<a href="chapter-5-reinforcement-learning---theory-and-applications.html#fundamentals-of-reinforcement-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="key-components" class="section level3 hasAnchor" number="11.1.1">
-<h3><span class="header-section-number">11.1.1</span> Key Components<a href="chapter-5-reinforcement-learning---theory-and-applications.html#key-components" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The RL framework consists of several fundamental components:</p>
+<p>Knowledge Distillation (KD) is a model compression technique where a smaller <strong>student</strong> model learns to mimic a larger <strong>teacher</strong> model. This enables deployment of powerful AI capabilities on resource-constrained devices while retaining most of the teacher’s performance.</p>
+<div id="motivation-for-knowledge-distillation" class="section level2 hasAnchor" number="14.1">
+<h2><span class="header-section-number">14.1</span> Motivation for Knowledge Distillation<a href="chapter-8-knowledge-distillation.html#motivation-for-knowledge-distillation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-deployment-challenge" class="section level3 hasAnchor" number="14.1.1">
+<h3><span class="header-section-number">14.1.1</span> The Deployment Challenge<a href="chapter-8-knowledge-distillation.html#the-deployment-challenge" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Large models achieve state-of-the-art performance but face practical limitations:</p>
 <table>
-<colgroup>
-<col width="34%" />
-<col width="25%" />
-<col width="40%" />
-</colgroup>
 <thead>
 <tr class="header">
-<th align="left">Component</th>
-<th align="left">Symbol</th>
-<th align="left">Description</th>
+<th align="left">Challenge</th>
+<th align="left">Large Models</th>
+<th align="left">After Distillation</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><strong>Agent</strong></td>
-<td align="left">-</td>
-<td align="left">The decision-maker that interacts with the environment</td>
+<td align="left"><strong>Latency</strong></td>
+<td align="left">Slow inference</td>
+<td align="left">Fast inference</td>
 </tr>
 <tr class="even">
-<td align="left"><strong>Environment</strong></td>
-<td align="left">-</td>
-<td align="left">The external system the agent operates in</td>
+<td align="left"><strong>Memory</strong></td>
+<td align="left">GB of parameters</td>
+<td align="left">MB of parameters</td>
 </tr>
 <tr class="odd">
-<td align="left"><strong>State</strong></td>
-<td align="left"><span class="math inline">\(s \in S\)</span></td>
-<td align="left">A representation of the environment at time <span class="math inline">\(t\)</span></td>
+<td align="left"><strong>Energy</strong></td>
+<td align="left">High power consumption</td>
+<td align="left">Low power consumption</td>
 </tr>
 <tr class="even">
-<td align="left"><strong>Action</strong></td>
-<td align="left"><span class="math inline">\(a \in A\)</span></td>
-<td align="left">A decision taken by the agent</td>
-</tr>
-<tr class="odd">
-<td align="left"><strong>Reward</strong></td>
-<td align="left"><span class="math inline">\(r \in \mathbb{R}\)</span></td>
-<td align="left">Scalar feedback signal</td>
-</tr>
-<tr class="even">
-<td align="left"><strong>Policy</strong></td>
-<td align="left"><span class="math inline">\(\pi(a|s)\)</span></td>
-<td align="left">Probability of taking action <span class="math inline">\(a\)</span> in state <span class="math inline">\(s\)</span></td>
-</tr>
-<tr class="odd">
-<td align="left"><strong>Value Function</strong></td>
-<td align="left"><span class="math inline">\(V^\pi(s)\)</span></td>
-<td align="left">Expected cumulative reward from state <span class="math inline">\(s\)</span></td>
-</tr>
-<tr class="even">
-<td align="left"><strong>Q-Function</strong></td>
-<td align="left"><span class="math inline">\(Q^\pi(s,a)\)</span></td>
-<td align="left">Expected cumulative reward for action <span class="math inline">\(a\)</span> in state <span class="math inline">\(s\)</span></td>
-</tr>
-<tr class="odd">
-<td align="left"><strong>Discount Factor</strong></td>
-<td align="left"><span class="math inline">\(\gamma \in [0,1]\)</span></td>
-<td align="left">Importance of future rewards</td>
+<td align="left"><strong>Cost</strong></td>
+<td align="left">Expensive GPUs</td>
+<td align="left">Edge devices</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="the-rl-objective" class="section level3 hasAnchor" number="11.1.2">
-<h3><span class="header-section-number">11.1.2</span> The RL Objective<a href="chapter-5-reinforcement-learning---theory-and-applications.html#the-rl-objective" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The goal is to find an optimal policy <span class="math inline">\(\pi^*\)</span> that maximizes expected cumulative discounted reward:</p>
-<p><span class="math display">\[
-\pi^* = \arg\max_\pi \mathbb{E}_\pi \left[ \sum_{t=0}^{\infty} \gamma^t r_t \right]
-\]</span></p>
-</div>
-</div>
-<div id="taxonomy-of-rl-algorithms" class="section level2 hasAnchor" number="11.2">
-<h2><span class="header-section-number">11.2</span> Taxonomy of RL Algorithms<a href="chapter-5-reinforcement-learning---theory-and-applications.html#taxonomy-of-rl-algorithms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="model-based-vs-model-free" class="section level3 hasAnchor" number="11.2.1">
-<h3><span class="header-section-number">11.2.1</span> Model-Based vs Model-Free<a href="chapter-5-reinforcement-learning---theory-and-applications.html#model-based-vs-model-free" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li><strong>Model-Based RL</strong>: Learns a model of environment dynamics <span class="math inline">\(P(s&#39;|s,a)\)</span> and uses it for planning</li>
-<li><strong>Model-Free RL</strong>: Learns directly from experience without modeling the environment</li>
-</ul>
-</div>
-<div id="value-based-vs-policy-based" class="section level3 hasAnchor" number="11.2.2">
-<h3><span class="header-section-number">11.2.2</span> Value-Based vs Policy-Based<a href="chapter-5-reinforcement-learning---theory-and-applications.html#value-based-vs-policy-based" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li><strong>Value-Based</strong>: Learn value functions, derive policy implicitly (Q-learning, DQN)</li>
-<li><strong>Policy-Based</strong>: Directly optimize the policy (REINFORCE, PPO)</li>
-<li><strong>Actor-Critic</strong>: Combine both approaches (A2C, A3C, SAC)</li>
-</ul>
-</div>
-<div id="on-policy-vs-off-policy" class="section level3 hasAnchor" number="11.2.3">
-<h3><span class="header-section-number">11.2.3</span> On-Policy vs Off-Policy<a href="chapter-5-reinforcement-learning---theory-and-applications.html#on-policy-vs-off-policy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li><strong>On-Policy</strong>: Learn from data collected by current policy (SARSA, PPO)</li>
-<li><strong>Off-Policy</strong>: Learn from data collected by any policy (Q-learning, DQN, SAC)</li>
-</ul>
+<div id="why-not-just-train-a-small-model" class="section level3 hasAnchor" number="14.1.2">
+<h3><span class="header-section-number">14.1.2</span> Why Not Just Train a Small Model?<a href="chapter-8-knowledge-distillation.html#why-not-just-train-a-small-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Small models trained from scratch often underperform because:
+- Limited capacity to capture complex patterns
+- Harder optimization landscape
+- Less regularization from overparameterization</p>
+<p><strong>Key Insight:</strong> A teacher’s soft predictions contain richer information than hard labels alone.</p>
 <hr />
 </div>
 </div>
-<div id="value-based-methods" class="section level2 hasAnchor" number="11.3">
-<h2><span class="header-section-number">11.3</span> Value-Based Methods<a href="chapter-5-reinforcement-learning---theory-and-applications.html#value-based-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="q-learning-1" class="section level3 hasAnchor" number="11.3.1">
-<h3><span class="header-section-number">11.3.1</span> Q-Learning<a href="chapter-5-reinforcement-learning---theory-and-applications.html#q-learning-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Q-learning is a foundational off-policy algorithm that learns the optimal action-value function:</p>
+<div id="foundations-of-knowledge-distillation" class="section level2 hasAnchor" number="14.2">
+<h2><span class="header-section-number">14.2</span> Foundations of Knowledge Distillation<a href="chapter-8-knowledge-distillation.html#foundations-of-knowledge-distillation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="soft-labels-and-dark-knowledge" class="section level3 hasAnchor" number="14.2.1">
+<h3><span class="header-section-number">14.2.1</span> Soft Labels and Dark Knowledge<a href="chapter-8-knowledge-distillation.html#soft-labels-and-dark-knowledge" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Given a teacher model with logits <span class="math inline">\(z_i\)</span>, the softmax with temperature <span class="math inline">\(T\)</span> produces soft probabilities:</p>
 <p><span class="math display">\[
-Q(s, a) \leftarrow Q(s, a) + \alpha \left[ r + \gamma \max_{a&#39;} Q(s&#39;, a&#39;) - Q(s, a) \right]
+p_i = \frac{\exp(z_i / T)}{\sum_j \exp(z_j / T)}
 \]</span></p>
-<p><strong>Key Properties:</strong>
-- Off-policy: Uses max over next actions (greedy)
-- Tabular: Works with discrete state-action spaces
-- Convergence: Guaranteed under certain conditions</p>
+<ul>
+<li><strong><span class="math inline">\(T = 1\)</span></strong>: Standard softmax (sharp distribution)</li>
+<li><strong><span class="math inline">\(T &gt; 1\)</span></strong>: Softer distribution revealing inter-class relationships</li>
+<li><strong><span class="math inline">\(T \to \infty\)</span></strong>: Uniform distribution</li>
+</ul>
+<p><strong>Dark Knowledge:</strong> The relative probabilities of incorrect classes encode learned similarities. For example, a “3” image might have higher probability for “8” than “7”, revealing structural similarity.</p>
 </div>
-<div id="sarsa-state-action-reward-state-action" class="section level3 hasAnchor" number="11.3.2">
-<h3><span class="header-section-number">11.3.2</span> SARSA (State-Action-Reward-State-Action)<a href="chapter-5-reinforcement-learning---theory-and-applications.html#sarsa-state-action-reward-state-action" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>SARSA is an on-policy variant that uses the actual next action:</p>
+<div id="the-hinton-distillation-framework" class="section level3 hasAnchor" number="14.2.2">
+<h3><span class="header-section-number">14.2.2</span> The Hinton Distillation Framework<a href="chapter-8-knowledge-distillation.html#the-hinton-distillation-framework" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The seminal work by Hinton et al. (2015) defines the distillation loss:</p>
 <p><span class="math display">\[
-Q(s, a) \leftarrow Q(s, a) + \alpha \left[ r + \gamma Q(s&#39;, a&#39;) - Q(s, a) \right]
+\mathcal{L}_{KD} = \alpha \cdot T^2 \cdot D_{KL}(p^T_{teacher} || p^T_{student}) + (1 - \alpha) \cdot \mathcal{L}_{CE}(y, p_{student})
 \]</span></p>
-<p><strong>Difference from Q-learning:</strong> Uses <span class="math inline">\(Q(s&#39;, a&#39;)\)</span> instead of <span class="math inline">\(\max_{a&#39;} Q(s&#39;, a&#39;)\)</span>, making it more conservative.</p>
+<p>where:
+- <span class="math inline">\(p^T\)</span> = softmax with temperature <span class="math inline">\(T\)</span>
+- <span class="math inline">\(D_{KL}\)</span> = KL divergence
+- <span class="math inline">\(\mathcal{L}_{CE}\)</span> = cross-entropy with ground truth
+- <span class="math inline">\(\alpha\)</span> = balancing hyperparameter
+- <span class="math inline">\(T^2\)</span> = scaling factor (gradient magnitude correction)</p>
 </div>
-<div id="deep-q-networks-dqn" class="section level3 hasAnchor" number="11.3.3">
-<h3><span class="header-section-number">11.3.3</span> Deep Q-Networks (DQN)<a href="chapter-5-reinforcement-learning---theory-and-applications.html#deep-q-networks-dqn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>DQN revolutionized RL by using deep neural networks to approximate Q-values:</p>
-<p><span class="math display">\[
-\mathcal{L}(\theta) = \mathbb{E}_{(s,a,r,s&#39;) \sim \mathcal{D}} \left[ \left( r + \gamma \max_{a&#39;} Q(s&#39;, a&#39;; \theta^-) - Q(s, a; \theta) \right)^2 \right]
-\]</span></p>
-<p><strong>Key Innovations:</strong>
-1. <strong>Experience Replay</strong>: Store transitions in buffer, sample randomly to break correlations
-2. <strong>Target Network</strong>: Separate network <span class="math inline">\(\theta^-\)</span> updated periodically for stability
-3. <strong>Frame Stacking</strong>: Stack consecutive frames to capture motion</p>
-</div>
-<div id="double-dqn" class="section level3 hasAnchor" number="11.3.4">
-<h3><span class="header-section-number">11.3.4</span> Double DQN<a href="chapter-5-reinforcement-learning---theory-and-applications.html#double-dqn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Addresses overestimation bias in DQN by decoupling action selection and evaluation:</p>
-<p><span class="math display">\[
-Y = r + \gamma Q(s&#39;, \arg\max_{a&#39;} Q(s&#39;, a&#39;; \theta); \theta^-)
-\]</span></p>
-</div>
-<div id="dueling-dqn" class="section level3 hasAnchor" number="11.3.5">
-<h3><span class="header-section-number">11.3.5</span> Dueling DQN<a href="chapter-5-reinforcement-learning---theory-and-applications.html#dueling-dqn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Separates Q-value into state value and advantage:</p>
-<p><span class="math display">\[
-Q(s, a; \theta, \alpha, \beta) = V(s; \theta, \beta) + \left( A(s, a; \theta, \alpha) - \frac{1}{|A|} \sum_{a&#39;} A(s, a&#39;; \theta, \alpha) \right)
-\]</span></p>
-<p>This architecture learns which states are valuable without needing to learn the effect of each action.</p>
-</div>
-<div id="prioritized-experience-replay" class="section level3 hasAnchor" number="11.3.6">
-<h3><span class="header-section-number">11.3.6</span> Prioritized Experience Replay<a href="chapter-5-reinforcement-learning---theory-and-applications.html#prioritized-experience-replay" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Samples important transitions more frequently based on TD-error:</p>
-<p><span class="math display">\[
-P(i) = \frac{p_i^\alpha}{\sum_k p_k^\alpha}, \quad p_i = |\delta_i| + \epsilon
-\]</span></p>
-<p>where <span class="math inline">\(\delta_i\)</span> is the TD-error for transition <span class="math inline">\(i\)</span>.</p>
-</div>
-<div id="rainbow-dqn" class="section level3 hasAnchor" number="11.3.7">
-<h3><span class="header-section-number">11.3.7</span> Rainbow DQN<a href="chapter-5-reinforcement-learning---theory-and-applications.html#rainbow-dqn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Combines multiple improvements:
-- Double Q-learning
-- Prioritized replay
-- Dueling networks
-- Multi-step learning
-- Distributional RL
-- Noisy networks</p>
+<div id="training-procedure" class="section level3 hasAnchor" number="14.2.3">
+<h3><span class="header-section-number">14.2.3</span> Training Procedure<a href="chapter-8-knowledge-distillation.html#training-procedure" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>Algorithm: Knowledge Distillation
+─────────────────────────────────
+1. Train teacher model on dataset
+2. For each training batch:
+   a. Get teacher soft predictions (with temperature T)
+   b. Get student predictions
+   c. Compute distillation loss + task loss
+   d. Update student parameters
+3. At inference: Use student with T=1</code></pre>
 <hr />
 </div>
 </div>
-<div id="policy-gradient-methods-2" class="section level2 hasAnchor" number="11.4">
-<h2><span class="header-section-number">11.4</span> Policy Gradient Methods<a href="chapter-5-reinforcement-learning---theory-and-applications.html#policy-gradient-methods-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="the-policy-gradient-theorem" class="section level3 hasAnchor" number="11.4.1">
-<h3><span class="header-section-number">11.4.1</span> The Policy Gradient Theorem<a href="chapter-5-reinforcement-learning---theory-and-applications.html#the-policy-gradient-theorem" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The gradient of expected return with respect to policy parameters:</p>
-<p><span class="math display">\[
-\nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta} \left[ \nabla_\theta \log \pi_\theta(a|s) Q^{\pi_\theta}(s, a) \right]
+<div id="types-of-knowledge-distillation" class="section level2 hasAnchor" number="14.3">
+<h2><span class="header-section-number">14.3</span> Types of Knowledge Distillation<a href="chapter-8-knowledge-distillation.html#types-of-knowledge-distillation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="response-based-distillation" class="section level3 hasAnchor" number="14.3.1">
+<h3><span class="header-section-number">14.3.1</span> Response-Based Distillation<a href="chapter-8-knowledge-distillation.html#response-based-distillation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Transfer knowledge from the teacher’s final output layer.</p>
+<p><strong>Soft Target Loss:</strong>
+<span class="math display">\[
+\mathcal{L}_{soft} = D_{KL}(p^T_{teacher} || p^T_{student})
 \]</span></p>
+<p><strong>Advantages:</strong> Simple, effective, model-agnostic</p>
 </div>
-<div id="reinforce-1" class="section level3 hasAnchor" number="11.4.2">
-<h3><span class="header-section-number">11.4.2</span> REINFORCE<a href="chapter-5-reinforcement-learning---theory-and-applications.html#reinforce-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The simplest policy gradient algorithm using Monte Carlo returns:</p>
-<p><span class="math display">\[
-\nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta} \left[ \sum_{t=0}^{T} \nabla_\theta \log \pi_\theta(a_t|s_t) G_t \right]
+<div id="feature-based-distillation" class="section level3 hasAnchor" number="14.3.2">
+<h3><span class="header-section-number">14.3.2</span> Feature-Based Distillation<a href="chapter-8-knowledge-distillation.html#feature-based-distillation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Transfer knowledge from intermediate representations.</p>
+<p><strong>FitNets (Romero et al., 2015):</strong>
+<span class="math display">\[
+\mathcal{L}_{hint} = ||W_s \cdot F_s - F_t||^2
 \]</span></p>
-<p>where <span class="math inline">\(G_t = \sum_{k=t}^{T} \gamma^{k-t} r_k\)</span> is the return from time <span class="math inline">\(t\)</span>.</p>
-<p><strong>Variance Reduction with Baseline:</strong></p>
-<p><span class="math display">\[
-\nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta} \left[ \nabla_\theta \log \pi_\theta(a|s) (Q^{\pi}(s, a) - b(s)) \right]
+<p>where <span class="math inline">\(W_s\)</span> is a learnable projection to match dimensions.</p>
+<p><strong>Attention Transfer:</strong>
+<span class="math display">\[
+\mathcal{L}_{AT} = \sum_l ||A^l_s - A^l_t||^2
 \]</span></p>
+<p>where attention maps <span class="math inline">\(A = \sum_c |F_c|^2\)</span> aggregate channel activations.</p>
 </div>
-<div id="advantage-actor-critic-a2c" class="section level3 hasAnchor" number="11.4.3">
-<h3><span class="header-section-number">11.4.3</span> Advantage Actor-Critic (A2C)<a href="chapter-5-reinforcement-learning---theory-and-applications.html#advantage-actor-critic-a2c" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Uses advantage function to reduce variance:</p>
-<p><span class="math display">\[
-A(s, a) = Q(s, a) - V(s)
-\]</span></p>
-<p><strong>Actor Update:</strong> <span class="math inline">\(\theta \leftarrow \theta + \alpha_\theta \nabla_\theta \log \pi_\theta(a|s) A(s, a)\)</span></p>
-<p><strong>Critic Update:</strong> <span class="math inline">\(\phi \leftarrow \phi - \alpha_\phi \nabla_\phi (V_\phi(s) - G_t)^2\)</span></p>
-</div>
-<div id="asynchronous-advantage-actor-critic-a3c" class="section level3 hasAnchor" number="11.4.4">
-<h3><span class="header-section-number">11.4.4</span> Asynchronous Advantage Actor-Critic (A3C)<a href="chapter-5-reinforcement-learning---theory-and-applications.html#asynchronous-advantage-actor-critic-a3c" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Parallelizes A2C across multiple workers:
-- Each worker interacts with its own environment copy
-- Asynchronous gradient updates to shared parameters
-- Diverse experience through different exploration</p>
-</div>
-<div id="proximal-policy-optimization-ppo-2" class="section level3 hasAnchor" number="11.4.5">
-<h3><span class="header-section-number">11.4.5</span> Proximal Policy Optimization (PPO)<a href="chapter-5-reinforcement-learning---theory-and-applications.html#proximal-policy-optimization-ppo-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>PPO constrains policy updates to prevent destructive large steps:</p>
-<p><span class="math display">\[
-\mathcal{L}^{CLIP}(\theta) = \mathbb{E}_t \left[ \min \left( r_t(\theta) A_t, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon) A_t \right) \right]
-\]</span></p>
-<p>where <span class="math inline">\(r_t(\theta) = \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{old}}(a_t|s_t)}\)</span> is the probability ratio.</p>
-<p><strong>Why PPO is Popular:</strong>
-- Simple to implement
-- Good sample efficiency
-- Stable training
-- Works across many domains</p>
-</div>
-<div id="trust-region-policy-optimization-trpo" class="section level3 hasAnchor" number="11.4.6">
-<h3><span class="header-section-number">11.4.6</span> Trust Region Policy Optimization (TRPO)<a href="chapter-5-reinforcement-learning---theory-and-applications.html#trust-region-policy-optimization-trpo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Constrains policy updates using KL divergence:</p>
-<p><span class="math display">\[
-\max_\theta \mathbb{E}_t \left[ \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{old}}(a_t|s_t)} A_t \right] \quad \text{s.t.} \quad \mathbb{E}_t[D_{KL}(\pi_{\theta_{old}} || \pi_\theta)] \leq \delta
-\]</span></p>
-<p>Uses conjugate gradient and line search for optimization.</p>
+<div id="relation-based-distillation" class="section level3 hasAnchor" number="14.3.3">
+<h3><span class="header-section-number">14.3.3</span> Relation-Based Distillation<a href="chapter-8-knowledge-distillation.html#relation-based-distillation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Transfer relationships between samples or layers.</p>
+<p><strong>Relational Knowledge Distillation (RKD):</strong></p>
+<p>Distance-wise: <span class="math inline">\(\mathcal{L}_D = \sum_{(i,j)} l_\delta(\psi_D(t_i, t_j), \psi_D(s_i, s_j))\)</span></p>
+<p>Angle-wise: <span class="math inline">\(\mathcal{L}_A = \sum_{(i,j,k)} l_\delta(\psi_A(t_i, t_j, t_k), \psi_A(s_i, s_j, s_k))\)</span></p>
+<p><strong>Contrastive Representation Distillation (CRD):</strong></p>
+<p>Uses contrastive learning to match teacher-student representations.</p>
 <hr />
 </div>
 </div>
-<div id="actor-critic-methods-2" class="section level2 hasAnchor" number="11.5">
-<h2><span class="header-section-number">11.5</span> Actor-Critic Methods<a href="chapter-5-reinforcement-learning---theory-and-applications.html#actor-critic-methods-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="soft-actor-critic-sac" class="section level3 hasAnchor" number="11.5.1">
-<h3><span class="header-section-number">11.5.1</span> Soft Actor-Critic (SAC)<a href="chapter-5-reinforcement-learning---theory-and-applications.html#soft-actor-critic-sac" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>SAC maximizes both expected return and entropy for exploration:</p>
-<p><span class="math display">\[
-J(\pi) = \sum_{t=0}^{T} \mathbb{E}_{(s_t, a_t) \sim \rho_\pi} \left[ r(s_t, a_t) + \alpha \mathcal{H}(\pi(\cdot|s_t)) \right]
-\]</span></p>
-<p><strong>Key Components:</strong>
-- <strong>Entropy Regularization</strong>: Encourages exploration
-- <strong>Twin Q-Networks</strong>: Two critics to reduce overestimation
-- <strong>Automatic Temperature Tuning</strong>: Learns optimal <span class="math inline">\(\alpha\)</span></p>
-<p><strong>Updates:</strong></p>
-<p>Critic: <span class="math inline">\(\mathcal{L}_Q = \mathbb{E} \left[ \left( Q(s,a) - (r + \gamma (Q_{target}(s&#39;, a&#39;) - \alpha \log \pi(a&#39;|s&#39;))) \right)^2 \right]\)</span></p>
-<p>Actor: <span class="math inline">\(\mathcal{L}_\pi = \mathbb{E}_{s \sim \mathcal{D}, a \sim \pi} \left[ \alpha \log \pi(a|s) - Q(s, a) \right]\)</span></p>
-</div>
-<div id="twin-delayed-ddpg-td3" class="section level3 hasAnchor" number="11.5.2">
-<h3><span class="header-section-number">11.5.2</span> Twin Delayed DDPG (TD3)<a href="chapter-5-reinforcement-learning---theory-and-applications.html#twin-delayed-ddpg-td3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Addresses overestimation in DDPG with three key tricks:</p>
+<div id="advanced-distillation-methods" class="section level2 hasAnchor" number="14.4">
+<h2><span class="header-section-number">14.4</span> Advanced Distillation Methods<a href="chapter-8-knowledge-distillation.html#advanced-distillation-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="self-distillation" class="section level3 hasAnchor" number="14.4.1">
+<h3><span class="header-section-number">14.4.1</span> Self-Distillation<a href="chapter-8-knowledge-distillation.html#self-distillation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The model distills knowledge into itself:</p>
 <ol style="list-style-type: decimal">
-<li><p><strong>Clipped Double Q-Learning</strong>: Use minimum of two critics
+<li><strong>Born-Again Networks:</strong> Train student with same architecture as teacher</li>
+<li><strong>Deep Mutual Learning:</strong> Multiple students teach each other</li>
+<li><strong>Progressive Self-Distillation:</strong> Deeper layers teach shallower ones</li>
+</ol>
+<p><span class="math display">\[
+\mathcal{L}_{self} = \sum_{l} D_{KL}(p^{(L)} || p^{(l)})
+\]</span></p>
+</div>
+<div id="online-distillation" class="section level3 hasAnchor" number="14.4.2">
+<h3><span class="header-section-number">14.4.2</span> Online Distillation<a href="chapter-8-knowledge-distillation.html#online-distillation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Teacher and student train simultaneously:</p>
+<p><strong>Deep Mutual Learning:</strong>
 <span class="math display">\[
-y = r + \gamma \min_{i=1,2} Q_{\theta_i&#39;}(s&#39;, \tilde{a}&#39;)
-\]</span></p></li>
-<li><p><strong>Delayed Policy Updates</strong>: Update actor less frequently than critics</p></li>
-<li><p><strong>Target Policy Smoothing</strong>: Add noise to target actions
+\mathcal{L}_1 = \mathcal{L}_{CE}(y, p_1) + D_{KL}(p_2 || p_1)
+\]</span>
 <span class="math display">\[
-\tilde{a}&#39; = \pi_{\phi&#39;}(s&#39;) + \epsilon, \quad \epsilon \sim \text{clip}(\mathcal{N}(0, \sigma), -c, c)
+\mathcal{L}_2 = \mathcal{L}_{CE}(y, p_2) + D_{KL}(p_1 || p_2)
+\]</span></p>
+<p><strong>Advantages:</strong>
+- No pre-trained teacher required
+- Both networks improve
+- More efficient training</p>
+</div>
+<div id="multi-teacher-distillation" class="section level3 hasAnchor" number="14.4.3">
+<h3><span class="header-section-number">14.4.3</span> Multi-Teacher Distillation<a href="chapter-8-knowledge-distillation.html#multi-teacher-distillation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Combine knowledge from multiple teachers:</p>
+<p><span class="math display">\[
+\mathcal{L}_{MT} = \sum_{k=1}^{K} w_k \cdot D_{KL}(p^T_{teacher_k} || p^T_{student})
+\]</span></p>
+<p><strong>Strategies:</strong>
+- <strong>Averaging:</strong> Equal weights for all teachers
+- <strong>Learned Weights:</strong> Attention-based aggregation
+- <strong>Ensemble:</strong> Teacher predictions combined before distillation</p>
+</div>
+<div id="data-free-distillation" class="section level3 hasAnchor" number="14.4.4">
+<h3><span class="header-section-number">14.4.4</span> Data-Free Distillation<a href="chapter-8-knowledge-distillation.html#data-free-distillation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Distill without access to original training data:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Generator-Based:</strong> Train GAN to synthesize training data</li>
+<li><strong>Activation Matching:</strong> Match batch normalization statistics</li>
+<li><strong>Inversion:</strong> Optimize inputs to match teacher activations</li>
+</ol>
+<p><span class="math display">\[
+x^* = \arg\min_x ||F_t(x) - \mu_{BN}||^2 + \mathcal{R}(x)
+\]</span></p>
+<hr />
+</div>
+</div>
+<div id="knowledge-distillation-for-specific-architectures" class="section level2 hasAnchor" number="14.5">
+<h2><span class="header-section-number">14.5</span> Knowledge Distillation for Specific Architectures<a href="chapter-8-knowledge-distillation.html#knowledge-distillation-for-specific-architectures" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="distilling-transformers" class="section level3 hasAnchor" number="14.5.1">
+<h3><span class="header-section-number">14.5.1</span> Distilling Transformers<a href="chapter-8-knowledge-distillation.html#distilling-transformers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>DistilBERT (Sanh et al., 2019):</strong>
+- 40% smaller, 60% faster than BERT
+- 97% of BERT’s performance</p>
+<p><strong>Loss Components:</strong>
+<span class="math display">\[
+\mathcal{L} = \alpha \mathcal{L}_{CE} + \beta \mathcal{L}_{MLM} + \gamma \mathcal{L}_{cos}
+\]</span></p>
+<p>where <span class="math inline">\(\mathcal{L}_{cos}\)</span> aligns hidden states:
+<span class="math display">\[
+\mathcal{L}_{cos} = -\cos(h_s, h_t)
+\]</span></p>
+<p><strong>TinyBERT:</strong>
+- Layer-to-layer distillation
+- Attention transfer
+- Embedding distillation</p>
+</div>
+<div id="distilling-large-language-models" class="section level3 hasAnchor" number="14.5.2">
+<h3><span class="header-section-number">14.5.2</span> Distilling Large Language Models<a href="chapter-8-knowledge-distillation.html#distilling-large-language-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Key Challenges:</strong>
+- Massive model sizes (billions of parameters)
+- Autoregressive generation
+- Multi-task capabilities</p>
+<p><strong>Approaches:</strong></p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Sequence-Level Distillation:</strong>
+<span class="math display">\[
+\mathcal{L}_{seq} = -\sum_t \log p_s(y_t | y_{&lt;t}, x)
 \]</span></p></li>
+<li><p><strong>Token-Level Distillation:</strong>
+<span class="math display">\[
+\mathcal{L}_{token} = \sum_t D_{KL}(p_t^T || p_s^T)
+\]</span></p></li>
+<li><p><strong>Chain-of-Thought Distillation:</strong></p>
+<ul>
+<li>Teacher generates reasoning steps</li>
+<li>Student learns to replicate reasoning</li>
+</ul></li>
 </ol>
 </div>
-<div id="deep-deterministic-policy-gradient-ddpg" class="section level3 hasAnchor" number="11.5.3">
-<h3><span class="header-section-number">11.5.3</span> Deep Deterministic Policy Gradient (DDPG)<a href="chapter-5-reinforcement-learning---theory-and-applications.html#deep-deterministic-policy-gradient-ddpg" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Extends DQN to continuous action spaces:</p>
-<ul>
-<li><strong>Actor</strong>: Deterministic policy <span class="math inline">\(\mu_\theta(s)\)</span></li>
-<li><strong>Critic</strong>: Q-function <span class="math inline">\(Q_\phi(s, a)\)</span></li>
-</ul>
-<p>Actor Update:
-<span class="math display">\[
-\nabla_\theta J \approx \mathbb{E}_s \left[ \nabla_a Q_\phi(s, a)|_{a=\mu_\theta(s)} \nabla_\theta \mu_\theta(s) \right]
-\]</span></p>
+<div id="distilling-vision-models" class="section level3 hasAnchor" number="14.5.3">
+<h3><span class="header-section-number">14.5.3</span> Distilling Vision Models<a href="chapter-8-knowledge-distillation.html#distilling-vision-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Compact Convolutional Transformers:</strong>
+- Distill ViT into efficient CNN-Transformer hybrids
+- Use both soft labels and feature matching</p>
+<p><strong>Detection &amp; Segmentation:</strong>
+- Distill region proposals
+- Match feature pyramids
+- Transfer localization knowledge</p>
 <hr />
 </div>
 </div>
-<div id="model-based-reinforcement-learning-1" class="section level2 hasAnchor" number="11.6">
-<h2><span class="header-section-number">11.6</span> Model-Based Reinforcement Learning<a href="chapter-5-reinforcement-learning---theory-and-applications.html#model-based-reinforcement-learning-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="world-models" class="section level3 hasAnchor" number="11.6.1">
-<h3><span class="header-section-number">11.6.1</span> World Models<a href="chapter-5-reinforcement-learning---theory-and-applications.html#world-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Learn a model of the environment and use it for planning:</p>
+<div id="knowledge-distillation-for-world-models" class="section level2 hasAnchor" number="14.6">
+<h2><span class="header-section-number">14.6</span> Knowledge Distillation for World Models<a href="chapter-8-knowledge-distillation.html#knowledge-distillation-for-world-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="distilling-environment-dynamics" class="section level3 hasAnchor" number="14.6.1">
+<h3><span class="header-section-number">14.6.1</span> Distilling Environment Dynamics<a href="chapter-8-knowledge-distillation.html#distilling-environment-dynamics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Transfer world model knowledge for efficient planning:</p>
 <p><span class="math display">\[
-\hat{s}_{t+1} = f_\theta(s_t, a_t)
+\mathcal{L}_{dynamics} = ||f_s(s_t, a_t) - f_t(s_t, a_t)||^2
 \]</span></p>
-<p><strong>Components:</strong>
-1. <strong>Dynamics Model</strong>: Predicts next state
-2. <strong>Reward Model</strong>: Predicts reward
-3. <strong>Planning</strong>: Use model for lookahead (MPC, MCTS)</p>
 </div>
-<div id="dyna-q" class="section level3 hasAnchor" number="11.6.2">
-<h3><span class="header-section-number">11.6.2</span> Dyna-Q<a href="chapter-5-reinforcement-learning---theory-and-applications.html#dyna-q" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Integrates learning and planning:
-1. Take action, observe transition
-2. Update Q-values from real experience
-3. Update model from real experience
-4. Plan: Sample from model, update Q-values</p>
-</div>
-<div id="model-predictive-control-mpc" class="section level3 hasAnchor" number="11.6.3">
-<h3><span class="header-section-number">11.6.3</span> Model Predictive Control (MPC)<a href="chapter-5-reinforcement-learning---theory-and-applications.html#model-predictive-control-mpc" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>At each step:
-1. Optimize action sequence using learned model
-2. Execute first action
-3. Re-plan at next step</p>
+<div id="latent-space-distillation" class="section level3 hasAnchor" number="14.6.2">
+<h3><span class="header-section-number">14.6.2</span> Latent Space Distillation<a href="chapter-8-knowledge-distillation.html#latent-space-distillation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Compress latent representations while preserving predictive power:</p>
 <p><span class="math display">\[
-a_{0:H}^* = \arg\max_{a_{0:H}} \sum_{t=0}^{H} \gamma^t \hat{r}(s_t, a_t)
+\mathcal{L}_{latent} = D_{KL}(q_t(z|x) || q_s(z|x)) + ||d_s(z) - d_t(z)||^2
 \]</span></p>
 </div>
-<div id="dreamer" class="section level3 hasAnchor" number="11.6.4">
-<h3><span class="header-section-number">11.6.4</span> Dreamer<a href="chapter-5-reinforcement-learning---theory-and-applications.html#dreamer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>State-of-the-art model-based RL:
-1. <strong>World Model</strong>: Recurrent State-Space Model (RSSM)
-2. <strong>Imagination</strong>: Roll out trajectories in latent space
-3. <strong>Actor-Critic</strong>: Train on imagined trajectories</p>
-<hr />
-</div>
-</div>
-<div id="exploration-strategies" class="section level2 hasAnchor" number="11.7">
-<h2><span class="header-section-number">11.7</span> Exploration Strategies<a href="chapter-5-reinforcement-learning---theory-and-applications.html#exploration-strategies" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="epsilon-greedy" class="section level3 hasAnchor" number="11.7.1">
-<h3><span class="header-section-number">11.7.1</span> Epsilon-Greedy<a href="chapter-5-reinforcement-learning---theory-and-applications.html#epsilon-greedy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="policy-distillation" class="section level3 hasAnchor" number="14.6.3">
+<h3><span class="header-section-number">14.6.3</span> Policy Distillation<a href="chapter-8-knowledge-distillation.html#policy-distillation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Transfer learned policies between agents:</p>
 <p><span class="math display">\[
-a = \begin{cases} \arg\max_a Q(s, a) &amp; \text{with probability } 1 - \epsilon \\ \text{random action} &amp; \text{with probability } \epsilon \end{cases}
+\mathcal{L}_{policy} = D_{KL}(\pi_t(a|s) || \pi_s(a|s))
 \]</span></p>
+<p><strong>Applications:</strong>
+- Sim-to-real transfer
+- Multi-task learning
+- Continual learning</p>
+<hr />
 </div>
-<div id="upper-confidence-bound-ucb" class="section level3 hasAnchor" number="11.7.2">
-<h3><span class="header-section-number">11.7.2</span> Upper Confidence Bound (UCB)<a href="chapter-5-reinforcement-learning---theory-and-applications.html#upper-confidence-bound-ucb" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="theoretical-foundations" class="section level2 hasAnchor" number="14.7">
+<h2><span class="header-section-number">14.7</span> Theoretical Foundations<a href="chapter-8-knowledge-distillation.html#theoretical-foundations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="why-does-distillation-work" class="section level3 hasAnchor" number="14.7.1">
+<h3><span class="header-section-number">14.7.1</span> Why Does Distillation Work?<a href="chapter-8-knowledge-distillation.html#why-does-distillation-work" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><strong>Label Smoothing Effect:</strong> Soft targets prevent overconfident predictions</li>
+<li><strong>Implicit Data Augmentation:</strong> Each sample provides richer supervision</li>
+<li><strong>Regularization:</strong> Teacher’s knowledge acts as a prior</li>
+<li><strong>Curriculum Learning:</strong> Teacher provides appropriately difficult targets</li>
+</ol>
+</div>
+<div id="information-theoretic-view" class="section level3 hasAnchor" number="14.7.2">
+<h3><span class="header-section-number">14.7.2</span> Information Theoretic View<a href="chapter-8-knowledge-distillation.html#information-theoretic-view" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Distillation maximizes mutual information between teacher and student:</p>
 <p><span class="math display">\[
-a = \arg\max_a \left[ Q(s, a) + c \sqrt{\frac{\ln t}{N(s, a)}} \right]
+\max I(T; S) = H(T) - H(T|S)
 \]</span></p>
 </div>
-<div id="intrinsic-motivation" class="section level3 hasAnchor" number="11.7.3">
-<h3><span class="header-section-number">11.7.3</span> Intrinsic Motivation<a href="chapter-5-reinforcement-learning---theory-and-applications.html#intrinsic-motivation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Add curiosity-driven rewards:
-- <strong>Prediction Error</strong>: Reward for surprising states
-- <strong>Information Gain</strong>: Reward for reducing uncertainty
-- <strong>State Visitation Count</strong>: Reward for novel states</p>
-</div>
-<div id="noisy-networks" class="section level3 hasAnchor" number="11.7.4">
-<h3><span class="header-section-number">11.7.4</span> Noisy Networks<a href="chapter-5-reinforcement-learning---theory-and-applications.html#noisy-networks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Replace linear layers with noisy versions:
+<div id="generalization-bounds" class="section level3 hasAnchor" number="14.7.3">
+<h3><span class="header-section-number">14.7.3</span> Generalization Bounds<a href="chapter-8-knowledge-distillation.html#generalization-bounds" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Student generalization error bounded by:
 <span class="math display">\[
-y = (W + \sigma_{W} \odot \epsilon_W) x + (b + \sigma_b \odot \epsilon_b)
+\epsilon_s \leq \epsilon_t + d(p_t, p_s) + \text{complexity}(s)
 \]</span></p>
+<p>where <span class="math inline">\(d(p_t, p_s)\)</span> measures divergence between teacher and student distributions.</p>
 <hr />
 </div>
 </div>
-<div id="multi-agent-reinforcement-learning-marl" class="section level2 hasAnchor" number="11.8">
-<h2><span class="header-section-number">11.8</span> Multi-Agent Reinforcement Learning (MARL)<a href="chapter-5-reinforcement-learning---theory-and-applications.html#multi-agent-reinforcement-learning-marl" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="independent-learners" class="section level3 hasAnchor" number="11.8.1">
-<h3><span class="header-section-number">11.8.1</span> Independent Learners<a href="chapter-5-reinforcement-learning---theory-and-applications.html#independent-learners" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Each agent learns independently, treating others as part of environment.</p>
-</div>
-<div id="centralized-training-decentralized-execution-ctde" class="section level3 hasAnchor" number="11.8.2">
-<h3><span class="header-section-number">11.8.2</span> Centralized Training, Decentralized Execution (CTDE)<a href="chapter-5-reinforcement-learning---theory-and-applications.html#centralized-training-decentralized-execution-ctde" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li>Train with global information</li>
-<li>Execute with local observations only</li>
-</ul>
-</div>
-<div id="qmix" class="section level3 hasAnchor" number="11.8.3">
-<h3><span class="header-section-number">11.8.3</span> QMIX<a href="chapter-5-reinforcement-learning---theory-and-applications.html#qmix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Factorizes joint Q-function:
-<span class="math display">\[
-Q_{tot}(\boldsymbol{\tau}, \boldsymbol{a}) = f_\theta(Q_1(\tau_1, a_1), ..., Q_n(\tau_n, a_n))
-\]</span></p>
-<p>where <span class="math inline">\(f_\theta\)</span> is a monotonic mixing network.</p>
-<hr />
-</div>
-</div>
-<div id="offline-reinforcement-learning" class="section level2 hasAnchor" number="11.9">
-<h2><span class="header-section-number">11.9</span> Offline Reinforcement Learning<a href="chapter-5-reinforcement-learning---theory-and-applications.html#offline-reinforcement-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Learn from fixed datasets without environment interaction.</p>
-<div id="conservative-q-learning-cql" class="section level3 hasAnchor" number="11.9.1">
-<h3><span class="header-section-number">11.9.1</span> Conservative Q-Learning (CQL)<a href="chapter-5-reinforcement-learning---theory-and-applications.html#conservative-q-learning-cql" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Adds penalty for out-of-distribution actions:
-<span class="math display">\[
-\mathcal{L}_{CQL} = \alpha \mathbb{E}_{s \sim \mathcal{D}} \left[ \log \sum_a \exp(Q(s, a)) - \mathbb{E}_{a \sim \hat{\pi}_\beta} [Q(s, a)] \right] + \mathcal{L}_{TD}
-\]</span></p>
-</div>
-<div id="decision-transformer" class="section level3 hasAnchor" number="11.9.2">
-<h3><span class="header-section-number">11.9.2</span> Decision Transformer<a href="chapter-5-reinforcement-learning---theory-and-applications.html#decision-transformer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Frames RL as sequence modeling:
-- Input: (Return-to-go, State, Action) sequences
-- Output: Next action
-- Architecture: GPT-style transformer</p>
-<hr />
-</div>
-</div>
-<div id="applications-of-reinforcement-learning" class="section level2 hasAnchor" number="11.10">
-<h2><span class="header-section-number">11.10</span> Applications of Reinforcement Learning<a href="chapter-5-reinforcement-learning---theory-and-applications.html#applications-of-reinforcement-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="practical-considerations" class="section level2 hasAnchor" number="14.8">
+<h2><span class="header-section-number">14.8</span> Practical Considerations<a href="chapter-8-knowledge-distillation.html#practical-considerations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="hyperparameter-selection" class="section level3 hasAnchor" number="14.8.1">
+<h3><span class="header-section-number">14.8.1</span> Hyperparameter Selection<a href="chapter-8-knowledge-distillation.html#hyperparameter-selection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <table>
 <colgroup>
-<col width="20%" />
-<col width="33%" />
-<col width="46%" />
+<col width="32%" />
+<col width="44%" />
+<col width="23%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">Domain</th>
-<th align="left">Application</th>
-<th align="left">Notable Examples</th>
+<th align="left">Parameter</th>
+<th align="left">Typical Range</th>
+<th align="left">Effect</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><strong>Games</strong></td>
-<td align="left">Game playing</td>
-<td align="left">AlphaGo, AlphaStar, OpenAI Five</td>
+<td align="left">Temperature <span class="math inline">\(T\)</span></td>
+<td align="left">3-20</td>
+<td align="left">Higher = softer targets</td>
 </tr>
 <tr class="even">
-<td align="left"><strong>Robotics</strong></td>
-<td align="left">Manipulation, locomotion</td>
-<td align="left">Boston Dynamics, manipulation tasks</td>
+<td align="left"><span class="math inline">\(\alpha\)</span> (KD weight)</td>
+<td align="left">0.5-0.9</td>
+<td align="left">Balance KD vs task loss</td>
 </tr>
 <tr class="odd">
-<td align="left"><strong>Autonomous Vehicles</strong></td>
-<td align="left">Navigation, decision-making</td>
-<td align="left">Waymo, Tesla Autopilot</td>
+<td align="left">Student capacity</td>
+<td align="left">0.1x-0.5x teacher</td>
+<td align="left">Trade-off: size vs performance</td>
 </tr>
 <tr class="even">
-<td align="left"><strong>Finance</strong></td>
-<td align="left">Trading, portfolio optimization</td>
-<td align="left">Algorithmic trading systems</td>
-</tr>
-<tr class="odd">
-<td align="left"><strong>Healthcare</strong></td>
-<td align="left">Treatment optimization</td>
-<td align="left">Drug dosing, clinical trials</td>
-</tr>
-<tr class="even">
-<td align="left"><strong>NLP</strong></td>
-<td align="left">RLHF for language models</td>
-<td align="left">ChatGPT, Claude</td>
-</tr>
-<tr class="odd">
-<td align="left"><strong>Recommendation</strong></td>
-<td align="left">Personalization</td>
-<td align="left">Netflix, YouTube</td>
+<td align="left">Training epochs</td>
+<td align="left">2-3x standard</td>
+<td align="left">Longer training helps</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="summary-algorithm-selection-guide" class="section level2 hasAnchor" number="11.11">
-<h2><span class="header-section-number">11.11</span> Summary: Algorithm Selection Guide<a href="chapter-5-reinforcement-learning---theory-and-applications.html#summary-algorithm-selection-guide" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="architecture-design" class="section level3 hasAnchor" number="14.8.2">
+<h3><span class="header-section-number">14.8.2</span> Architecture Design<a href="chapter-8-knowledge-distillation.html#architecture-design" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Student Architecture Guidelines:</strong>
+- Reduce depth more than width
+- Keep similar receptive field
+- Match teacher’s inductive biases when possible</p>
+</div>
+<div id="when-distillation-fails" class="section level3 hasAnchor" number="14.8.3">
+<h3><span class="header-section-number">14.8.3</span> When Distillation Fails<a href="chapter-8-knowledge-distillation.html#when-distillation-fails" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <table>
+<colgroup>
+<col width="29%" />
+<col width="29%" />
+<col width="41%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th align="left">Algorithm</th>
-<th align="left">Action Space</th>
-<th align="left">Sample Efficiency</th>
-<th align="left">Stability</th>
-<th align="left">Use Case</th>
+<th align="left">Issue</th>
+<th align="left">Cause</th>
+<th align="left">Solution</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><strong>DQN</strong></td>
-<td align="left">Discrete</td>
-<td align="left">Medium</td>
-<td align="left">Medium</td>
-<td align="left">Atari games</td>
+<td align="left">No improvement</td>
+<td align="left">Capacity gap too large</td>
+<td align="left">Use intermediate-sized teacher</td>
 </tr>
 <tr class="even">
-<td align="left"><strong>PPO</strong></td>
-<td align="left">Both</td>
-<td align="left">Medium</td>
-<td align="left">High</td>
-<td align="left">General purpose</td>
+<td align="left">Slow convergence</td>
+<td align="left">Temperature too high</td>
+<td align="left">Anneal temperature</td>
 </tr>
 <tr class="odd">
-<td align="left"><strong>SAC</strong></td>
-<td align="left">Continuous</td>
-<td align="left">High</td>
-<td align="left">High</td>
-<td align="left">Robotics</td>
+<td align="left">Worse than scratch</td>
+<td align="left">Poor teacher</td>
+<td align="left">Ensure teacher quality</td>
 </tr>
 <tr class="even">
-<td align="left"><strong>TD3</strong></td>
-<td align="left">Continuous</td>
-<td align="left">High</td>
-<td align="left">High</td>
-<td align="left">Robotics</td>
-</tr>
-<tr class="odd">
-<td align="left"><strong>Dreamer</strong></td>
-<td align="left">Both</td>
-<td align="left">Very High</td>
-<td align="left">Medium</td>
-<td align="left">Complex environments</td>
-</tr>
-<tr class="even">
-<td align="left"><strong>Decision Transformer</strong></td>
-<td align="left">Both</td>
-<td align="left">N/A (Offline)</td>
-<td align="left">High</td>
-<td align="left">Offline RL</td>
+<td align="left">Overfitting</td>
+<td align="left">Too few samples</td>
+<td align="left">Data augmentation</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<p><em>For further reading: Sutton &amp; Barto’s “Reinforcement Learning: An Introduction” and OpenAI Spinning Up documentation.</em></p>
+</div>
+</div>
+<div id="state-of-the-art-methods" class="section level2 hasAnchor" number="14.9">
+<h2><span class="header-section-number">14.9</span> State-of-the-Art Methods<a href="chapter-8-knowledge-distillation.html#state-of-the-art-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="knowledge-distillation-with-feature-matching" class="section level3 hasAnchor" number="14.9.1">
+<h3><span class="header-section-number">14.9.1</span> Knowledge Distillation with Feature Matching<a href="chapter-8-knowledge-distillation.html#knowledge-distillation-with-feature-matching" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Comprehensive KD Framework:</strong>
+<span class="math display">\[
+\mathcal{L} = \lambda_1 \mathcal{L}_{task} + \lambda_2 \mathcal{L}_{logit} + \lambda_3 \mathcal{L}_{feature} + \lambda_4 \mathcal{L}_{relation}
+\]</span></p>
+</div>
+<div id="curriculum-based-distillation" class="section level3 hasAnchor" number="14.9.2">
+<h3><span class="header-section-number">14.9.2</span> Curriculum-Based Distillation<a href="chapter-8-knowledge-distillation.html#curriculum-based-distillation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Gradually increase difficulty:
+1. Start with easy samples (high teacher confidence)
+2. Progress to harder samples
+3. Anneal temperature from high to low</p>
+</div>
+<div id="differentiable-architecture-search-distillation" class="section level3 hasAnchor" number="14.9.3">
+<h3><span class="header-section-number">14.9.3</span> Differentiable Architecture Search + Distillation<a href="chapter-8-knowledge-distillation.html#differentiable-architecture-search-distillation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Jointly optimize student architecture and knowledge transfer.</p>
+<hr />
+</div>
+</div>
+<div id="applications" class="section level2 hasAnchor" number="14.10">
+<h2><span class="header-section-number">14.10</span> Applications<a href="chapter-8-knowledge-distillation.html#applications" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="edge-deployment" class="section level3 hasAnchor" number="14.10.1">
+<h3><span class="header-section-number">14.10.1</span> Edge Deployment<a href="chapter-8-knowledge-distillation.html#edge-deployment" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Application</th>
+<th align="left">Teacher</th>
+<th align="left">Student</th>
+<th align="left">Speedup</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Mobile vision</td>
+<td align="left">ResNet-152</td>
+<td align="left">MobileNetV3</td>
+<td align="left">10x</td>
+</tr>
+<tr class="even">
+<td align="left">On-device NLP</td>
+<td align="left">BERT-Large</td>
+<td align="left">DistilBERT</td>
+<td align="left">6x</td>
+</tr>
+<tr class="odd">
+<td align="left">Embedded systems</td>
+<td align="left">EfficientNet-B7</td>
+<td align="left">EfficientNet-B0</td>
+<td align="left">20x</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="model-compression-pipeline" class="section level3 hasAnchor" number="14.10.2">
+<h3><span class="header-section-number">14.10.2</span> Model Compression Pipeline<a href="chapter-8-knowledge-distillation.html#model-compression-pipeline" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>Full Pipeline:
+1. Train large teacher (or use pretrained)
+2. Knowledge distillation → smaller student
+3. Quantization → INT8/INT4
+4. Pruning → remove redundant weights
+5. Compile for target hardware</code></pre>
+</div>
+<div id="federated-learning" class="section level3 hasAnchor" number="14.10.3">
+<h3><span class="header-section-number">14.10.3</span> Federated Learning<a href="chapter-8-knowledge-distillation.html#federated-learning" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Distillation enables:
+- Heterogeneous model aggregation
+- Communication-efficient updates
+- Privacy-preserving knowledge transfer</p>
+<hr />
+</div>
+</div>
+<div id="summary-1" class="section level2 hasAnchor" number="14.11">
+<h2><span class="header-section-number">14.11</span> Summary<a href="chapter-8-knowledge-distillation.html#summary-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="key-takeaways" class="section level3 hasAnchor" number="14.11.1">
+<h3><span class="header-section-number">14.11.1</span> Key Takeaways<a href="chapter-8-knowledge-distillation.html#key-takeaways" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><strong>Soft labels contain dark knowledge</strong> about inter-class relationships</li>
+<li><strong>Temperature controls</strong> the softness of probability distributions</li>
+<li><strong>Feature-based methods</strong> transfer richer intermediate representations</li>
+<li><strong>Self-distillation</strong> can improve models without external teachers</li>
+<li><strong>Distillation complements</strong> other compression techniques (pruning, quantization)</li>
+</ol>
+</div>
+<div id="comparison-of-methods" class="section level3 hasAnchor" number="14.11.2">
+<h3><span class="header-section-number">14.11.2</span> Comparison of Methods<a href="chapter-8-knowledge-distillation.html#comparison-of-methods" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Method</th>
+<th align="left">Knowledge Type</th>
+<th align="left">Data Required</th>
+<th align="left">Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Response-based</td>
+<td align="left">Output logits</td>
+<td align="left">Original data</td>
+<td align="left">Low</td>
+</tr>
+<tr class="even">
+<td align="left">Feature-based</td>
+<td align="left">Intermediate features</td>
+<td align="left">Original data</td>
+<td align="left">Medium</td>
+</tr>
+<tr class="odd">
+<td align="left">Relation-based</td>
+<td align="left">Sample relationships</td>
+<td align="left">Original data</td>
+<td align="left">Medium</td>
+</tr>
+<tr class="even">
+<td align="left">Data-free</td>
+<td align="left">Synthetic</td>
+<td align="left">None</td>
+<td align="left">High</td>
+</tr>
+<tr class="odd">
+<td align="left">Self-distillation</td>
+<td align="left">Self-knowledge</td>
+<td align="left">Original data</td>
+<td align="left">Low</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="connection-to-world-models" class="section level3 hasAnchor" number="14.11.3">
+<h3><span class="header-section-number">14.11.3</span> Connection to World Models<a href="chapter-8-knowledge-distillation.html#connection-to-world-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Knowledge distillation is essential for deploying world models in real-world applications:
+- <strong>Compress dynamics models</strong> for real-time inference
+- <strong>Transfer planning knowledge</strong> to lightweight agents
+- <strong>Enable edge deployment</strong> of predictive systems</p>
+<hr />
+<p><em>For further reading: Hinton et al. “Distilling the Knowledge in a Neural Network” (2015) and Gou et al. “Knowledge Distillation: A Survey” (2021).</em></p>
 
+</div>
 </div>
 </div>
             </section>
@@ -1044,8 +1067,8 @@ Q_{tot}(\boldsymbol{\tau}, \boldsymbol{a}) = f_\theta(Q_1(\tau_1, a_1), ..., Q_n
           </div>
         </div>
       </div>
-<a href="conclusion-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="chapter-6-dino-world-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="chapter-7-jepa-architecture.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
