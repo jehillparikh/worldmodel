@@ -1,4 +1,4 @@
-# Chapter 8: Knowledge Distillation
+# Chapter 10: Knowledge Distillation
 
 > *"The goal is to transfer the dark knowledge from a large model to a small model."*
 > — Geoffrey Hinton

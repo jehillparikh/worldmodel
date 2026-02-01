@@ -1,4 +1,4 @@
-# Chapter 7: JEPA Architecture
+# Chapter 9: JEPA Architecture
 
 
 

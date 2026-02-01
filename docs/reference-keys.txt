@@ -1,5 +1,5 @@
 tab:vit-applications
-introduction
+chapter-1-introduction
 the-next-frontier-in-ai
 foundations-of-world-models
 what-you-will-learn
@@ -57,7 +57,7 @@ the-intuition
 mathematical-formulation
 score-based-generative-models
 summary
-chapter-4-markov-decision-process-bellman-equation
+chapter-6-markov-decision-process-bellman-equation
 state-transition-probability
 policy-in-mdp
 optimal-policy-pi
@@ -123,7 +123,7 @@ value-update-critic
 benefits-of-actor-critic-methods
 types-of-actor-critic-methods
 conclusion-1
-chapter-5-reinforcement-learning---theory-and-applications
+chapter-7-reinforcement-learning---theory-and-applications
 fundamentals-of-reinforcement-learning
 key-components
 the-rl-objective
@@ -146,6 +146,15 @@ advantage-actor-critic-a2c
 asynchronous-advantage-actor-critic-a3c
 proximal-policy-optimization-ppo-2
 trust-region-policy-optimization-trpo
+generalized-policy-optimization-gpo-methods
+direct-preference-optimization-dpo
+group-relative-policy-optimization-grpo
+identity-preference-optimization-ipo
+kahneman-tversky-optimization-kto
+odds-ratio-preference-optimization-orpo
+reinforcement-learning-from-human-feedback-rlhf
+comparison-of-gpo-methods
+practical-recommendations
 actor-critic-methods-2
 soft-actor-critic-sac
 twin-delayed-ddpg-td3
@@ -169,8 +178,8 @@ conservative-q-learning-cql
 decision-transformer
 applications-of-reinforcement-learning
 summary-algorithm-selection-guide
-chapter-6-dino-world-models
-introduction-1
+chapter-8-dino-world-models
+introduction
 what-is-dino-wm
 why-is-this-important
 key-contributions
@@ -187,7 +196,7 @@ key-findings
 conclusion-2
 future-directions
 references
-chapter-7-jepa-architecture
+chapter-9-jepa-architecture
 joint-embedding-predictive-architecture-jepa
 core-architecture-of-jepa
 variants-of-jepa
@@ -195,7 +204,7 @@ image-based-jepa-i-jepa
 motion-content-jepa-mc-jepa
 video-jepa-v-jepa
 applications-and-future-directions
-chapter-8-knowledge-distillation
+chapter-10-knowledge-distillation
 motivation-for-knowledge-distillation
 the-deployment-challenge
 why-not-just-train-a-small-model

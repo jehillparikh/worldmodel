@@ -1,4 +1,4 @@
-# Chapter 4: Markov Decision Process & Bellman Equation
+# Chapter 6: Markov Decision Process & Bellman Equation
 
 A **Markov Decision Process (MDP)** is a framework for modeling decision-making where outcomes are partly random and partly controlled by an agent. MDPs are widely used in **reinforcement learning (RL), robotics, finance, and game theory**.
 

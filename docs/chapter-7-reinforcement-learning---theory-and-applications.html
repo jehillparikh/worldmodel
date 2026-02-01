@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Foundations of World Models</title>
+  <title>Chapter 11 Chapter 7: Reinforcement Learning - Theory and Applications | Foundations of World Models</title>
   <meta name="description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Foundations of World Models" />
+  <meta property="og:title" content="Chapter 11 Chapter 7: Reinforcement Learning - Theory and Applications | Foundations of World Models" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
   <meta property="og:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="github-repo" content="jehillparikh/worldmodel" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Foundations of World Models" />
+  <meta name="twitter:title" content="Chapter 11 Chapter 7: Reinforcement Learning - Theory and Applications | Foundations of World Models" />
   
   <meta name="twitter:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="twitter:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="chapter-1-introduction.html"/>
+<link rel="prev" href="conclusion-1.html"/>
+<link rel="next" href="chapter-8-dino-world-models.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -542,82 +542,689 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Foundations of World Models</h1>
-<h2 class="subtitle"><em>From Transformers to Predictive Intelligence</em></h2>
-<p class="author"><em>Jehill Parikh</em></p>
-<p class="date"><em>February 2026</em></p>
-</div>
-<div id="preface" class="section level1 unnumbered hasAnchor">
-<h1>Preface<a href="index.html#preface" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Welcome to <strong>Foundations of World Models</strong>.</p>
-<p>This book provides a comprehensive exploration of <strong>World Models</strong>—AI systems that build internal representations of their environment to understand, predict, and plan. Drawing from advances in deep learning, reinforcement learning, and cognitive science, World Models represent a paradigm shift from reactive AI systems to ones capable of imagination and foresight.</p>
-<div id="what-are-world-models" class="section level2 unnumbered hasAnchor">
-<h2>What Are World Models?<a href="index.html#what-are-world-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>A World Model is an internal simulation that allows an AI agent to:</p>
-<ul>
-<li><strong>Understand</strong> the underlying dynamics of its environment</li>
-<li><strong>Predict</strong> future states based on potential actions</li>
-<li><strong>Plan</strong> optimal strategies without real-world trial-and-error</li>
-</ul>
-<p>This capability—learning a compressed, predictive representation of the world—mirrors how biological intelligence navigates complex environments.</p>
-</div>
-<div id="who-is-this-book-for" class="section level2 unnumbered hasAnchor">
-<h2>Who Is This Book For?<a href="index.html#who-is-this-book-for" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>This book is designed for:</p>
-<ul>
-<li><strong>Researchers</strong> exploring the frontiers of embodied AI and predictive learning</li>
-<li><strong>Engineers</strong> building intelligent systems that require planning and reasoning</li>
-<li><strong>Students</strong> with a foundation in deep learning seeking to understand state-of-the-art architectures</li>
-</ul>
-<p>A background in neural networks, basic reinforcement learning, and linear algebra is recommended.</p>
-</div>
-<div id="how-to-use-this-book" class="section level2 unnumbered hasAnchor">
-<h2>How to Use This Book<a href="index.html#how-to-use-this-book" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The book is structured progressively, building from fundamental components to complete architectures:</p>
+<div id="chapter-7-reinforcement-learning---theory-and-applications" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">Chapter 11</span> Chapter 7: Reinforcement Learning - Theory and Applications<a href="chapter-7-reinforcement-learning---theory-and-applications.html#chapter-7-reinforcement-learning---theory-and-applications" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<blockquote>
+<p><em>“The key to artificial intelligence has always been the representation.”</em>
+— Jeff Hawkins</p>
+</blockquote>
+<p>Reinforcement Learning (RL) is the science of decision-making under uncertainty. Unlike supervised learning where we learn from labeled examples, RL agents learn by interacting with an environment, receiving feedback through rewards, and discovering optimal behaviors through trial and error.</p>
+<div id="fundamentals-of-reinforcement-learning" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> Fundamentals of Reinforcement Learning<a href="chapter-7-reinforcement-learning---theory-and-applications.html#fundamentals-of-reinforcement-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="key-components" class="section level3 hasAnchor" number="11.1.1">
+<h3><span class="header-section-number">11.1.1</span> Key Components<a href="chapter-7-reinforcement-learning---theory-and-applications.html#key-components" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The RL framework consists of several fundamental components:</p>
 <table>
 <colgroup>
-<col width="26%" />
-<col width="43%" />
-<col width="30%" />
+<col width="34%" />
+<col width="25%" />
+<col width="40%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th>Part</th>
-<th>Chapters</th>
-<th>Focus</th>
+<th align="left">Component</th>
+<th align="left">Symbol</th>
+<th align="left">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Foundations</strong></td>
-<td>1-3</td>
-<td>Self-attention, Transformers, and core mechanisms</td>
+<td align="left"><strong>Agent</strong></td>
+<td align="left">-</td>
+<td align="left">The decision-maker that interacts with the environment</td>
 </tr>
 <tr class="even">
-<td><strong>Perception</strong></td>
-<td>4-5</td>
-<td>Image encoders, generative models, and representation learning</td>
+<td align="left"><strong>Environment</strong></td>
+<td align="left">-</td>
+<td align="left">The external system the agent operates in</td>
 </tr>
 <tr class="odd">
-<td><strong>Decision Making</strong></td>
-<td>6-7</td>
-<td>MDPs, Bellman equations, and reinforcement learning</td>
+<td align="left"><strong>State</strong></td>
+<td align="left"><span class="math inline">\(s \in S\)</span></td>
+<td align="left">A representation of the environment at time <span class="math inline">\(t\)</span></td>
 </tr>
 <tr class="even">
-<td><strong>World Models</strong></td>
-<td>8-9</td>
-<td>DINO-WM, JEPA, and predictive architectures</td>
+<td align="left"><strong>Action</strong></td>
+<td align="left"><span class="math inline">\(a \in A\)</span></td>
+<td align="left">A decision taken by the agent</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Reward</strong></td>
+<td align="left"><span class="math inline">\(r \in \mathbb{R}\)</span></td>
+<td align="left">Scalar feedback signal</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Policy</strong></td>
+<td align="left"><span class="math inline">\(\pi(a|s)\)</span></td>
+<td align="left">Probability of taking action <span class="math inline">\(a\)</span> in state <span class="math inline">\(s\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Value Function</strong></td>
+<td align="left"><span class="math inline">\(V^\pi(s)\)</span></td>
+<td align="left">Expected cumulative reward from state <span class="math inline">\(s\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Q-Function</strong></td>
+<td align="left"><span class="math inline">\(Q^\pi(s,a)\)</span></td>
+<td align="left">Expected cumulative reward for action <span class="math inline">\(a\)</span> in state <span class="math inline">\(s\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Discount Factor</strong></td>
+<td align="left"><span class="math inline">\(\gamma \in [0,1]\)</span></td>
+<td align="left">Importance of future rewards</td>
 </tr>
 </tbody>
 </table>
-<p>Each chapter includes mathematical foundations, architectural details, and connections to the broader World Models framework.</p>
 </div>
-<div id="acknowledgments" class="section level2 unnumbered hasAnchor">
-<h2>Acknowledgments<a href="index.html#acknowledgments" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>This work builds upon groundbreaking research from the AI community. Special acknowledgment goes to the researchers behind DINO, JEPA, and the many innovations that make World Models possible.</p>
+<div id="the-rl-objective" class="section level3 hasAnchor" number="11.1.2">
+<h3><span class="header-section-number">11.1.2</span> The RL Objective<a href="chapter-7-reinforcement-learning---theory-and-applications.html#the-rl-objective" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The goal is to find an optimal policy <span class="math inline">\(\pi^*\)</span> that maximizes expected cumulative discounted reward:</p>
+<p><span class="math display">\[
+\pi^* = \arg\max_\pi \mathbb{E}_\pi \left[ \sum_{t=0}^{\infty} \gamma^t r_t \right]
+\]</span></p>
+</div>
+</div>
+<div id="taxonomy-of-rl-algorithms" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> Taxonomy of RL Algorithms<a href="chapter-7-reinforcement-learning---theory-and-applications.html#taxonomy-of-rl-algorithms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="model-based-vs-model-free" class="section level3 hasAnchor" number="11.2.1">
+<h3><span class="header-section-number">11.2.1</span> Model-Based vs Model-Free<a href="chapter-7-reinforcement-learning---theory-and-applications.html#model-based-vs-model-free" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>Model-Based RL</strong>: Learns a model of environment dynamics <span class="math inline">\(P(s&#39;|s,a)\)</span> and uses it for planning</li>
+<li><strong>Model-Free RL</strong>: Learns directly from experience without modeling the environment</li>
+</ul>
+</div>
+<div id="value-based-vs-policy-based" class="section level3 hasAnchor" number="11.2.2">
+<h3><span class="header-section-number">11.2.2</span> Value-Based vs Policy-Based<a href="chapter-7-reinforcement-learning---theory-and-applications.html#value-based-vs-policy-based" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>Value-Based</strong>: Learn value functions, derive policy implicitly (Q-learning, DQN)</li>
+<li><strong>Policy-Based</strong>: Directly optimize the policy (REINFORCE, PPO)</li>
+<li><strong>Actor-Critic</strong>: Combine both approaches (A2C, A3C, SAC)</li>
+</ul>
+</div>
+<div id="on-policy-vs-off-policy" class="section level3 hasAnchor" number="11.2.3">
+<h3><span class="header-section-number">11.2.3</span> On-Policy vs Off-Policy<a href="chapter-7-reinforcement-learning---theory-and-applications.html#on-policy-vs-off-policy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>On-Policy</strong>: Learn from data collected by current policy (SARSA, PPO)</li>
+<li><strong>Off-Policy</strong>: Learn from data collected by any policy (Q-learning, DQN, SAC)</li>
+</ul>
 <hr />
-<p><em>Let’s begin the journey of building machines that can imagine.</em></p>
+</div>
+</div>
+<div id="value-based-methods" class="section level2 hasAnchor" number="11.3">
+<h2><span class="header-section-number">11.3</span> Value-Based Methods<a href="chapter-7-reinforcement-learning---theory-and-applications.html#value-based-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="q-learning-1" class="section level3 hasAnchor" number="11.3.1">
+<h3><span class="header-section-number">11.3.1</span> Q-Learning<a href="chapter-7-reinforcement-learning---theory-and-applications.html#q-learning-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Q-learning is a foundational off-policy algorithm that learns the optimal action-value function:</p>
+<p><span class="math display">\[
+Q(s, a) \leftarrow Q(s, a) + \alpha \left[ r + \gamma \max_{a&#39;} Q(s&#39;, a&#39;) - Q(s, a) \right]
+\]</span></p>
+<p><strong>Key Properties:</strong>
+- Off-policy: Uses max over next actions (greedy)
+- Tabular: Works with discrete state-action spaces
+- Convergence: Guaranteed under certain conditions</p>
+</div>
+<div id="sarsa-state-action-reward-state-action" class="section level3 hasAnchor" number="11.3.2">
+<h3><span class="header-section-number">11.3.2</span> SARSA (State-Action-Reward-State-Action)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#sarsa-state-action-reward-state-action" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>SARSA is an on-policy variant that uses the actual next action:</p>
+<p><span class="math display">\[
+Q(s, a) \leftarrow Q(s, a) + \alpha \left[ r + \gamma Q(s&#39;, a&#39;) - Q(s, a) \right]
+\]</span></p>
+<p><strong>Difference from Q-learning:</strong> Uses <span class="math inline">\(Q(s&#39;, a&#39;)\)</span> instead of <span class="math inline">\(\max_{a&#39;} Q(s&#39;, a&#39;)\)</span>, making it more conservative.</p>
+</div>
+<div id="deep-q-networks-dqn" class="section level3 hasAnchor" number="11.3.3">
+<h3><span class="header-section-number">11.3.3</span> Deep Q-Networks (DQN)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#deep-q-networks-dqn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>DQN revolutionized RL by using deep neural networks to approximate Q-values:</p>
+<p><span class="math display">\[
+\mathcal{L}(\theta) = \mathbb{E}_{(s,a,r,s&#39;) \sim \mathcal{D}} \left[ \left( r + \gamma \max_{a&#39;} Q(s&#39;, a&#39;; \theta^-) - Q(s, a; \theta) \right)^2 \right]
+\]</span></p>
+<p><strong>Key Innovations:</strong>
+1. <strong>Experience Replay</strong>: Store transitions in buffer, sample randomly to break correlations
+2. <strong>Target Network</strong>: Separate network <span class="math inline">\(\theta^-\)</span> updated periodically for stability
+3. <strong>Frame Stacking</strong>: Stack consecutive frames to capture motion</p>
+</div>
+<div id="double-dqn" class="section level3 hasAnchor" number="11.3.4">
+<h3><span class="header-section-number">11.3.4</span> Double DQN<a href="chapter-7-reinforcement-learning---theory-and-applications.html#double-dqn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Addresses overestimation bias in DQN by decoupling action selection and evaluation:</p>
+<p><span class="math display">\[
+Y = r + \gamma Q(s&#39;, \arg\max_{a&#39;} Q(s&#39;, a&#39;; \theta); \theta^-)
+\]</span></p>
+</div>
+<div id="dueling-dqn" class="section level3 hasAnchor" number="11.3.5">
+<h3><span class="header-section-number">11.3.5</span> Dueling DQN<a href="chapter-7-reinforcement-learning---theory-and-applications.html#dueling-dqn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Separates Q-value into state value and advantage:</p>
+<p><span class="math display">\[
+Q(s, a; \theta, \alpha, \beta) = V(s; \theta, \beta) + \left( A(s, a; \theta, \alpha) - \frac{1}{|A|} \sum_{a&#39;} A(s, a&#39;; \theta, \alpha) \right)
+\]</span></p>
+<p>This architecture learns which states are valuable without needing to learn the effect of each action.</p>
+</div>
+<div id="prioritized-experience-replay" class="section level3 hasAnchor" number="11.3.6">
+<h3><span class="header-section-number">11.3.6</span> Prioritized Experience Replay<a href="chapter-7-reinforcement-learning---theory-and-applications.html#prioritized-experience-replay" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Samples important transitions more frequently based on TD-error:</p>
+<p><span class="math display">\[
+P(i) = \frac{p_i^\alpha}{\sum_k p_k^\alpha}, \quad p_i = |\delta_i| + \epsilon
+\]</span></p>
+<p>where <span class="math inline">\(\delta_i\)</span> is the TD-error for transition <span class="math inline">\(i\)</span>.</p>
+</div>
+<div id="rainbow-dqn" class="section level3 hasAnchor" number="11.3.7">
+<h3><span class="header-section-number">11.3.7</span> Rainbow DQN<a href="chapter-7-reinforcement-learning---theory-and-applications.html#rainbow-dqn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Combines multiple improvements:
+- Double Q-learning
+- Prioritized replay
+- Dueling networks
+- Multi-step learning
+- Distributional RL
+- Noisy networks</p>
+<hr />
+</div>
+</div>
+<div id="policy-gradient-methods-2" class="section level2 hasAnchor" number="11.4">
+<h2><span class="header-section-number">11.4</span> Policy Gradient Methods<a href="chapter-7-reinforcement-learning---theory-and-applications.html#policy-gradient-methods-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-policy-gradient-theorem" class="section level3 hasAnchor" number="11.4.1">
+<h3><span class="header-section-number">11.4.1</span> The Policy Gradient Theorem<a href="chapter-7-reinforcement-learning---theory-and-applications.html#the-policy-gradient-theorem" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The gradient of expected return with respect to policy parameters:</p>
+<p><span class="math display">\[
+\nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta} \left[ \nabla_\theta \log \pi_\theta(a|s) Q^{\pi_\theta}(s, a) \right]
+\]</span></p>
+</div>
+<div id="reinforce-1" class="section level3 hasAnchor" number="11.4.2">
+<h3><span class="header-section-number">11.4.2</span> REINFORCE<a href="chapter-7-reinforcement-learning---theory-and-applications.html#reinforce-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The simplest policy gradient algorithm using Monte Carlo returns:</p>
+<p><span class="math display">\[
+\nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta} \left[ \sum_{t=0}^{T} \nabla_\theta \log \pi_\theta(a_t|s_t) G_t \right]
+\]</span></p>
+<p>where <span class="math inline">\(G_t = \sum_{k=t}^{T} \gamma^{k-t} r_k\)</span> is the return from time <span class="math inline">\(t\)</span>.</p>
+<p><strong>Variance Reduction with Baseline:</strong></p>
+<p><span class="math display">\[
+\nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta} \left[ \nabla_\theta \log \pi_\theta(a|s) (Q^{\pi}(s, a) - b(s)) \right]
+\]</span></p>
+</div>
+<div id="advantage-actor-critic-a2c" class="section level3 hasAnchor" number="11.4.3">
+<h3><span class="header-section-number">11.4.3</span> Advantage Actor-Critic (A2C)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#advantage-actor-critic-a2c" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Uses advantage function to reduce variance:</p>
+<p><span class="math display">\[
+A(s, a) = Q(s, a) - V(s)
+\]</span></p>
+<p><strong>Actor Update:</strong> <span class="math inline">\(\theta \leftarrow \theta + \alpha_\theta \nabla_\theta \log \pi_\theta(a|s) A(s, a)\)</span></p>
+<p><strong>Critic Update:</strong> <span class="math inline">\(\phi \leftarrow \phi - \alpha_\phi \nabla_\phi (V_\phi(s) - G_t)^2\)</span></p>
+</div>
+<div id="asynchronous-advantage-actor-critic-a3c" class="section level3 hasAnchor" number="11.4.4">
+<h3><span class="header-section-number">11.4.4</span> Asynchronous Advantage Actor-Critic (A3C)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#asynchronous-advantage-actor-critic-a3c" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Parallelizes A2C across multiple workers:
+- Each worker interacts with its own environment copy
+- Asynchronous gradient updates to shared parameters
+- Diverse experience through different exploration</p>
+</div>
+<div id="proximal-policy-optimization-ppo-2" class="section level3 hasAnchor" number="11.4.5">
+<h3><span class="header-section-number">11.4.5</span> Proximal Policy Optimization (PPO)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#proximal-policy-optimization-ppo-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>PPO constrains policy updates to prevent destructive large steps:</p>
+<p><span class="math display">\[
+\mathcal{L}^{CLIP}(\theta) = \mathbb{E}_t \left[ \min \left( r_t(\theta) A_t, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon) A_t \right) \right]
+\]</span></p>
+<p>where <span class="math inline">\(r_t(\theta) = \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{old}}(a_t|s_t)}\)</span> is the probability ratio.</p>
+<p><strong>Why PPO is Popular:</strong>
+- Simple to implement
+- Good sample efficiency
+- Stable training
+- Works across many domains</p>
+</div>
+<div id="trust-region-policy-optimization-trpo" class="section level3 hasAnchor" number="11.4.6">
+<h3><span class="header-section-number">11.4.6</span> Trust Region Policy Optimization (TRPO)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#trust-region-policy-optimization-trpo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Constrains policy updates using KL divergence:</p>
+<p><span class="math display">\[
+\max_\theta \mathbb{E}_t \left[ \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{old}}(a_t|s_t)} A_t \right] \quad \text{s.t.} \quad \mathbb{E}_t[D_{KL}(\pi_{\theta_{old}} || \pi_\theta)] \leq \delta
+\]</span></p>
+<p>Uses conjugate gradient and line search for optimization.</p>
+<hr />
+</div>
+</div>
+<div id="generalized-policy-optimization-gpo-methods" class="section level2 hasAnchor" number="11.5">
+<h2><span class="header-section-number">11.5</span> Generalized Policy Optimization (GPO) Methods<a href="chapter-7-reinforcement-learning---theory-and-applications.html#generalized-policy-optimization-gpo-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>GPO methods represent a family of algorithms that generalize and extend policy optimization techniques, particularly for training large language models with human feedback.</p>
+<div id="direct-preference-optimization-dpo" class="section level3 hasAnchor" number="11.5.1">
+<h3><span class="header-section-number">11.5.1</span> Direct Preference Optimization (DPO)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#direct-preference-optimization-dpo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>DPO eliminates the need for a separate reward model by directly optimizing the policy from preference data:</p>
+<p><span class="math display">\[
+\mathcal{L}_{DPO}(\pi_\theta; \pi_{ref}) = -\mathbb{E}_{(x, y_w, y_l) \sim \mathcal{D}} \left[ \log \sigma \left( \beta \log \frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)} \right) \right]
+\]</span></p>
+<p>where:
+- <span class="math inline">\(y_w\)</span> = preferred (winning) response
+- <span class="math inline">\(y_l\)</span> = dispreferred (losing) response
+- <span class="math inline">\(\pi_{ref}\)</span> = reference policy (typically SFT model)
+- <span class="math inline">\(\beta\)</span> = temperature parameter</p>
+<p><strong>Advantages over RLHF:</strong>
+- No reward model training needed
+- No RL optimization loop
+- Stable and efficient training
+- Mathematically equivalent to RLHF under Bradley-Terry model</p>
+</div>
+<div id="group-relative-policy-optimization-grpo" class="section level3 hasAnchor" number="11.5.2">
+<h3><span class="header-section-number">11.5.2</span> Group Relative Policy Optimization (GRPO)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#group-relative-policy-optimization-grpo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>GRPO improves upon PPO for LLM alignment by using group-based advantage estimation:</p>
+<p><span class="math display">\[
+\mathcal{L}_{GRPO}(\theta) = \mathbb{E}_{x \sim \mathcal{D}, \{y_i\}_{i=1}^G \sim \pi_{\theta_{old}}(\cdot|x)} \left[ \sum_{i=1}^G \min \left( r_i(\theta) \hat{A}_i, \text{clip}(r_i(\theta), 1-\epsilon, 1+\epsilon) \hat{A}_i \right) \right]
+\]</span></p>
+<p><strong>Group-based Advantage:</strong>
+<span class="math display">\[
+\hat{A}_i = \frac{r(x, y_i) - \text{mean}(\{r(x, y_j)\}_{j=1}^G)}{\text{std}(\{r(x, y_j)\}_{j=1}^G)}
+\]</span></p>
+<p><strong>Key Innovations:</strong>
+- Samples multiple responses per prompt
+- Normalizes rewards within each group
+- Reduces variance in advantage estimation
+- More stable than standard PPO for LLMs</p>
+</div>
+<div id="identity-preference-optimization-ipo" class="section level3 hasAnchor" number="11.5.3">
+<h3><span class="header-section-number">11.5.3</span> Identity Preference Optimization (IPO)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#identity-preference-optimization-ipo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>IPO addresses the overfitting issues in DPO:</p>
+<p><span class="math display">\[
+\mathcal{L}_{IPO}(\theta) = \mathbb{E}_{(x, y_w, y_l)} \left[ \left( \log \frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \log \frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)} - \frac{1}{2\beta} \right)^2 \right]
+\]</span></p>
+<p><strong>Benefits:</strong>
+- Prevents reward hacking
+- More robust to noisy preferences
+- Better generalization</p>
+</div>
+<div id="kahneman-tversky-optimization-kto" class="section level3 hasAnchor" number="11.5.4">
+<h3><span class="header-section-number">11.5.4</span> Kahneman-Tversky Optimization (KTO)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#kahneman-tversky-optimization-kto" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>KTO uses prospect theory to model human preferences:</p>
+<p><span class="math display">\[
+\mathcal{L}_{KTO}(\theta) = \mathbb{E}_{x, y} \left[ w(y) \cdot \left( 1 - v_\theta(x, y) \right) \right]
+\]</span></p>
+<p>where the value function incorporates loss aversion:
+<span class="math display">\[
+v_\theta(x, y) = \begin{cases}
+\sigma(\beta (r_\theta(x, y) - z_{ref})) &amp; \text{if } y \text{ is desirable} \\
+\sigma(\beta \lambda (z_{ref} - r_\theta(x, y))) &amp; \text{if } y \text{ is undesirable}
+\end{cases}
+\]</span></p>
+<p><strong>Key Features:</strong>
+- Works with unpaired preference data (no need for <span class="math inline">\(y_w\)</span> vs <span class="math inline">\(y_l\)</span> pairs)
+- Models loss aversion (<span class="math inline">\(\lambda &gt; 1\)</span>)
+- More data-efficient</p>
+</div>
+<div id="odds-ratio-preference-optimization-orpo" class="section level3 hasAnchor" number="11.5.5">
+<h3><span class="header-section-number">11.5.5</span> Odds Ratio Preference Optimization (ORPO)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#odds-ratio-preference-optimization-orpo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>ORPO combines SFT and preference optimization in a single stage:</p>
+<p><span class="math display">\[
+\mathcal{L}_{ORPO} = \mathcal{L}_{SFT} + \lambda \cdot \mathcal{L}_{OR}
+\]</span></p>
+<p>where the odds ratio loss is:
+<span class="math display">\[
+\mathcal{L}_{OR} = -\log \sigma \left( \log \frac{\text{odds}_\theta(y_w|x)}{\text{odds}_\theta(y_l|x)} \right)
+\]</span></p>
+<p><strong>Advantages:</strong>
+- Single-stage training (no separate SFT then alignment)
+- No reference model needed
+- Memory efficient</p>
+</div>
+<div id="reinforcement-learning-from-human-feedback-rlhf" class="section level3 hasAnchor" number="11.5.6">
+<h3><span class="header-section-number">11.5.6</span> Reinforcement Learning from Human Feedback (RLHF)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#reinforcement-learning-from-human-feedback-rlhf" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The foundational approach that GPO methods improve upon:</p>
+<p><strong>Three-Stage Pipeline:</strong></p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Supervised Fine-Tuning (SFT):</strong>
+<span class="math display">\[
+\mathcal{L}_{SFT} = -\mathbb{E}_{(x,y) \sim \mathcal{D}_{demo}} [\log \pi_\theta(y|x)]
+\]</span></p></li>
+<li><p><strong>Reward Model Training:</strong>
+<span class="math display">\[
+\mathcal{L}_{RM} = -\mathbb{E}_{(x, y_w, y_l)} [\log \sigma(r_\phi(x, y_w) - r_\phi(x, y_l))]
+\]</span></p></li>
+<li><p><strong>RL Fine-Tuning (typically PPO):</strong>
+<span class="math display">\[
+\max_\theta \mathbb{E}_{x \sim \mathcal{D}, y \sim \pi_\theta} [r_\phi(x, y)] - \beta D_{KL}(\pi_\theta || \pi_{ref})
+\]</span></p></li>
+</ol>
+</div>
+<div id="comparison-of-gpo-methods" class="section level3 hasAnchor" number="11.5.7">
+<h3><span class="header-section-number">11.5.7</span> Comparison of GPO Methods<a href="chapter-7-reinforcement-learning---theory-and-applications.html#comparison-of-gpo-methods" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Method</th>
+<th align="left">Requires RM</th>
+<th align="left">Paired Data</th>
+<th align="left">Reference Model</th>
+<th align="left">Stages</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>RLHF (PPO)</strong></td>
+<td align="left">Yes</td>
+<td align="left">Yes</td>
+<td align="left">Yes</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>DPO</strong></td>
+<td align="left">No</td>
+<td align="left">Yes</td>
+<td align="left">Yes</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>GRPO</strong></td>
+<td align="left">Yes</td>
+<td align="left">No</td>
+<td align="left">Yes</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>IPO</strong></td>
+<td align="left">No</td>
+<td align="left">Yes</td>
+<td align="left">Yes</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>KTO</strong></td>
+<td align="left">No</td>
+<td align="left">No</td>
+<td align="left">Yes</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>ORPO</strong></td>
+<td align="left">No</td>
+<td align="left">Yes</td>
+<td align="left">No</td>
+<td align="left">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="practical-recommendations" class="section level3 hasAnchor" number="11.5.8">
+<h3><span class="header-section-number">11.5.8</span> Practical Recommendations<a href="chapter-7-reinforcement-learning---theory-and-applications.html#practical-recommendations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Choose DPO when:</strong>
+- You have paired preference data
+- You want simple, stable training
+- Computational resources are limited</p>
+<p><strong>Choose GRPO when:</strong>
+- Training large-scale models
+- You need reduced variance
+- You have a good reward model</p>
+<p><strong>Choose KTO when:</strong>
+- You only have binary feedback (good/bad)
+- Data collection is expensive
+- Preferences are noisy</p>
+<p><strong>Choose ORPO when:</strong>
+- You want end-to-end training
+- Memory is constrained
+- You’re starting from a base model</p>
+<hr />
+</div>
+</div>
+<div id="actor-critic-methods-2" class="section level2 hasAnchor" number="11.6">
+<h2><span class="header-section-number">11.6</span> Actor-Critic Methods<a href="chapter-7-reinforcement-learning---theory-and-applications.html#actor-critic-methods-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="soft-actor-critic-sac" class="section level3 hasAnchor" number="11.6.1">
+<h3><span class="header-section-number">11.6.1</span> Soft Actor-Critic (SAC)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#soft-actor-critic-sac" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>SAC maximizes both expected return and entropy for exploration:</p>
+<p><span class="math display">\[
+J(\pi) = \sum_{t=0}^{T} \mathbb{E}_{(s_t, a_t) \sim \rho_\pi} \left[ r(s_t, a_t) + \alpha \mathcal{H}(\pi(\cdot|s_t)) \right]
+\]</span></p>
+<p><strong>Key Components:</strong>
+- <strong>Entropy Regularization</strong>: Encourages exploration
+- <strong>Twin Q-Networks</strong>: Two critics to reduce overestimation
+- <strong>Automatic Temperature Tuning</strong>: Learns optimal <span class="math inline">\(\alpha\)</span></p>
+<p><strong>Updates:</strong></p>
+<p>Critic: <span class="math inline">\(\mathcal{L}_Q = \mathbb{E} \left[ \left( Q(s,a) - (r + \gamma (Q_{target}(s&#39;, a&#39;) - \alpha \log \pi(a&#39;|s&#39;))) \right)^2 \right]\)</span></p>
+<p>Actor: <span class="math inline">\(\mathcal{L}_\pi = \mathbb{E}_{s \sim \mathcal{D}, a \sim \pi} \left[ \alpha \log \pi(a|s) - Q(s, a) \right]\)</span></p>
+</div>
+<div id="twin-delayed-ddpg-td3" class="section level3 hasAnchor" number="11.6.2">
+<h3><span class="header-section-number">11.6.2</span> Twin Delayed DDPG (TD3)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#twin-delayed-ddpg-td3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Addresses overestimation in DDPG with three key tricks:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Clipped Double Q-Learning</strong>: Use minimum of two critics
+<span class="math display">\[
+y = r + \gamma \min_{i=1,2} Q_{\theta_i&#39;}(s&#39;, \tilde{a}&#39;)
+\]</span></p></li>
+<li><p><strong>Delayed Policy Updates</strong>: Update actor less frequently than critics</p></li>
+<li><p><strong>Target Policy Smoothing</strong>: Add noise to target actions
+<span class="math display">\[
+\tilde{a}&#39; = \pi_{\phi&#39;}(s&#39;) + \epsilon, \quad \epsilon \sim \text{clip}(\mathcal{N}(0, \sigma), -c, c)
+\]</span></p></li>
+</ol>
+</div>
+<div id="deep-deterministic-policy-gradient-ddpg" class="section level3 hasAnchor" number="11.6.3">
+<h3><span class="header-section-number">11.6.3</span> Deep Deterministic Policy Gradient (DDPG)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#deep-deterministic-policy-gradient-ddpg" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Extends DQN to continuous action spaces:</p>
+<ul>
+<li><strong>Actor</strong>: Deterministic policy <span class="math inline">\(\mu_\theta(s)\)</span></li>
+<li><strong>Critic</strong>: Q-function <span class="math inline">\(Q_\phi(s, a)\)</span></li>
+</ul>
+<p>Actor Update:
+<span class="math display">\[
+\nabla_\theta J \approx \mathbb{E}_s \left[ \nabla_a Q_\phi(s, a)|_{a=\mu_\theta(s)} \nabla_\theta \mu_\theta(s) \right]
+\]</span></p>
+<hr />
+</div>
+</div>
+<div id="model-based-reinforcement-learning-1" class="section level2 hasAnchor" number="11.7">
+<h2><span class="header-section-number">11.7</span> Model-Based Reinforcement Learning<a href="chapter-7-reinforcement-learning---theory-and-applications.html#model-based-reinforcement-learning-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="world-models" class="section level3 hasAnchor" number="11.7.1">
+<h3><span class="header-section-number">11.7.1</span> World Models<a href="chapter-7-reinforcement-learning---theory-and-applications.html#world-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Learn a model of the environment and use it for planning:</p>
+<p><span class="math display">\[
+\hat{s}_{t+1} = f_\theta(s_t, a_t)
+\]</span></p>
+<p><strong>Components:</strong>
+1. <strong>Dynamics Model</strong>: Predicts next state
+2. <strong>Reward Model</strong>: Predicts reward
+3. <strong>Planning</strong>: Use model for lookahead (MPC, MCTS)</p>
+</div>
+<div id="dyna-q" class="section level3 hasAnchor" number="11.7.2">
+<h3><span class="header-section-number">11.7.2</span> Dyna-Q<a href="chapter-7-reinforcement-learning---theory-and-applications.html#dyna-q" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Integrates learning and planning:
+1. Take action, observe transition
+2. Update Q-values from real experience
+3. Update model from real experience
+4. Plan: Sample from model, update Q-values</p>
+</div>
+<div id="model-predictive-control-mpc" class="section level3 hasAnchor" number="11.7.3">
+<h3><span class="header-section-number">11.7.3</span> Model Predictive Control (MPC)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#model-predictive-control-mpc" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>At each step:
+1. Optimize action sequence using learned model
+2. Execute first action
+3. Re-plan at next step</p>
+<p><span class="math display">\[
+a_{0:H}^* = \arg\max_{a_{0:H}} \sum_{t=0}^{H} \gamma^t \hat{r}(s_t, a_t)
+\]</span></p>
+</div>
+<div id="dreamer" class="section level3 hasAnchor" number="11.7.4">
+<h3><span class="header-section-number">11.7.4</span> Dreamer<a href="chapter-7-reinforcement-learning---theory-and-applications.html#dreamer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>State-of-the-art model-based RL:
+1. <strong>World Model</strong>: Recurrent State-Space Model (RSSM)
+2. <strong>Imagination</strong>: Roll out trajectories in latent space
+3. <strong>Actor-Critic</strong>: Train on imagined trajectories</p>
+<hr />
+</div>
+</div>
+<div id="exploration-strategies" class="section level2 hasAnchor" number="11.8">
+<h2><span class="header-section-number">11.8</span> Exploration Strategies<a href="chapter-7-reinforcement-learning---theory-and-applications.html#exploration-strategies" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="epsilon-greedy" class="section level3 hasAnchor" number="11.8.1">
+<h3><span class="header-section-number">11.8.1</span> Epsilon-Greedy<a href="chapter-7-reinforcement-learning---theory-and-applications.html#epsilon-greedy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math display">\[
+a = \begin{cases} \arg\max_a Q(s, a) &amp; \text{with probability } 1 - \epsilon \\ \text{random action} &amp; \text{with probability } \epsilon \end{cases}
+\]</span></p>
+</div>
+<div id="upper-confidence-bound-ucb" class="section level3 hasAnchor" number="11.8.2">
+<h3><span class="header-section-number">11.8.2</span> Upper Confidence Bound (UCB)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#upper-confidence-bound-ucb" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math display">\[
+a = \arg\max_a \left[ Q(s, a) + c \sqrt{\frac{\ln t}{N(s, a)}} \right]
+\]</span></p>
+</div>
+<div id="intrinsic-motivation" class="section level3 hasAnchor" number="11.8.3">
+<h3><span class="header-section-number">11.8.3</span> Intrinsic Motivation<a href="chapter-7-reinforcement-learning---theory-and-applications.html#intrinsic-motivation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Add curiosity-driven rewards:
+- <strong>Prediction Error</strong>: Reward for surprising states
+- <strong>Information Gain</strong>: Reward for reducing uncertainty
+- <strong>State Visitation Count</strong>: Reward for novel states</p>
+</div>
+<div id="noisy-networks" class="section level3 hasAnchor" number="11.8.4">
+<h3><span class="header-section-number">11.8.4</span> Noisy Networks<a href="chapter-7-reinforcement-learning---theory-and-applications.html#noisy-networks" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Replace linear layers with noisy versions:
+<span class="math display">\[
+y = (W + \sigma_{W} \odot \epsilon_W) x + (b + \sigma_b \odot \epsilon_b)
+\]</span></p>
+<hr />
+</div>
+</div>
+<div id="multi-agent-reinforcement-learning-marl" class="section level2 hasAnchor" number="11.9">
+<h2><span class="header-section-number">11.9</span> Multi-Agent Reinforcement Learning (MARL)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#multi-agent-reinforcement-learning-marl" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="independent-learners" class="section level3 hasAnchor" number="11.9.1">
+<h3><span class="header-section-number">11.9.1</span> Independent Learners<a href="chapter-7-reinforcement-learning---theory-and-applications.html#independent-learners" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Each agent learns independently, treating others as part of environment.</p>
+</div>
+<div id="centralized-training-decentralized-execution-ctde" class="section level3 hasAnchor" number="11.9.2">
+<h3><span class="header-section-number">11.9.2</span> Centralized Training, Decentralized Execution (CTDE)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#centralized-training-decentralized-execution-ctde" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Train with global information</li>
+<li>Execute with local observations only</li>
+</ul>
+</div>
+<div id="qmix" class="section level3 hasAnchor" number="11.9.3">
+<h3><span class="header-section-number">11.9.3</span> QMIX<a href="chapter-7-reinforcement-learning---theory-and-applications.html#qmix" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Factorizes joint Q-function:
+<span class="math display">\[
+Q_{tot}(\boldsymbol{\tau}, \boldsymbol{a}) = f_\theta(Q_1(\tau_1, a_1), ..., Q_n(\tau_n, a_n))
+\]</span></p>
+<p>where <span class="math inline">\(f_\theta\)</span> is a monotonic mixing network.</p>
+<hr />
+</div>
+</div>
+<div id="offline-reinforcement-learning" class="section level2 hasAnchor" number="11.10">
+<h2><span class="header-section-number">11.10</span> Offline Reinforcement Learning<a href="chapter-7-reinforcement-learning---theory-and-applications.html#offline-reinforcement-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Learn from fixed datasets without environment interaction.</p>
+<div id="conservative-q-learning-cql" class="section level3 hasAnchor" number="11.10.1">
+<h3><span class="header-section-number">11.10.1</span> Conservative Q-Learning (CQL)<a href="chapter-7-reinforcement-learning---theory-and-applications.html#conservative-q-learning-cql" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Adds penalty for out-of-distribution actions:
+<span class="math display">\[
+\mathcal{L}_{CQL} = \alpha \mathbb{E}_{s \sim \mathcal{D}} \left[ \log \sum_a \exp(Q(s, a)) - \mathbb{E}_{a \sim \hat{\pi}_\beta} [Q(s, a)] \right] + \mathcal{L}_{TD}
+\]</span></p>
+</div>
+<div id="decision-transformer" class="section level3 hasAnchor" number="11.10.2">
+<h3><span class="header-section-number">11.10.2</span> Decision Transformer<a href="chapter-7-reinforcement-learning---theory-and-applications.html#decision-transformer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Frames RL as sequence modeling:
+- Input: (Return-to-go, State, Action) sequences
+- Output: Next action
+- Architecture: GPT-style transformer</p>
+<hr />
+</div>
+</div>
+<div id="applications-of-reinforcement-learning" class="section level2 hasAnchor" number="11.11">
+<h2><span class="header-section-number">11.11</span> Applications of Reinforcement Learning<a href="chapter-7-reinforcement-learning---theory-and-applications.html#applications-of-reinforcement-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="20%" />
+<col width="33%" />
+<col width="46%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Domain</th>
+<th align="left">Application</th>
+<th align="left">Notable Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Games</strong></td>
+<td align="left">Game playing</td>
+<td align="left">AlphaGo, AlphaStar, OpenAI Five</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Robotics</strong></td>
+<td align="left">Manipulation, locomotion</td>
+<td align="left">Boston Dynamics, manipulation tasks</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Autonomous Vehicles</strong></td>
+<td align="left">Navigation, decision-making</td>
+<td align="left">Waymo, Tesla Autopilot</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Finance</strong></td>
+<td align="left">Trading, portfolio optimization</td>
+<td align="left">Algorithmic trading systems</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Healthcare</strong></td>
+<td align="left">Treatment optimization</td>
+<td align="left">Drug dosing, clinical trials</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>NLP</strong></td>
+<td align="left">RLHF for language models</td>
+<td align="left">ChatGPT, Claude</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Recommendation</strong></td>
+<td align="left">Personalization</td>
+<td align="left">Netflix, YouTube</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="summary-algorithm-selection-guide" class="section level2 hasAnchor" number="11.12">
+<h2><span class="header-section-number">11.12</span> Summary: Algorithm Selection Guide<a href="chapter-7-reinforcement-learning---theory-and-applications.html#summary-algorithm-selection-guide" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Algorithm</th>
+<th align="left">Action Space</th>
+<th align="left">Sample Efficiency</th>
+<th align="left">Stability</th>
+<th align="left">Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>DQN</strong></td>
+<td align="left">Discrete</td>
+<td align="left">Medium</td>
+<td align="left">Medium</td>
+<td align="left">Atari games</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>PPO</strong></td>
+<td align="left">Both</td>
+<td align="left">Medium</td>
+<td align="left">High</td>
+<td align="left">General purpose</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>SAC</strong></td>
+<td align="left">Continuous</td>
+<td align="left">High</td>
+<td align="left">High</td>
+<td align="left">Robotics</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>TD3</strong></td>
+<td align="left">Continuous</td>
+<td align="left">High</td>
+<td align="left">High</td>
+<td align="left">Robotics</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Dreamer</strong></td>
+<td align="left">Both</td>
+<td align="left">Very High</td>
+<td align="left">Medium</td>
+<td align="left">Complex environments</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Decision Transformer</strong></td>
+<td align="left">Both</td>
+<td align="left">N/A (Offline)</td>
+<td align="left">High</td>
+<td align="left">Offline RL</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>For further reading: Sutton &amp; Barto’s “Reinforcement Learning: An Introduction” and OpenAI Spinning Up documentation.</em></p>
 
 </div>
 </div>
@@ -626,8 +1233,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-
-<a href="chapter-1-introduction.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="conclusion-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapter-8-dino-world-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

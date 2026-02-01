@@ -1,4 +1,4 @@
-# Chapter 5: Reinforcement Learning - Theory and Applications
+# Chapter 7: Reinforcement Learning - Theory and Applications
 
 > *"The key to artificial intelligence has always been the representation."*
 > — Jeff Hawkins
@@ -199,6 +199,157 @@ $$
 $$
 
 Uses conjugate gradient and line search for optimization.
+
+---
+
+## Generalized Policy Optimization (GPO) Methods
+
+GPO methods represent a family of algorithms that generalize and extend policy optimization techniques, particularly for training large language models with human feedback.
+
+### Direct Preference Optimization (DPO)
+
+DPO eliminates the need for a separate reward model by directly optimizing the policy from preference data:
+
+$$
+\mathcal{L}_{DPO}(\pi_\theta; \pi_{ref}) = -\mathbb{E}_{(x, y_w, y_l) \sim \mathcal{D}} \left[ \log \sigma \left( \beta \log \frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)} \right) \right]
+$$
+
+where:
+- $y_w$ = preferred (winning) response
+- $y_l$ = dispreferred (losing) response
+- $\pi_{ref}$ = reference policy (typically SFT model)
+- $\beta$ = temperature parameter
+
+**Advantages over RLHF:**
+- No reward model training needed
+- No RL optimization loop
+- Stable and efficient training
+- Mathematically equivalent to RLHF under Bradley-Terry model
+
+### Group Relative Policy Optimization (GRPO)
+
+GRPO improves upon PPO for LLM alignment by using group-based advantage estimation:
+
+$$
+\mathcal{L}_{GRPO}(\theta) = \mathbb{E}_{x \sim \mathcal{D}, \{y_i\}_{i=1}^G \sim \pi_{\theta_{old}}(\cdot|x)} \left[ \sum_{i=1}^G \min \left( r_i(\theta) \hat{A}_i, \text{clip}(r_i(\theta), 1-\epsilon, 1+\epsilon) \hat{A}_i \right) \right]
+$$
+
+**Group-based Advantage:**
+$$
+\hat{A}_i = \frac{r(x, y_i) - \text{mean}(\{r(x, y_j)\}_{j=1}^G)}{\text{std}(\{r(x, y_j)\}_{j=1}^G)}
+$$
+
+**Key Innovations:**
+- Samples multiple responses per prompt
+- Normalizes rewards within each group
+- Reduces variance in advantage estimation
+- More stable than standard PPO for LLMs
+
+### Identity Preference Optimization (IPO)
+
+IPO addresses the overfitting issues in DPO:
+
+$$
+\mathcal{L}_{IPO}(\theta) = \mathbb{E}_{(x, y_w, y_l)} \left[ \left( \log \frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \log \frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)} - \frac{1}{2\beta} \right)^2 \right]
+$$
+
+**Benefits:**
+- Prevents reward hacking
+- More robust to noisy preferences
+- Better generalization
+
+### Kahneman-Tversky Optimization (KTO)
+
+KTO uses prospect theory to model human preferences:
+
+$$
+\mathcal{L}_{KTO}(\theta) = \mathbb{E}_{x, y} \left[ w(y) \cdot \left( 1 - v_\theta(x, y) \right) \right]
+$$
+
+where the value function incorporates loss aversion:
+$$
+v_\theta(x, y) = \begin{cases}
+\sigma(\beta (r_\theta(x, y) - z_{ref})) & \text{if } y \text{ is desirable} \\
+\sigma(\beta \lambda (z_{ref} - r_\theta(x, y))) & \text{if } y \text{ is undesirable}
+\end{cases}
+$$
+
+**Key Features:**
+- Works with unpaired preference data (no need for $y_w$ vs $y_l$ pairs)
+- Models loss aversion ($\lambda > 1$)
+- More data-efficient
+
+### Odds Ratio Preference Optimization (ORPO)
+
+ORPO combines SFT and preference optimization in a single stage:
+
+$$
+\mathcal{L}_{ORPO} = \mathcal{L}_{SFT} + \lambda \cdot \mathcal{L}_{OR}
+$$
+
+where the odds ratio loss is:
+$$
+\mathcal{L}_{OR} = -\log \sigma \left( \log \frac{\text{odds}_\theta(y_w|x)}{\text{odds}_\theta(y_l|x)} \right)
+$$
+
+**Advantages:**
+- Single-stage training (no separate SFT then alignment)
+- No reference model needed
+- Memory efficient
+
+### Reinforcement Learning from Human Feedback (RLHF)
+
+The foundational approach that GPO methods improve upon:
+
+**Three-Stage Pipeline:**
+
+1. **Supervised Fine-Tuning (SFT):**
+$$
+\mathcal{L}_{SFT} = -\mathbb{E}_{(x,y) \sim \mathcal{D}_{demo}} [\log \pi_\theta(y|x)]
+$$
+
+2. **Reward Model Training:**
+$$
+\mathcal{L}_{RM} = -\mathbb{E}_{(x, y_w, y_l)} [\log \sigma(r_\phi(x, y_w) - r_\phi(x, y_l))]
+$$
+
+3. **RL Fine-Tuning (typically PPO):**
+$$
+\max_\theta \mathbb{E}_{x \sim \mathcal{D}, y \sim \pi_\theta} [r_\phi(x, y)] - \beta D_{KL}(\pi_\theta || \pi_{ref})
+$$
+
+### Comparison of GPO Methods
+
+| Method | Requires RM | Paired Data | Reference Model | Stages |
+|:-------|:------------|:------------|:----------------|:-------|
+| **RLHF (PPO)** | Yes | Yes | Yes | 3 |
+| **DPO** | No | Yes | Yes | 2 |
+| **GRPO** | Yes | No | Yes | 2 |
+| **IPO** | No | Yes | Yes | 2 |
+| **KTO** | No | No | Yes | 2 |
+| **ORPO** | No | Yes | No | 1 |
+
+### Practical Recommendations
+
+**Choose DPO when:**
+- You have paired preference data
+- You want simple, stable training
+- Computational resources are limited
+
+**Choose GRPO when:**
+- Training large-scale models
+- You need reduced variance
+- You have a good reward model
+
+**Choose KTO when:**
+- You only have binary feedback (good/bad)
+- Data collection is expensive
+- Preferences are noisy
+
+**Choose ORPO when:**
+- You want end-to-end training
+- Memory is constrained
+- You're starting from a base model
 
 ---
 

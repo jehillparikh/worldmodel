@@ -1,4 +1,4 @@
-# Chapter 6: DINO World Models
+# Chapter 8: DINO World Models
 
 ```{r setup-06, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

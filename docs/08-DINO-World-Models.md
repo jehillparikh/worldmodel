@@ -1,4 +1,4 @@
-# Chapter 6: DINO World Models
+# Chapter 8: DINO World Models
 
 
 

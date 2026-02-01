@@ -1,6 +1,6 @@
-# Introduction
+# Chapter 1: Introduction
 
-> *"The brain is a prediction machine. It is constantly generating predictions about the world and updating them based on sensory input."*  
+> *"The brain is a prediction machine. It is constantly generating predictions about the world and updating them based on sensory input."*
 > — Jeff Hawkins
 
 ![World Model](./Images/worldmodel.png "World Model Architecture")
