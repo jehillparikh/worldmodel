@@ -115,7 +115,7 @@ body {
 }
 
 /* ============================================
-   Gitbook Layout Overrides
+   Gitbook Layout Overrides - CRITICAL FIXES
    ============================================ */
 .book {
   background: var(--color-bg);
@@ -123,6 +123,7 @@ body {
 
 .book .book-body {
   background: var(--color-bg);
+  overflow: visible !important;
 }
 
 .book .book-body .page-wrapper {
@@ -135,6 +136,34 @@ body {
   padding: var(--spacing-2xl) var(--spacing-xl);
 }
 
+/* FIX: Ensure main content area is visible */
+.book .book-body .page-wrapper .page-inner section {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* FIX: Ensure all content elements are visible */
+.book .book-body .page-wrapper .page-inner p,
+.book .book-body .page-wrapper .page-inner h1,
+.book .book-body .page-wrapper .page-inner h2,
+.book .book-body .page-wrapper .page-inner h3,
+.book .book-body .page-wrapper .page-inner h4,
+.book .book-body .page-wrapper .page-inner h5,
+.book .book-body .page-wrapper .page-inner h6,
+.book .book-body .page-wrapper .page-inner ul,
+.book .book-body .page-wrapper .page-inner ol,
+.book .book-body .page-wrapper .page-inner table,
+.book .book-body .page-wrapper .page-inner pre,
+.book .book-body .page-wrapper .page-inner blockquote,
+.book .book-body .page-wrapper .page-inner img,
+.book .book-body .page-wrapper .page-inner figure,
+.book .book-body .page-wrapper .page-inner .figure {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 @media (min-width: 1200px) {
   .book .book-body .page-wrapper .page-inner {
     padding: var(--spacing-3xl) var(--spacing-2xl);
@@ -142,7 +171,7 @@ body {
 }
 
 /* ============================================
-   Sidebar Navigation
+   Sidebar Navigation - Expandable Chapters
    ============================================ */
 .book .book-summary {
   background: var(--color-bg-sidebar);
@@ -151,62 +180,124 @@ body {
   font-size: var(--text-sm);
   width: var(--sidebar-width);
   overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
 }
 
 .book .book-summary ul.summary {
-  padding: var(--spacing-md) 0;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 .book .book-summary ul.summary li {
   list-style: none;
+  margin: 0;
 }
 
-.book .book-summary ul.summary li a,
-.book .book-summary ul.summary li span {
+/* Chapter links (main chapters) */
+.book .book-summary ul.summary li.chapter > a {
   display: block;
-  padding: var(--spacing-sm) var(--spacing-lg);
-  color: var(--color-text-secondary);
+  padding: 12px 20px;
+  color: var(--color-text);
   text-decoration: none;
   transition: all var(--transition-fast);
   border-left: 3px solid transparent;
-  font-weight: 450;
+  font-weight: 500;
+  position: relative;
 }
 
-.book .book-summary ul.summary li a:hover {
+/* Expand/collapse indicator for chapters with subsections */
+.book .book-summary ul.summary li.chapter.has-sub > a::after {
+  content: "▸";
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  color: var(--color-text-muted);
+  transition: transform var(--transition-fast);
+}
+
+.book .book-summary ul.summary li.chapter.has-sub.expanded > a::after {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.book .book-summary ul.summary li.chapter > a:hover {
   color: var(--color-primary);
   background: var(--color-bg-highlight);
   border-left-color: var(--color-primary-light);
 }
 
-.book .book-summary ul.summary li.active > a,
-.book .book-summary ul.summary li.active > span {
+/* Active chapter */
+.book .book-summary ul.summary li.chapter.active > a {
   color: var(--color-primary);
   background: var(--color-bg);
   border-left-color: var(--color-primary);
   font-weight: 600;
 }
 
+/* Sub-items (sections within chapters) */
+.book .book-summary ul.summary li.chapter ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--color-bg);
+}
+
+.book .book-summary ul.summary li.chapter ul li a {
+  display: block;
+  padding: 8px 20px 8px 35px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 0.85em;
+  border-left: 3px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.book .book-summary ul.summary li.chapter ul li a:hover {
+  color: var(--color-primary);
+  background: var(--color-bg-highlight);
+}
+
+.book .book-summary ul.summary li.chapter ul li.active a {
+  color: var(--color-primary);
+  border-left-color: var(--color-primary-light);
+  font-weight: 500;
+}
+
+/* Deeper nested items */
+.book .book-summary ul.summary li.chapter ul li ul li a {
+  padding-left: 50px;
+  font-size: 0.8em;
+}
+
+/* Divider */
 .book .book-summary ul.summary li.divider {
   height: 1px;
   background: var(--color-border);
-  margin: var(--spacing-md) var(--spacing-lg);
+  margin: 15px 20px;
 }
 
-/* Sidebar Header */
-.book .book-summary ul.summary li:first-child a {
+/* Book title in sidebar */
+.book .book-summary ul.summary > li:first-child > a {
   font-weight: 700;
-  font-size: var(--text-base);
+  font-size: 1.1em;
   color: var(--color-heading);
-  padding: var(--spacing-lg);
+  padding: 20px;
   border-bottom: 1px solid var(--color-border);
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: 10px;
+  background: var(--color-bg);
 }
 
 /* Chapter numbers */
 .book .book-summary ul.summary li.chapter span.section-number {
   font-weight: 600;
   color: var(--color-primary);
-  margin-right: var(--spacing-xs);
+  margin-right: 6px;
 }
 
 /* ============================================
@@ -318,14 +409,17 @@ small {
 /* ============================================
    Lists
    ============================================ */
-ul, ol {
+.book .book-body .page-wrapper .page-inner ul,
+.book .book-body .page-wrapper .page-inner ol {
   margin: 0 0 var(--spacing-lg) 0;
   padding-left: var(--spacing-xl);
+  display: block !important;
 }
 
-li {
+.book .book-body .page-wrapper .page-inner li {
   margin-bottom: var(--spacing-sm);
   line-height: 1.7;
+  display: list-item !important;
 }
 
 li > ul,
@@ -446,7 +540,6 @@ th {
   padding: var(--spacing-md) var(--spacing-lg);
   color: var(--color-heading);
   border-bottom: 2px solid var(--color-border);
-  white-space: nowrap;
 }
 
 td {
@@ -571,7 +664,7 @@ p.caption,
 }
 
 /* ============================================
-   Navigation
+   Navigation Buttons
    ============================================ */
 .book .book-body .navigation {
   position: fixed;
@@ -610,15 +703,20 @@ p.caption,
 }
 
 /* ============================================
-   Header & Book Title
+   Header & Toolbar
    ============================================ */
 .book-header {
   background: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
   padding: var(--spacing-md) var(--spacing-lg);
-  position: sticky;
+  position: fixed;
   top: 0;
+  right: 0;
+  left: var(--sidebar-width);
   z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .book-header h1 {
@@ -626,6 +724,17 @@ p.caption,
   margin: 0;
   border: none;
   padding: 0;
+}
+
+/* Toolbar buttons */
+.book-header .btn {
+  color: var(--color-text-secondary);
+  padding: 8px;
+  transition: color var(--transition-fast);
+}
+
+.book-header .btn:hover {
+  color: var(--color-primary);
 }
 
 /* ============================================
@@ -812,6 +921,10 @@ sup.footnote-ref a {
   .book .book-body .navigation {
     width: 40px;
     height: 40px;
+  }
+
+  .book-header {
+    left: 0;
   }
 }
 

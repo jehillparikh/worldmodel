@@ -6,12 +6,12 @@ bookdown::gitbook:
     after_body: null
   config:
     toc:
-      collapse: section
+      collapse: subsection
       scroll_highlight: yes
       before: |
-        <li><a href="./" style="font-weight: 700; font-size: 1.1em;">Foundations of World Models</a></li>
+        <li><a href="./" style="font-weight: 700; font-size: 1.1em; padding: 10px 15px; display: block; border-bottom: 1px solid #e1e4e8;">Foundations of World Models</a></li>
       after: |
-        <li><a href="https://github.com/jehillparikh/worldmodel" target="_blank">
+        <li style="margin-top: 10px;"><a href="https://github.com/jehillparikh/worldmodel" target="_blank" rel="noopener">
         <i class="fa fa-github"></i> View on GitHub</a></li>
     toolbar:
       position: fixed
@@ -34,7 +34,7 @@ bookdown::gitbook:
       theme: white
       family: serif
       size: 2
-    info: yes
+    info: no
 
 bookdown::pdf_book:
   includes:
