@@ -309,27 +309,209 @@ Genie represents a path toward:
 
 ---
 
-## Theoretical Foundations: World Models Are Necessary
+## Theoretical Foundations: General Agents Contain World Models
 
-### General Agents Contain World Models
+A landmark paper by Richens, Abel, Bellot, and Everitt (ICML 2025) provides the first formal proof that **world models are not optional but necessary** for generally capable AI agents. This section explores this foundational result in depth.
 
-A landmark 2025 paper by Richens et al. provides formal proof that **world models are necessary for general intelligence**:
+### The Central Question
 
-> **Theorem**: Any agent capable of generalizing to multi-step goal-directed tasks must have learned an environmental predictive model.
+A long-standing debate in AI research concerns whether agents need internal models of their environment:
 
-### Key Results
+- **Model-based view**: Agents must learn predictive models to plan and generalize
+- **Model-free view**: Agents can learn effective behaviors through trial and error without explicit world models
 
-1. **Necessity**: Model-free approaches cannot achieve flexible goal-directed behavior
-2. **Extractability**: World models can be recovered from agent policies
-3. **Scaling Laws**: More complex goals require more accurate world models
+The paper settles this debate definitively: **general agents necessarily contain world models**.
 
-### Implications
+### Formal Framework
 
-- **Safety**: Understanding agent world models enables better alignment
-- **Capability Bounds**: World model accuracy limits agent performance
-- **Interpretability**: Extracting world models aids understanding
+#### Definitions
 
-This theoretical result validates the empirical success of world model approaches and suggests they are not just one option among many, but a fundamental requirement for general AI.
+An agent is defined as a policy $\pi: \mathcal{H} \rightarrow \Delta(\mathcal{A})$ mapping histories to action distributions.
+
+A **world model** is a learned representation that predicts:
+$$
+P(s_{t+1}, r_t | s_t, a_t)
+$$
+the next state and reward given current state and action.
+
+An agent **generalizes** if it can achieve goals in novel situations not seen during training.
+
+#### The Main Theorem
+
+> **Theorem (Richens et al., 2025)**: Any agent capable of optimal behavior across a sufficiently diverse set of multi-step goal-directed tasks must have learned representations that constitute a world model of its environment.
+
+More precisely, if an agent can:
+1. Achieve arbitrary goals specified at test time
+2. Generalize to new goal configurations
+3. Plan over multiple time steps
+
+Then the agent's internal representations **necessarily encode** predictive information about environment dynamics.
+
+### Proof Sketch
+
+The proof proceeds through several key steps:
+
+**Step 1: Goal-Directed Behavior Requires Prediction**
+
+To achieve a goal $g$ from state $s$, an agent must evaluate which actions lead toward $g$. This evaluation implicitly requires predicting the consequences of actions:
+
+$$
+\pi^*(a|s, g) \propto \sum_{s'} P(s'|s,a) \cdot V(s', g)
+$$
+
+**Step 2: Generalization Implies Structure**
+
+If an agent generalizes to new goals, it cannot simply memorize state-action mappings. It must have learned structured representations that capture how actions affect states.
+
+**Step 3: Structure Encodes Dynamics**
+
+These structured representations, when analyzed formally, contain sufficient information to reconstruct environment dynamics—they **are** world models.
+
+### Model Extraction
+
+A remarkable corollary is that world models can be **extracted** from trained agents:
+
+#### Extraction Algorithm
+
+Given a trained policy $\pi$:
+
+1. **Probe internal representations** at different layers
+2. **Train a decoder** to predict next states from representations
+3. **Verify predictions** match actual environment dynamics
+
+The paper shows this extraction is always possible for general agents, and the extracted model's accuracy correlates with agent performance.
+
+#### Implications for Interpretability
+
+This provides a principled approach to understanding what agents have learned:
+
+```
+Trained Agent → Extract World Model → Analyze Predictions
+                                           ↓
+                              Understand Agent Beliefs
+```
+
+### Scaling Laws for World Models
+
+The paper establishes a fundamental relationship:
+
+> **Corollary**: The complexity of achievable goals is bounded by world model accuracy.
+
+$$
+\text{Goal Complexity} \leq f(\text{World Model Accuracy})
+$$
+
+This means:
+- Simple goals (single-step) require minimal world modeling
+- Complex goals (multi-step, compositional) require accurate world models
+- **To build more capable agents, we must build better world models**
+
+### Implications for AI Development
+
+#### 1. Architecture Design
+
+The theorem suggests architectures should explicitly support world modeling:
+
+| Approach | Alignment with Theory |
+|:---------|:---------------------|
+| Model-based RL | Direct implementation |
+| Transformers (next-token prediction) | Implicit world modeling |
+| Retrieval-augmented systems | External world model |
+| Pure model-free RL | Will converge to implicit world model |
+
+#### 2. Safety and Alignment
+
+Understanding agent world models enables:
+
+- **Detecting misalignment**: Check if world model matches reality
+- **Identifying failure modes**: Find where predictions break down
+- **Improving robustness**: Correct world model errors before deployment
+
+#### 3. Capability Evaluation
+
+World model quality provides a **proxy for capability**:
+
+$$
+\text{Agent Capability} \approx g(\text{World Model Quality})
+$$
+
+This enables evaluating agents without exhaustive task testing.
+
+#### 4. Training Objectives
+
+The theorem suggests world model learning should be an explicit objective:
+
+$$
+\mathcal{L}_{total} = \mathcal{L}_{task} + \lambda \mathcal{L}_{world\_model}
+$$
+
+Many successful approaches (Dreamer, JEPA) already do this.
+
+### Connection to Large Language Models
+
+The paper has profound implications for LLMs:
+
+#### LLMs as World Models
+
+Next-token prediction implicitly learns world models:
+
+$$
+P(x_{t+1} | x_{1:t}) \approx \text{World Model Prediction}
+$$
+
+When trained on text describing the world, LLMs learn to predict how the world works.
+
+#### Emergent Planning
+
+This explains emergent capabilities in LLMs:
+- **Chain-of-thought reasoning**: Explicit simulation using world model
+- **In-context learning**: Rapid world model adaptation
+- **Tool use**: Extending world model with external dynamics
+
+#### Limitations Explained
+
+It also explains LLM failures:
+- **Hallucinations**: World model makes incorrect predictions
+- **Planning failures**: World model lacks relevant dynamics
+- **Physical reasoning**: Insufficient training on physical dynamics
+
+### The Model-Free Paradox Resolved
+
+How do apparently "model-free" algorithms like DQN succeed?
+
+The paper resolves this paradox:
+
+> Even model-free algorithms, when successful at general tasks, have **implicitly learned world models** in their value function representations.
+
+The Q-function encodes predictive information:
+$$
+Q(s, a) = \mathbb{E}\left[\sum_t \gamma^t r_t | s_0=s, a_0=a\right]
+$$
+
+This expectation over future rewards requires (implicit) knowledge of dynamics.
+
+### Future Research Directions
+
+The paper opens several research directions:
+
+1. **World Model Metrics**: Develop better measures of world model quality
+2. **Extraction Methods**: Improve techniques for extracting world models
+3. **Architecture Search**: Design architectures that learn better world models
+4. **Transfer Learning**: Use extracted world models for domain transfer
+5. **Safety Applications**: Apply world model analysis to AI safety
+
+### Summary
+
+The "General Agents Contain World Models" paper provides:
+
+| Contribution | Significance |
+|:-------------|:-------------|
+| **Necessity proof** | World models required for general intelligence |
+| **Extraction method** | Can recover world models from any agent |
+| **Scaling law** | Goal complexity bounded by model accuracy |
+| **Unification** | Bridges model-based and model-free approaches |
+
+This theoretical foundation validates decades of world model research and provides clear guidance for building more capable AI systems.
 
 ---
 

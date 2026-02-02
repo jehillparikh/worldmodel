@@ -54,6 +54,71 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <style type="text/css">
   
@@ -121,6 +186,42 @@
 <li class="chapter" data-level="3.3.3" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#rotary-positional-embeddings-rope"><i class="fa fa-check"></i><b>3.3.3</b> Rotary Positional Embeddings (RoPE)</a></li>
 <li class="chapter" data-level="3.3.4" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#alibi-attention-with-linear-biases"><i class="fa fa-check"></i><b>3.3.4</b> ALiBi (Attention with Linear Biases)</a></li>
 <li class="chapter" data-level="3.3.5" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#rmsnorm-swiglu"><i class="fa fa-check"></i><b>3.3.5</b> RMSNorm &amp; SwiGLU</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#llm-agents"><i class="fa fa-check"></i><b>3.4</b> LLM Agents</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#what-is-an-llm-agent"><i class="fa fa-check"></i><b>3.4.1</b> What is an LLM Agent?</a></li>
+<li class="chapter" data-level="3.4.2" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#agent-architectures"><i class="fa fa-check"></i><b>3.4.2</b> Agent Architectures</a></li>
+<li class="chapter" data-level="3.4.3" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#tool-use"><i class="fa fa-check"></i><b>3.4.3</b> Tool Use</a></li>
+<li class="chapter" data-level="3.4.4" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#multi-agent-systems"><i class="fa fa-check"></i><b>3.4.4</b> Multi-Agent Systems</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#prompting-techniques"><i class="fa fa-check"></i><b>3.5</b> Prompting Techniques</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#basic-prompting-patterns"><i class="fa fa-check"></i><b>3.5.1</b> Basic Prompting Patterns</a></li>
+<li class="chapter" data-level="3.5.2" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#advanced-prompting-techniques"><i class="fa fa-check"></i><b>3.5.2</b> Advanced Prompting Techniques</a></li>
+<li class="chapter" data-level="3.5.3" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#prompting-best-practices"><i class="fa fa-check"></i><b>3.5.3</b> Prompting Best Practices</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#context-engineering"><i class="fa fa-check"></i><b>3.6</b> Context Engineering</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#the-context-window"><i class="fa fa-check"></i><b>3.6.1</b> The Context Window</a></li>
+<li class="chapter" data-level="3.6.2" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#retrieval-augmented-generation-rag"><i class="fa fa-check"></i><b>3.6.2</b> Retrieval-Augmented Generation (RAG)</a></li>
+<li class="chapter" data-level="3.6.3" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#context-window-management"><i class="fa fa-check"></i><b>3.6.3</b> Context Window Management</a></li>
+<li class="chapter" data-level="3.6.4" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#system-prompts-instructions"><i class="fa fa-check"></i><b>3.6.4</b> System Prompts &amp; Instructions</a></li>
+<li class="chapter" data-level="3.6.5" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#memory-systems"><i class="fa fa-check"></i><b>3.6.5</b> Memory Systems</a></li>
+<li class="chapter" data-level="3.6.6" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#structured-output"><i class="fa fa-check"></i><b>3.6.6</b> Structured Output</a></li>
+<li class="chapter" data-level="3.6.7" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#evaluation-iteration"><i class="fa fa-check"></i><b>3.6.7</b> Evaluation &amp; Iteration</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#agentic-frameworks-tools"><i class="fa fa-check"></i><b>3.7</b> Agentic Frameworks &amp; Tools</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#building-production-agents"><i class="fa fa-check"></i><b>3.7.1</b> Building Production Agents</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#theoretical-insight-llms-as-world-models"><i class="fa fa-check"></i><b>3.8</b> Theoretical Insight: LLMs as World Models</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#the-core-theorem"><i class="fa fa-check"></i><b>3.8.1</b> The Core Theorem</a></li>
+<li class="chapter" data-level="3.8.2" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#why-this-matters-for-transformers"><i class="fa fa-check"></i><b>3.8.2</b> Why This Matters for Transformers</a></li>
+<li class="chapter" data-level="3.8.3" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#implications-for-agent-design"><i class="fa fa-check"></i><b>3.8.3</b> Implications for Agent Design</a></li>
+<li class="chapter" data-level="3.8.4" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#connecting-to-rag-and-tool-use"><i class="fa fa-check"></i><b>3.8.4</b> Connecting to RAG and Tool Use</a></li>
+<li class="chapter" data-level="3.8.5" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#the-model-free-illusion"><i class="fa fa-check"></i><b>3.8.5</b> The Model-Free Illusion</a></li>
+<li class="chapter" data-level="3.8.6" data-path="chapter-3-transformers.html"><a href="chapter-3-transformers.html#practical-takeaways"><i class="fa fa-check"></i><b>3.8.6</b> Practical Takeaways</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="chapter-4-image-encoders.html"><a href="chapter-4-image-encoders.html"><i class="fa fa-check"></i><b>4</b> Chapter 4: Image Encoders</a>
@@ -359,11 +460,18 @@
 <li class="chapter" data-level="8.6.3" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#training-pipeline"><i class="fa fa-check"></i><b>8.6.3</b> Training Pipeline</a></li>
 <li class="chapter" data-level="8.6.4" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#applications-1"><i class="fa fa-check"></i><b>8.6.4</b> Applications</a></li>
 </ul></li>
-<li class="chapter" data-level="8.7" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#theoretical-foundations-world-models-are-necessary"><i class="fa fa-check"></i><b>8.7</b> Theoretical Foundations: World Models Are Necessary</a>
+<li class="chapter" data-level="8.7" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#theoretical-foundations-general-agents-contain-world-models"><i class="fa fa-check"></i><b>8.7</b> Theoretical Foundations: General Agents Contain World Models</a>
 <ul>
-<li class="chapter" data-level="8.7.1" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#general-agents-contain-world-models"><i class="fa fa-check"></i><b>8.7.1</b> General Agents Contain World Models</a></li>
-<li class="chapter" data-level="8.7.2" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#key-results"><i class="fa fa-check"></i><b>8.7.2</b> Key Results</a></li>
-<li class="chapter" data-level="8.7.3" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#implications"><i class="fa fa-check"></i><b>8.7.3</b> Implications</a></li>
+<li class="chapter" data-level="8.7.1" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#the-central-question"><i class="fa fa-check"></i><b>8.7.1</b> The Central Question</a></li>
+<li class="chapter" data-level="8.7.2" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#formal-framework"><i class="fa fa-check"></i><b>8.7.2</b> Formal Framework</a></li>
+<li class="chapter" data-level="8.7.3" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#proof-sketch"><i class="fa fa-check"></i><b>8.7.3</b> Proof Sketch</a></li>
+<li class="chapter" data-level="8.7.4" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#model-extraction"><i class="fa fa-check"></i><b>8.7.4</b> Model Extraction</a></li>
+<li class="chapter" data-level="8.7.5" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#scaling-laws-for-world-models"><i class="fa fa-check"></i><b>8.7.5</b> Scaling Laws for World Models</a></li>
+<li class="chapter" data-level="8.7.6" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#implications-for-ai-development"><i class="fa fa-check"></i><b>8.7.6</b> Implications for AI Development</a></li>
+<li class="chapter" data-level="8.7.7" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#connection-to-large-language-models"><i class="fa fa-check"></i><b>8.7.7</b> Connection to Large Language Models</a></li>
+<li class="chapter" data-level="8.7.8" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#the-model-free-paradox-resolved"><i class="fa fa-check"></i><b>8.7.8</b> The Model-Free Paradox Resolved</a></li>
+<li class="chapter" data-level="8.7.9" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#future-research-directions"><i class="fa fa-check"></i><b>8.7.9</b> Future Research Directions</a></li>
+<li class="chapter" data-level="8.7.10" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#summary-1"><i class="fa fa-check"></i><b>8.7.10</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="8.8" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#comparison-of-world-model-approaches"><i class="fa fa-check"></i><b>8.8</b> Comparison of World Model Approaches</a></li>
 <li class="chapter" data-level="8.9" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#progressive-refinement-from-coarse-to-fine"><i class="fa fa-check"></i><b>8.9</b> Progressive Refinement: From Coarse to Fine</a>
@@ -379,7 +487,7 @@
 <li class="chapter" data-level="8.10.3" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#multi-modal-worlds"><i class="fa fa-check"></i><b>8.10.3</b> Multi-Modal Worlds</a></li>
 <li class="chapter" data-level="8.10.4" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#embodied-training"><i class="fa fa-check"></i><b>8.10.4</b> Embodied Training</a></li>
 </ul></li>
-<li class="chapter" data-level="8.11" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#summary-1"><i class="fa fa-check"></i><b>8.11</b> Summary</a></li>
+<li class="chapter" data-level="8.11" data-path="chapter-8-world-models.html"><a href="chapter-8-world-models.html#summary-2"><i class="fa fa-check"></i><b>8.11</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="chapter-9-knowledge-distillation.html"><a href="chapter-9-knowledge-distillation.html"><i class="fa fa-check"></i><b>9</b> Chapter 9: Knowledge Distillation</a>
 <ul>
@@ -428,7 +536,7 @@
 <li class="chapter" data-level="9.8" data-path="chapter-9-knowledge-distillation.html"><a href="chapter-9-knowledge-distillation.html#practical-considerations"><i class="fa fa-check"></i><b>9.8</b> Practical Considerations</a>
 <ul>
 <li class="chapter" data-level="9.8.1" data-path="chapter-9-knowledge-distillation.html"><a href="chapter-9-knowledge-distillation.html#hyperparameter-selection"><i class="fa fa-check"></i><b>9.8.1</b> Hyperparameter Selection</a></li>
-<li class="chapter" data-level="9.8.2" data-path="chapter-9-knowledge-distillation.html"><a href="chapter-9-knowledge-distillation.html#architecture-design"><i class="fa fa-check"></i><b>9.8.2</b> Architecture Design</a></li>
+<li class="chapter" data-level="9.8.2" data-path="chapter-9-knowledge-distillation.html"><a href="chapter-9-knowledge-distillation.html#architecture-design-1"><i class="fa fa-check"></i><b>9.8.2</b> Architecture Design</a></li>
 <li class="chapter" data-level="9.8.3" data-path="chapter-9-knowledge-distillation.html"><a href="chapter-9-knowledge-distillation.html#when-distillation-fails"><i class="fa fa-check"></i><b>9.8.3</b> When Distillation Fails</a></li>
 </ul></li>
 <li class="chapter" data-level="9.9" data-path="chapter-9-knowledge-distillation.html"><a href="chapter-9-knowledge-distillation.html#state-of-the-art-methods"><i class="fa fa-check"></i><b>9.9</b> State-of-the-Art Methods</a>
@@ -443,7 +551,7 @@
 <li class="chapter" data-level="9.10.2" data-path="chapter-9-knowledge-distillation.html"><a href="chapter-9-knowledge-distillation.html#model-compression-pipeline"><i class="fa fa-check"></i><b>9.10.2</b> Model Compression Pipeline</a></li>
 <li class="chapter" data-level="9.10.3" data-path="chapter-9-knowledge-distillation.html"><a href="chapter-9-knowledge-distillation.html#federated-learning"><i class="fa fa-check"></i><b>9.10.3</b> Federated Learning</a></li>
 </ul></li>
-<li class="chapter" data-level="9.11" data-path="chapter-9-knowledge-distillation.html"><a href="chapter-9-knowledge-distillation.html#summary-2"><i class="fa fa-check"></i><b>9.11</b> Summary</a>
+<li class="chapter" data-level="9.11" data-path="chapter-9-knowledge-distillation.html"><a href="chapter-9-knowledge-distillation.html#summary-3"><i class="fa fa-check"></i><b>9.11</b> Summary</a>
 <ul>
 <li class="chapter" data-level="9.11.1" data-path="chapter-9-knowledge-distillation.html"><a href="chapter-9-knowledge-distillation.html#key-takeaways"><i class="fa fa-check"></i><b>9.11.1</b> Key Takeaways</a></li>
 <li class="chapter" data-level="9.11.2" data-path="chapter-9-knowledge-distillation.html"><a href="chapter-9-knowledge-distillation.html#comparison-of-methods"><i class="fa fa-check"></i><b>9.11.2</b> Comparison of Methods</a></li>
@@ -771,31 +879,228 @@ a^*_{0:H} = \arg\min_{a_{0:H}} \| \hat{z}_H - z_{\text{goal}} \|
 <hr />
 </div>
 </div>
-<div id="theoretical-foundations-world-models-are-necessary" class="section level2 hasAnchor" number="8.7">
-<h2><span class="header-section-number">8.7</span> Theoretical Foundations: World Models Are Necessary<a href="chapter-8-world-models.html#theoretical-foundations-world-models-are-necessary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="general-agents-contain-world-models" class="section level3 hasAnchor" number="8.7.1">
-<h3><span class="header-section-number">8.7.1</span> General Agents Contain World Models<a href="chapter-8-world-models.html#general-agents-contain-world-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>A landmark 2025 paper by Richens et al. provides formal proof that <strong>world models are necessary for general intelligence</strong>:</p>
-<blockquote>
-<p><strong>Theorem</strong>: Any agent capable of generalizing to multi-step goal-directed tasks must have learned an environmental predictive model.</p>
-</blockquote>
+<div id="theoretical-foundations-general-agents-contain-world-models" class="section level2 hasAnchor" number="8.7">
+<h2><span class="header-section-number">8.7</span> Theoretical Foundations: General Agents Contain World Models<a href="chapter-8-world-models.html#theoretical-foundations-general-agents-contain-world-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A landmark paper by Richens, Abel, Bellot, and Everitt (ICML 2025) provides the first formal proof that <strong>world models are not optional but necessary</strong> for generally capable AI agents. This section explores this foundational result in depth.</p>
+<div id="the-central-question" class="section level3 hasAnchor" number="8.7.1">
+<h3><span class="header-section-number">8.7.1</span> The Central Question<a href="chapter-8-world-models.html#the-central-question" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A long-standing debate in AI research concerns whether agents need internal models of their environment:</p>
+<ul>
+<li><strong>Model-based view</strong>: Agents must learn predictive models to plan and generalize</li>
+<li><strong>Model-free view</strong>: Agents can learn effective behaviors through trial and error without explicit world models</li>
+</ul>
+<p>The paper settles this debate definitively: <strong>general agents necessarily contain world models</strong>.</p>
 </div>
-<div id="key-results" class="section level3 hasAnchor" number="8.7.2">
-<h3><span class="header-section-number">8.7.2</span> Key Results<a href="chapter-8-world-models.html#key-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="formal-framework" class="section level3 hasAnchor" number="8.7.2">
+<h3><span class="header-section-number">8.7.2</span> Formal Framework<a href="chapter-8-world-models.html#formal-framework" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="definitions" class="section level4 hasAnchor" number="8.7.2.1">
+<h4><span class="header-section-number">8.7.2.1</span> Definitions<a href="chapter-8-world-models.html#definitions" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>An agent is defined as a policy <span class="math inline">\(\pi: \mathcal{H} \rightarrow \Delta(\mathcal{A})\)</span> mapping histories to action distributions.</p>
+<p>A <strong>world model</strong> is a learned representation that predicts:
+<span class="math display">\[
+P(s_{t+1}, r_t | s_t, a_t)
+\]</span>
+the next state and reward given current state and action.</p>
+<p>An agent <strong>generalizes</strong> if it can achieve goals in novel situations not seen during training.</p>
+</div>
+<div id="the-main-theorem" class="section level4 hasAnchor" number="8.7.2.2">
+<h4><span class="header-section-number">8.7.2.2</span> The Main Theorem<a href="chapter-8-world-models.html#the-main-theorem" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<blockquote>
+<p><strong>Theorem (Richens et al., 2025)</strong>: Any agent capable of optimal behavior across a sufficiently diverse set of multi-step goal-directed tasks must have learned representations that constitute a world model of its environment.</p>
+</blockquote>
+<p>More precisely, if an agent can:
+1. Achieve arbitrary goals specified at test time
+2. Generalize to new goal configurations
+3. Plan over multiple time steps</p>
+<p>Then the agent’s internal representations <strong>necessarily encode</strong> predictive information about environment dynamics.</p>
+</div>
+</div>
+<div id="proof-sketch" class="section level3 hasAnchor" number="8.7.3">
+<h3><span class="header-section-number">8.7.3</span> Proof Sketch<a href="chapter-8-world-models.html#proof-sketch" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The proof proceeds through several key steps:</p>
+<p><strong>Step 1: Goal-Directed Behavior Requires Prediction</strong></p>
+<p>To achieve a goal <span class="math inline">\(g\)</span> from state <span class="math inline">\(s\)</span>, an agent must evaluate which actions lead toward <span class="math inline">\(g\)</span>. This evaluation implicitly requires predicting the consequences of actions:</p>
+<p><span class="math display">\[
+\pi^*(a|s, g) \propto \sum_{s&#39;} P(s&#39;|s,a) \cdot V(s&#39;, g)
+\]</span></p>
+<p><strong>Step 2: Generalization Implies Structure</strong></p>
+<p>If an agent generalizes to new goals, it cannot simply memorize state-action mappings. It must have learned structured representations that capture how actions affect states.</p>
+<p><strong>Step 3: Structure Encodes Dynamics</strong></p>
+<p>These structured representations, when analyzed formally, contain sufficient information to reconstruct environment dynamics—they <strong>are</strong> world models.</p>
+</div>
+<div id="model-extraction" class="section level3 hasAnchor" number="8.7.4">
+<h3><span class="header-section-number">8.7.4</span> Model Extraction<a href="chapter-8-world-models.html#model-extraction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A remarkable corollary is that world models can be <strong>extracted</strong> from trained agents:</p>
+<div id="extraction-algorithm" class="section level4 hasAnchor" number="8.7.4.1">
+<h4><span class="header-section-number">8.7.4.1</span> Extraction Algorithm<a href="chapter-8-world-models.html#extraction-algorithm" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Given a trained policy <span class="math inline">\(\pi\)</span>:</p>
 <ol style="list-style-type: decimal">
-<li><strong>Necessity</strong>: Model-free approaches cannot achieve flexible goal-directed behavior</li>
-<li><strong>Extractability</strong>: World models can be recovered from agent policies</li>
-<li><strong>Scaling Laws</strong>: More complex goals require more accurate world models</li>
+<li><strong>Probe internal representations</strong> at different layers</li>
+<li><strong>Train a decoder</strong> to predict next states from representations</li>
+<li><strong>Verify predictions</strong> match actual environment dynamics</li>
+</ol>
+<p>The paper shows this extraction is always possible for general agents, and the extracted model’s accuracy correlates with agent performance.</p>
+</div>
+<div id="implications-for-interpretability" class="section level4 hasAnchor" number="8.7.4.2">
+<h4><span class="header-section-number">8.7.4.2</span> Implications for Interpretability<a href="chapter-8-world-models.html#implications-for-interpretability" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>This provides a principled approach to understanding what agents have learned:</p>
+<pre><code>Trained Agent → Extract World Model → Analyze Predictions
+                                           ↓
+                              Understand Agent Beliefs</code></pre>
+</div>
+</div>
+<div id="scaling-laws-for-world-models" class="section level3 hasAnchor" number="8.7.5">
+<h3><span class="header-section-number">8.7.5</span> Scaling Laws for World Models<a href="chapter-8-world-models.html#scaling-laws-for-world-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The paper establishes a fundamental relationship:</p>
+<blockquote>
+<p><strong>Corollary</strong>: The complexity of achievable goals is bounded by world model accuracy.</p>
+</blockquote>
+<p><span class="math display">\[
+\text{Goal Complexity} \leq f(\text{World Model Accuracy})
+\]</span></p>
+<p>This means:
+- Simple goals (single-step) require minimal world modeling
+- Complex goals (multi-step, compositional) require accurate world models
+- <strong>To build more capable agents, we must build better world models</strong></p>
+</div>
+<div id="implications-for-ai-development" class="section level3 hasAnchor" number="8.7.6">
+<h3><span class="header-section-number">8.7.6</span> Implications for AI Development<a href="chapter-8-world-models.html#implications-for-ai-development" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="architecture-design" class="section level4 hasAnchor" number="8.7.6.1">
+<h4><span class="header-section-number">8.7.6.1</span> 1. Architecture Design<a href="chapter-8-world-models.html#architecture-design" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The theorem suggests architectures should explicitly support world modeling:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Approach</th>
+<th align="left">Alignment with Theory</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Model-based RL</td>
+<td align="left">Direct implementation</td>
+</tr>
+<tr class="even">
+<td align="left">Transformers (next-token prediction)</td>
+<td align="left">Implicit world modeling</td>
+</tr>
+<tr class="odd">
+<td align="left">Retrieval-augmented systems</td>
+<td align="left">External world model</td>
+</tr>
+<tr class="even">
+<td align="left">Pure model-free RL</td>
+<td align="left">Will converge to implicit world model</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="safety-and-alignment" class="section level4 hasAnchor" number="8.7.6.2">
+<h4><span class="header-section-number">8.7.6.2</span> 2. Safety and Alignment<a href="chapter-8-world-models.html#safety-and-alignment" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Understanding agent world models enables:</p>
+<ul>
+<li><strong>Detecting misalignment</strong>: Check if world model matches reality</li>
+<li><strong>Identifying failure modes</strong>: Find where predictions break down</li>
+<li><strong>Improving robustness</strong>: Correct world model errors before deployment</li>
+</ul>
+</div>
+<div id="capability-evaluation" class="section level4 hasAnchor" number="8.7.6.3">
+<h4><span class="header-section-number">8.7.6.3</span> 3. Capability Evaluation<a href="chapter-8-world-models.html#capability-evaluation" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>World model quality provides a <strong>proxy for capability</strong>:</p>
+<p><span class="math display">\[
+\text{Agent Capability} \approx g(\text{World Model Quality})
+\]</span></p>
+<p>This enables evaluating agents without exhaustive task testing.</p>
+</div>
+<div id="training-objectives-1" class="section level4 hasAnchor" number="8.7.6.4">
+<h4><span class="header-section-number">8.7.6.4</span> 4. Training Objectives<a href="chapter-8-world-models.html#training-objectives-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The theorem suggests world model learning should be an explicit objective:</p>
+<p><span class="math display">\[
+\mathcal{L}_{total} = \mathcal{L}_{task} + \lambda \mathcal{L}_{world\_model}
+\]</span></p>
+<p>Many successful approaches (Dreamer, JEPA) already do this.</p>
+</div>
+</div>
+<div id="connection-to-large-language-models" class="section level3 hasAnchor" number="8.7.7">
+<h3><span class="header-section-number">8.7.7</span> Connection to Large Language Models<a href="chapter-8-world-models.html#connection-to-large-language-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The paper has profound implications for LLMs:</p>
+<div id="llms-as-world-models" class="section level4 hasAnchor" number="8.7.7.1">
+<h4><span class="header-section-number">8.7.7.1</span> LLMs as World Models<a href="chapter-8-world-models.html#llms-as-world-models" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Next-token prediction implicitly learns world models:</p>
+<p><span class="math display">\[
+P(x_{t+1} | x_{1:t}) \approx \text{World Model Prediction}
+\]</span></p>
+<p>When trained on text describing the world, LLMs learn to predict how the world works.</p>
+</div>
+<div id="emergent-planning" class="section level4 hasAnchor" number="8.7.7.2">
+<h4><span class="header-section-number">8.7.7.2</span> Emergent Planning<a href="chapter-8-world-models.html#emergent-planning" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>This explains emergent capabilities in LLMs:
+- <strong>Chain-of-thought reasoning</strong>: Explicit simulation using world model
+- <strong>In-context learning</strong>: Rapid world model adaptation
+- <strong>Tool use</strong>: Extending world model with external dynamics</p>
+</div>
+<div id="limitations-explained" class="section level4 hasAnchor" number="8.7.7.3">
+<h4><span class="header-section-number">8.7.7.3</span> Limitations Explained<a href="chapter-8-world-models.html#limitations-explained" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>It also explains LLM failures:
+- <strong>Hallucinations</strong>: World model makes incorrect predictions
+- <strong>Planning failures</strong>: World model lacks relevant dynamics
+- <strong>Physical reasoning</strong>: Insufficient training on physical dynamics</p>
+</div>
+</div>
+<div id="the-model-free-paradox-resolved" class="section level3 hasAnchor" number="8.7.8">
+<h3><span class="header-section-number">8.7.8</span> The Model-Free Paradox Resolved<a href="chapter-8-world-models.html#the-model-free-paradox-resolved" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>How do apparently “model-free” algorithms like DQN succeed?</p>
+<p>The paper resolves this paradox:</p>
+<blockquote>
+<p>Even model-free algorithms, when successful at general tasks, have <strong>implicitly learned world models</strong> in their value function representations.</p>
+</blockquote>
+<p>The Q-function encodes predictive information:
+<span class="math display">\[
+Q(s, a) = \mathbb{E}\left[\sum_t \gamma^t r_t | s_0=s, a_0=a\right]
+\]</span></p>
+<p>This expectation over future rewards requires (implicit) knowledge of dynamics.</p>
+</div>
+<div id="future-research-directions" class="section level3 hasAnchor" number="8.7.9">
+<h3><span class="header-section-number">8.7.9</span> Future Research Directions<a href="chapter-8-world-models.html#future-research-directions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The paper opens several research directions:</p>
+<ol style="list-style-type: decimal">
+<li><strong>World Model Metrics</strong>: Develop better measures of world model quality</li>
+<li><strong>Extraction Methods</strong>: Improve techniques for extracting world models</li>
+<li><strong>Architecture Search</strong>: Design architectures that learn better world models</li>
+<li><strong>Transfer Learning</strong>: Use extracted world models for domain transfer</li>
+<li><strong>Safety Applications</strong>: Apply world model analysis to AI safety</li>
 </ol>
 </div>
-<div id="implications" class="section level3 hasAnchor" number="8.7.3">
-<h3><span class="header-section-number">8.7.3</span> Implications<a href="chapter-8-world-models.html#implications" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li><strong>Safety</strong>: Understanding agent world models enables better alignment</li>
-<li><strong>Capability Bounds</strong>: World model accuracy limits agent performance</li>
-<li><strong>Interpretability</strong>: Extracting world models aids understanding</li>
-</ul>
-<p>This theoretical result validates the empirical success of world model approaches and suggests they are not just one option among many, but a fundamental requirement for general AI.</p>
+<div id="summary-1" class="section level3 hasAnchor" number="8.7.10">
+<h3><span class="header-section-number">8.7.10</span> Summary<a href="chapter-8-world-models.html#summary-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The “General Agents Contain World Models” paper provides:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Contribution</th>
+<th align="left">Significance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Necessity proof</strong></td>
+<td align="left">World models required for general intelligence</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Extraction method</strong></td>
+<td align="left">Can recover world models from any agent</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Scaling law</strong></td>
+<td align="left">Goal complexity bounded by model accuracy</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Unification</strong></td>
+<td align="left">Bridges model-based and model-free approaches</td>
+</tr>
+</tbody>
+</table>
+<p>This theoretical foundation validates decades of world model research and provides clear guidance for building more capable AI systems.</p>
 <hr />
 </div>
 </div>
@@ -934,8 +1239,8 @@ a^*_{0:H} = \arg\min_{a_{0:H}} \| \hat{z}_H - z_{\text{goal}} \|
 <hr />
 </div>
 </div>
-<div id="summary-1" class="section level2 hasAnchor" number="8.11">
-<h2><span class="header-section-number">8.11</span> Summary<a href="chapter-8-world-models.html#summary-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="summary-2" class="section level2 hasAnchor" number="8.11">
+<h2><span class="header-section-number">8.11</span> Summary<a href="chapter-8-world-models.html#summary-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>World models have evolved from a compelling idea to a practical paradigm:</p>
 <table>
 <thead>
