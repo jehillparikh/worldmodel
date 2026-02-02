@@ -37,7 +37,6 @@ rmd_files: [
   "05-Generative-Models.Rmd",
   "06-Reinforcement-Learning.Rmd",
   "07-Active-Inference.Rmd",
-  "08-DINO-World-Models.Rmd",
-  "09-JEPA-Architecture.Rmd",
-  "10-Knowledge-Distillation.Rmd"
+  "08-World-Models.Rmd",
+  "09-Knowledge-Distillation.Rmd"
 ]

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Chapter 2: Self-Attention Mechanism | Foundations of World Models</title>
+  <title>Chapter 8 Chapter 8: World Models | Foundations of World Models</title>
   <meta name="description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Chapter 2: Self-Attention Mechanism | Foundations of World Models" />
+  <meta property="og:title" content="Chapter 8 Chapter 8: World Models | Foundations of World Models" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
   <meta property="og:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="github-repo" content="jehillparikh/worldmodel" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Chapter 2: Self-Attention Mechanism | Foundations of World Models" />
+  <meta name="twitter:title" content="Chapter 8 Chapter 8: World Models | Foundations of World Models" />
   
   <meta name="twitter:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="twitter:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="chapter-1-introduction.html"/>
-<link rel="next" href="chapter-3-transformers.html"/>
+<link rel="prev" href="chapter-7-active-inference.html"/>
+<link rel="next" href="chapter-9-knowledge-distillation.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -467,91 +467,518 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="chapter-2-self-attention-mechanism" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Chapter 2: Self-Attention Mechanism<a href="chapter-2-self-attention-mechanism.html#chapter-2-self-attention-mechanism" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="chapter-8-world-models" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Chapter 8: World Models<a href="chapter-8-world-models.html#chapter-8-world-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <blockquote>
-<p><em>“Attention is all you need.”</em><br />
-— Vaswani et al., 2017</p>
+<p><em>“An agent’s world model allows it to imagine the future and plan actions accordingly.”</em>
+— David Ha &amp; Jürgen Schmidhuber</p>
 </blockquote>
-<p>The <strong>Self-Attention Mechanism</strong> is the engine that powers the Transformer revolution. Unlike Recurrent Neural Networks (RNNs) that process data sequentially, self-attention allows a model to look at an entire sequence at once and determine which parts are relevant to each other. This capability to capture <strong>long-range dependencies</strong> is what makes modern AI models so powerful.</p>
-<div id="the-core-mechanism" class="section level2 hasAnchor" number="2.1">
-<h2><span class="header-section-number">2.1</span> The Core Mechanism<a href="chapter-2-self-attention-mechanism.html#the-core-mechanism" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>At its heart, self-attention is a database retrieval operation. For every token in a sequence, we ask: <em>“How relevant are other tokens to me?”</em></p>
-<p>This is achieved using three vectors derived from the input embedding <span class="math inline">\(X\)</span>:
-1. <strong>Query (<span class="math inline">\(Q\)</span>)</strong>: What I am looking for.
-2. <strong>Key (<span class="math inline">\(K\)</span>)</strong>: What I offer to be searched.
-3. <strong>Value (<span class="math inline">\(V\)</span>)</strong>: The actual content I contain.</p>
-<p>Mathematically, these are computed as linear projections:
-<span class="math display">\[Q = XW_Q, \quad K = XW_K, \quad V = XW_V\]</span>
-where <span class="math inline">\(W_Q, W_K, W_V\)</span> are learnable weight matrices.</p>
-<div id="scaled-dot-product-attention" class="section level3 hasAnchor" number="2.1.1">
-<h3><span class="header-section-number">2.1.1</span> Scaled Dot-Product Attention<a href="chapter-2-self-attention-mechanism.html#scaled-dot-product-attention" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The relevance score between a query and a key is calculated using a dot product. A high dot product indicates high similarity (relevance).</p>
-<p><span class="math display">\[
-\text{Attention}(Q, K, V) = \text{softmax} \left( \frac{QK^T}{\sqrt{d_k}} \right) V
+<p>World Models represent one of the most significant paradigms in artificial intelligence—the idea that intelligent agents build internal representations of their environment that allow them to simulate, predict, and plan. This chapter traces the evolution of world models from foundational work to cutting-edge approaches like JEPA, DINO-WM, and Genie.</p>
+<hr />
+<div id="foundations-ha-schmidhubers-world-models" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Foundations: Ha &amp; Schmidhuber’s World Models<a href="chapter-8-world-models.html#foundations-ha-schmidhubers-world-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-original-vision" class="section level3 hasAnchor" number="8.1.1">
+<h3><span class="header-section-number">8.1.1</span> The Original Vision<a href="chapter-8-world-models.html#the-original-vision" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In their seminal 2018 paper, David Ha and Jürgen Schmidhuber introduced the <strong>World Models</strong> framework, demonstrating that agents could learn to act by first learning to dream. Their key insight was to decompose the problem into three components:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Vision Model (V)</strong>: Compresses high-dimensional observations into compact latent representations</li>
+<li><strong>Memory Model (M)</strong>: Predicts future latent states, enabling simulation</li>
+<li><strong>Controller (C)</strong>: A simple policy that operates on the compressed representations</li>
+</ol>
+</div>
+<div id="architecture-1" class="section level3 hasAnchor" number="8.1.2">
+<h3><span class="header-section-number">8.1.2</span> Architecture<a href="chapter-8-world-models.html#architecture-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The original architecture combined:</p>
+<p><strong>Variational Autoencoder (VAE)</strong> for perception:
+<span class="math display">\[
+z = \text{Encoder}(x), \quad \hat{x} = \text{Decoder}(z)
 \]</span></p>
-<ul>
-<li><strong><span class="math inline">\(QK^T\)</span></strong>: Computes the similarity scores between every query and every key.</li>
-<li><strong><span class="math inline">\(\sqrt{d_k}\)</span></strong>: Scaling factor to prevent gradients from vanishing in the softmax function.</li>
-<li><strong>Softmax</strong>: Normalizes scores into probabilities (summing to 1).</li>
-<li><strong><span class="math inline">\(V\)</span></strong>: The final output is a weighted sum of values, where relevant tokens contribute more.</li>
-</ul>
-<div class="float">
-<img src="Images/mha_img_original.png" title="Scaled Dot-Product Attention" alt="Attention" />
-<div class="figcaption">Attention</div>
-</div>
-</div>
-</div>
-<div id="multi-head-attention" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> Multi-Head Attention<a href="chapter-2-self-attention-mechanism.html#multi-head-attention" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>A single attention head might focus on one type of relationship (e.g., subject-verb agreement). To capture multiple nuances, we use <strong>Multi-Head Attention (MHA)</strong>.</p>
-<p>MHA runs several self-attention operations in parallel, each with its own set of weight matrices. The outputs are concatenated and projected:</p>
-<p><span class="math display">\[
-\text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, \dots, \text{head}_h) W_O
+<p><strong>MDN-RNN</strong> for dynamics prediction:
+<span class="math display">\[
+P(z_{t+1} | a_t, z_t, h_t) = \sum_{i=1}^{K} \pi_i \mathcal{N}(\mu_i, \sigma_i)
 \]</span></p>
-<p>This allows the model to attend to information from different representation subspaces at different positions.</p>
+<p>where the mixture density network outputs parameters for a Gaussian mixture model over future latent states.</p>
+<p><strong>Simple Linear Controller</strong>:
+<span class="math display">\[
+a_t = W_c [z_t, h_t] + b_c
+\]</span></p>
 </div>
-<div id="efficient-attention-recent-developments" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> Efficient Attention &amp; Recent Developments<a href="chapter-2-self-attention-mechanism.html#efficient-attention-recent-developments" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>While the original mechanism is powerful, it has a quadratic complexity <span class="math inline">\(O(N^2)\)</span> with respect to sequence length. Recent innovations aim to make attention more efficient and scalable.</p>
-<div id="flashattention" class="section level3 hasAnchor" number="2.3.1">
-<h3><span class="header-section-number">2.3.1</span> FlashAttention<a href="chapter-2-self-attention-mechanism.html#flashattention" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>FlashAttention</strong> (Dao et al., 2022) is an IO-aware exact attention algorithm that significantly speeds up training and reduces memory usage.</p>
+<div id="training-in-dreams" class="section level3 hasAnchor" number="8.1.3">
+<h3><span class="header-section-number">8.1.3</span> Training in Dreams<a href="chapter-8-world-models.html#training-in-dreams" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A revolutionary aspect was <strong>training entirely in imagination</strong>:</p>
+<ol style="list-style-type: decimal">
+<li>Train V and M on real environment data</li>
+<li>Generate simulated rollouts using M</li>
+<li>Train C on these imagined trajectories</li>
+<li>Transfer to real environment</li>
+</ol>
+<p>This approach achieved state-of-the-art results on car racing and other control tasks while requiring orders of magnitude less real environment interaction.</p>
+</div>
+<div id="key-insights" class="section level3 hasAnchor" number="8.1.4">
+<h3><span class="header-section-number">8.1.4</span> Key Insights<a href="chapter-8-world-models.html#key-insights" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><strong>The Problem</strong>: Standard attention implementation requires writing large intermediate matrices (like the <span class="math inline">\(N \times N\)</span> attention matrix) to the GPU’s high-bandwidth memory (HBM), which is slow.</li>
-<li><strong>The Solution</strong>: FlashAttention uses <strong>tiling</strong> to compute attention in blocks. It loads small blocks of <span class="math inline">\(Q, K, V\)</span> from HBM to the fast on-chip SRAM, computes attention, and writes only the final result back to HBM.</li>
-<li><strong>Recomputation</strong>: Instead of storing the large attention matrix for backward pass, it recomputes it on-the-fly, which is faster than reading it from HBM.</li>
-<li><strong>Impact</strong>: This results in up to <strong>3x faster training</strong> and allows for much longer context windows (e.g., 32k tokens) without running out of memory.</li>
+<li><strong>Compression is crucial</strong>: Good latent representations enable efficient planning</li>
+<li><strong>Dreams can teach</strong>: Simulated experience transfers to reality</li>
+<li><strong>Simplicity at the top</strong>: Complex world models enable simple controllers</li>
+<li><strong>Uncertainty matters</strong>: Modeling stochasticity prevents overfitting to the model</li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="dreamer-scalable-world-models" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Dreamer: Scalable World Models<a href="chapter-8-world-models.html#dreamer-scalable-world-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="dreamerv1-2019" class="section level3 hasAnchor" number="8.2.1">
+<h3><span class="header-section-number">8.2.1</span> DreamerV1 (2019)<a href="chapter-8-world-models.html#dreamerv1-2019" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Dreamer extended the World Models framework with:</p>
+<ul>
+<li><strong>Recurrent State-Space Model (RSSM)</strong>: Combines deterministic and stochastic latent states</li>
+<li><strong>Actor-Critic Learning</strong>: Learns value functions and policies from imagined rollouts</li>
+<li><strong>Latent Imagination</strong>: Plans entirely in latent space</li>
+</ul>
+<p>The RSSM separates latent state into:
+<span class="math display">\[
+s_t = [h_t, z_t]
+\]</span></p>
+<p>where <span class="math inline">\(h_t\)</span> is deterministic (captures history) and <span class="math inline">\(z_t\)</span> is stochastic (captures uncertainty).</p>
+</div>
+<div id="dreamerv2-2020" class="section level3 hasAnchor" number="8.2.2">
+<h3><span class="header-section-number">8.2.2</span> DreamerV2 (2020)<a href="chapter-8-world-models.html#dreamerv2-2020" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Improved upon V1 with:</p>
+<ul>
+<li><strong>Discrete Latents</strong>: Uses categorical distributions instead of Gaussians</li>
+<li><strong>KL Balancing</strong>: Better optimization of the variational bound</li>
+<li><strong>Larger Models</strong>: Scaled to complex 3D environments</li>
 </ul>
 </div>
-<div id="kv-cache-key-value-cache" class="section level3 hasAnchor" number="2.3.2">
-<h3><span class="header-section-number">2.3.2</span> KV Cache (Key-Value Cache)<a href="chapter-2-self-attention-mechanism.html#kv-cache-key-value-cache" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In autoregressive generation (like GPT), the model generates one token at a time. For each new token, it needs to attend to all previous tokens.</p>
+<div id="dreamerv3-2023" class="section level3 hasAnchor" number="8.2.3">
+<h3><span class="header-section-number">8.2.3</span> DreamerV3 (2023)<a href="chapter-8-world-models.html#dreamerv3-2023" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Achieved human-level performance across diverse domains:</p>
 <ul>
-<li><strong>Inefficiency</strong>: Naively, we would recompute the Key and Value vectors for the entire history at every step. This is redundant and computationally expensive (<span class="math inline">\(O(N^2)\)</span> total for generating <span class="math inline">\(N\)</span> tokens).</li>
-<li><strong>Optimization</strong>: We cache the Key and Value vectors of previous tokens in GPU memory. At each step, we only compute <span class="math inline">\(Q, K, V\)</span> for the <em>new</em> token and append the new <span class="math inline">\(K\)</span> and <span class="math inline">\(V\)</span> to the cache.</li>
-<li><strong>Result</strong>: This reduces the complexity of generating a token to <span class="math inline">\(O(N)\)</span> (linear with context length) and significantly speeds up inference.</li>
+<li><strong>Symlog Predictions</strong>: Handles varying reward scales</li>
+<li><strong>Percentile Scaling</strong>: Normalizes returns adaptively</li>
+<li><strong>Universal Recipe</strong>: Same hyperparameters across all tasks</li>
+</ul>
+<p>Key results:
+- First algorithm to collect diamonds in Minecraft from scratch
+- Matched human performance on Atari benchmarks
+- Strong results on continuous control</p>
+<hr />
+</div>
+</div>
+<div id="jepa-joint-embedding-predictive-architecture" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> JEPA: Joint Embedding Predictive Architecture<a href="chapter-8-world-models.html#jepa-joint-embedding-predictive-architecture" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-jepa-paradigm" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> The JEPA Paradigm<a href="chapter-8-world-models.html#the-jepa-paradigm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Proposed by Yann LeCun and colleagues, JEPA represents a shift from pixel-level prediction to <strong>representation-level prediction</strong>. Instead of predicting future observations directly, JEPA predicts future representations.</p>
+</div>
+<div id="core-principle" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> Core Principle<a href="chapter-8-world-models.html#core-principle" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math display">\[
+\text{Predict: } \hat{z}_{\text{target}} = f_\theta(z_{\text{context}})
+\]</span></p>
+<p>Rather than:
+<span class="math display">\[
+\text{Reconstruct: } \hat{x}_{\text{target}} = g_\phi(z_{\text{context}})
+\]</span></p>
+<p>This avoids the need to model irrelevant details (textures, lighting) and focuses on semantic content.</p>
+</div>
+<div id="architecture-components" class="section level3 hasAnchor" number="8.3.3">
+<h3><span class="header-section-number">8.3.3</span> Architecture Components<a href="chapter-8-world-models.html#architecture-components" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>Context Encoder</strong>: Processes visible/past information to generate context representation</li>
+<li><strong>Target Encoder</strong>: Processes target region/frame (used for training signal only)</li>
+<li><strong>Predictor</strong>: Maps context representation to predicted target representation</li>
+</ul>
+<p>The training objective:
+<span class="math display">\[
+\mathcal{L} = \| f_\theta(E_c(x_{\text{context}})) - \text{sg}(E_t(x_{\text{target}})) \|^2
+\]</span></p>
+<p>where <span class="math inline">\(\text{sg}\)</span> denotes stop-gradient (target encoder is updated via EMA).</p>
+</div>
+<div id="i-jepa-image-based-jepa" class="section level3 hasAnchor" number="8.3.4">
+<h3><span class="header-section-number">8.3.4</span> I-JEPA: Image-based JEPA<a href="chapter-8-world-models.html#i-jepa-image-based-jepa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>I-JEPA applies JEPA to images through:</p>
+<p><strong>Multi-block Masking</strong>:
+- Mask multiple non-overlapping target regions
+- Use remaining visible regions as context
+- Predict representations of masked regions</p>
+<p><strong>Key Design Choices</strong>:
+- Large target blocks (encourage semantic prediction)
+- Asymmetric architecture (predictor is lightweight)
+- No data augmentation needed</p>
+<p><strong>Results</strong>:
+- Competitive with contrastive methods (DINO, MAE)
+- Better linear probe performance
+- More semantically meaningful representations</p>
+</div>
+<div id="mc-jepa-motion-content-jepa" class="section level3 hasAnchor" number="8.3.5">
+<h3><span class="header-section-number">8.3.5</span> MC-JEPA: Motion-Content JEPA<a href="chapter-8-world-models.html#mc-jepa-motion-content-jepa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Extends to video by learning:
+- <strong>Motion features</strong>: Captured via optical flow prediction
+- <strong>Content features</strong>: Captured via frame prediction</p>
+<p>Architecture includes:
+- Shared encoder for temporal features
+- Flow estimator for motion dynamics
+- Content learner for static scene understanding</p>
+</div>
+<div id="v-jepa-video-jepa" class="section level3 hasAnchor" number="8.3.6">
+<h3><span class="header-section-number">8.3.6</span> V-JEPA: Video JEPA<a href="chapter-8-world-models.html#v-jepa-video-jepa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Predicts future frame representations from past frames:</p>
+<p><span class="math display">\[
+\hat{z}_{t+k} = \text{Predictor}(z_{t-n:t})
+\]</span></p>
+<p><strong>Key Features</strong>:
+- Temporal masking strategies
+- Learns both short-term and long-term dependencies
+- No need for labeled data or augmentations</p>
+<p><strong>Applications</strong>:
+- Action recognition
+- Video understanding
+- Robotic planning</p>
+<hr />
+</div>
+</div>
+<div id="dino-wm-zero-shot-world-models" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> DINO-WM: Zero-Shot World Models<a href="chapter-8-world-models.html#dino-wm-zero-shot-world-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="leveraging-pre-trained-vision" class="section level3 hasAnchor" number="8.4.1">
+<h3><span class="header-section-number">8.4.1</span> Leveraging Pre-trained Vision<a href="chapter-8-world-models.html#leveraging-pre-trained-vision" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>DINO-WM (2024) demonstrates that <strong>pre-trained visual representations</strong> can enable world models without task-specific training.</p>
+</div>
+<div id="core-innovation" class="section level3 hasAnchor" number="8.4.2">
+<h3><span class="header-section-number">8.4.2</span> Core Innovation<a href="chapter-8-world-models.html#core-innovation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Rather than learning representations from scratch, DINO-WM:</p>
+<ol style="list-style-type: decimal">
+<li>Uses frozen <strong>DINOv2</strong> embeddings as the observation space</li>
+<li>Learns dynamics in this pre-trained feature space</li>
+<li>Plans by optimizing actions to reach goal features</li>
+</ol>
+</div>
+<div id="architecture-2" class="section level3 hasAnchor" number="8.4.3">
+<h3><span class="header-section-number">8.4.3</span> Architecture<a href="chapter-8-world-models.html#architecture-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Feature Extraction</strong>:
+<span class="math display">\[
+z_t = \text{DINOv2}(o_t) \quad \text{(frozen)}
+\]</span></p>
+<p><strong>Latent Dynamics Model</strong>:
+<span class="math display">\[
+\hat{z}_{t+1} = f_\theta(z_t, a_t)
+\]</span></p>
+<p>Implemented as a Vision Transformer operating on patch embeddings.</p>
+<p><strong>Planning via MPC</strong>:
+<span class="math display">\[
+a^*_{0:H} = \arg\min_{a_{0:H}} \| \hat{z}_H - z_{\text{goal}} \|
+\]</span></p>
+</div>
+<div id="key-advantages" class="section level3 hasAnchor" number="8.4.4">
+<h3><span class="header-section-number">8.4.4</span> Key Advantages<a href="chapter-8-world-models.html#key-advantages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><strong>Zero-shot Generalization</strong>: Works on unseen tasks without retraining</li>
+<li><strong>Offline Learning</strong>: Trains from pre-collected trajectories</li>
+<li><strong>No Reward Engineering</strong>: Uses visual goal-reaching objective</li>
+<li><strong>Scalable</strong>: Benefits from larger pre-trained models</li>
+</ol>
+</div>
+<div id="results" class="section level3 hasAnchor" number="8.4.5">
+<h3><span class="header-section-number">8.4.5</span> Results<a href="chapter-8-world-models.html#results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>45% higher success rates than baselines</li>
+<li>56% improvement in visual fidelity (LPIPS)</li>
+<li>Generalizes across mazes, manipulation, multi-object scenes</li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="genie-generative-interactive-environments" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Genie: Generative Interactive Environments<a href="chapter-8-world-models.html#genie-generative-interactive-environments" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="world-models-as-simulators" class="section level3 hasAnchor" number="8.5.1">
+<h3><span class="header-section-number">8.5.1</span> World Models as Simulators<a href="chapter-8-world-models.html#world-models-as-simulators" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Google DeepMind’s <strong>Genie</strong> (2024) takes world models to their logical conclusion: generating entire interactive environments from a single image.</p>
+</div>
+<div id="architecture-3" class="section level3 hasAnchor" number="8.5.2">
+<h3><span class="header-section-number">8.5.2</span> Architecture<a href="chapter-8-world-models.html#architecture-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Genie uses a three-component architecture:</p>
+<p><strong>1. Video Tokenizer (ST-ViViT)</strong>:
+- Spatiotemporal Vision Transformer
+- Converts video frames to discrete tokens
+- Enables efficient sequence modeling</p>
+<p><strong>2. Latent Action Model</strong>:
+- Infers actions from video without labels
+- Learns a discrete action space automatically
+- Enables controllable generation</p>
+<p><strong>3. Dynamics Model</strong>:
+- Autoregressive transformer (like GPT)
+- Predicts next frame tokens given history and action
+- Generates consistent, controllable futures</p>
+</div>
+<div id="training" class="section level3 hasAnchor" number="8.5.3">
+<h3><span class="header-section-number">8.5.3</span> Training<a href="chapter-8-world-models.html#training" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Genie trains on <strong>unlabeled internet videos</strong>:
+- No action labels required
+- Learns controllable latent actions
+- Scales to diverse domains</p>
+</div>
+<div id="capabilities" class="section level3 hasAnchor" number="8.5.4">
+<h3><span class="header-section-number">8.5.4</span> Capabilities<a href="chapter-8-world-models.html#capabilities" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Generate playable environments from single images</li>
+<li>Create game-like interactions from photos or sketches</li>
+<li>Enable human or AI control of generated worlds</li>
+<li>Potential for training embodied agents</li>
 </ul>
 </div>
-<div id="pagedattention-vllm" class="section level3 hasAnchor" number="2.3.3">
-<h3><span class="header-section-number">2.3.3</span> PagedAttention (vLLM)<a href="chapter-2-self-attention-mechanism.html#pagedattention-vllm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>As context lengths grew, managing the KV Cache became a bottleneck. The cache can be huge (gigabytes per request) and fragmented in memory.</p>
+<div id="significance" class="section level3 hasAnchor" number="8.5.5">
+<h3><span class="header-section-number">8.5.5</span> Significance<a href="chapter-8-world-models.html#significance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Genie represents a path toward:
+- <strong>Foundation world models</strong>: Pre-trained on diverse video
+- <strong>Imagination-based training</strong>: Agents learn in generated worlds
+- <strong>Creative tools</strong>: Interactive content from static images</p>
+<hr />
+</div>
+</div>
+<div id="cosmos-physical-world-simulation" class="section level2 hasAnchor" number="8.6">
+<h2><span class="header-section-number">8.6</span> Cosmos: Physical World Simulation<a href="chapter-8-world-models.html#cosmos-physical-world-simulation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="nvidias-world-foundation-models" class="section level3 hasAnchor" number="8.6.1">
+<h3><span class="header-section-number">8.6.1</span> NVIDIA’s World Foundation Models<a href="chapter-8-world-models.html#nvidias-world-foundation-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Cosmos</strong> (2024) aims to build world models that understand physical reality:</p>
+</div>
+<div id="key-components" class="section level3 hasAnchor" number="8.6.2">
+<h3><span class="header-section-number">8.6.2</span> Key Components<a href="chapter-8-world-models.html#key-components" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Tokenization</strong>:
+- Continuous tokens for high-fidelity reconstruction
+- Discrete tokens for efficient scaling
+- Joint image-video tokenizers</p>
+<p><strong>World Model Architectures</strong>:
+- Autoregressive transformers
+- Diffusion-based models
+- Hybrid approaches</p>
+</div>
+<div id="training-pipeline" class="section level3 hasAnchor" number="8.6.3">
+<h3><span class="header-section-number">8.6.3</span> Training Pipeline<a href="chapter-8-world-models.html#training-pipeline" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><strong>Video Curation</strong>: High-quality, physically consistent videos</li>
+<li><strong>Multi-stage Training</strong>: Progressive resolution increase</li>
+<li><strong>Physics Grounding</strong>: Ensure physical plausibility</li>
+</ol>
+</div>
+<div id="applications-1" class="section level3 hasAnchor" number="8.6.4">
+<h3><span class="header-section-number">8.6.4</span> Applications<a href="chapter-8-world-models.html#applications-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><strong>The Problem</strong>: Traditional memory allocation reserves contiguous blocks for the KV cache. Since we don’t know the final output length, we often over-allocate (wasting memory) or face fragmentation.</li>
-<li><strong>The Solution</strong>: Inspired by virtual memory in operating systems, <strong>PagedAttention</strong> (used in vLLM) breaks the KV cache into non-contiguous blocks (“pages”).</li>
-<li><strong>Mechanism</strong>: A block table maps logical tokens to physical memory blocks. This allows the system to allocate memory dynamically on demand.</li>
-<li><strong>Impact</strong>: This leads to near-zero memory waste and allows serving many more concurrent requests (higher throughput) with the same hardware.</li>
+<li>Autonomous vehicle simulation</li>
+<li>Robotic planning and training</li>
+<li>Synthetic data generation</li>
+<li>Game and content creation</li>
 </ul>
+<hr />
 </div>
-<div id="linear-attention" class="section level3 hasAnchor" number="2.3.4">
-<h3><span class="header-section-number">2.3.4</span> Linear Attention<a href="chapter-2-self-attention-mechanism.html#linear-attention" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Various approaches (e.g., Linformer, Performer) approximate the softmax attention map to achieve linear complexity <span class="math inline">\(O(N)\)</span>, making it feasible to process extremely long documents or genomic sequences.</p>
 </div>
-<div id="sliding-window-attention" class="section level3 hasAnchor" number="2.3.5">
-<h3><span class="header-section-number">2.3.5</span> Sliding Window Attention<a href="chapter-2-self-attention-mechanism.html#sliding-window-attention" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Used in models like <strong>Mistral</strong> and <strong>Longformer</strong>, this restricts attention to a local window around each token. This reduces computation while still allowing global information to propagate through multiple layers.</p>
+<div id="theoretical-foundations-world-models-are-necessary" class="section level2 hasAnchor" number="8.7">
+<h2><span class="header-section-number">8.7</span> Theoretical Foundations: World Models Are Necessary<a href="chapter-8-world-models.html#theoretical-foundations-world-models-are-necessary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="general-agents-contain-world-models" class="section level3 hasAnchor" number="8.7.1">
+<h3><span class="header-section-number">8.7.1</span> General Agents Contain World Models<a href="chapter-8-world-models.html#general-agents-contain-world-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A landmark 2025 paper by Richens et al. provides formal proof that <strong>world models are necessary for general intelligence</strong>:</p>
+<blockquote>
+<p><strong>Theorem</strong>: Any agent capable of generalizing to multi-step goal-directed tasks must have learned an environmental predictive model.</p>
+</blockquote>
+</div>
+<div id="key-results" class="section level3 hasAnchor" number="8.7.2">
+<h3><span class="header-section-number">8.7.2</span> Key Results<a href="chapter-8-world-models.html#key-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><strong>Necessity</strong>: Model-free approaches cannot achieve flexible goal-directed behavior</li>
+<li><strong>Extractability</strong>: World models can be recovered from agent policies</li>
+<li><strong>Scaling Laws</strong>: More complex goals require more accurate world models</li>
+</ol>
+</div>
+<div id="implications" class="section level3 hasAnchor" number="8.7.3">
+<h3><span class="header-section-number">8.7.3</span> Implications<a href="chapter-8-world-models.html#implications" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>Safety</strong>: Understanding agent world models enables better alignment</li>
+<li><strong>Capability Bounds</strong>: World model accuracy limits agent performance</li>
+<li><strong>Interpretability</strong>: Extracting world models aids understanding</li>
+</ul>
+<p>This theoretical result validates the empirical success of world model approaches and suggests they are not just one option among many, but a fundamental requirement for general AI.</p>
+<hr />
+</div>
+</div>
+<div id="comparison-of-world-model-approaches" class="section level2 hasAnchor" number="8.8">
+<h2><span class="header-section-number">8.8</span> Comparison of World Model Approaches<a href="chapter-8-world-models.html#comparison-of-world-model-approaches" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="21%" />
+<col width="25%" />
+<col width="20%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Approach</th>
+<th align="left">Representation</th>
+<th align="left">Prediction Target</th>
+<th align="left">Training Data</th>
+<th align="left">Key Strength</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Ha &amp; Schmidhuber</strong></td>
+<td align="left">VAE latents</td>
+<td align="left">Next latent state</td>
+<td align="left">Task-specific</td>
+<td align="left">Simplicity, dream training</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Dreamer</strong></td>
+<td align="left">RSSM states</td>
+<td align="left">Latent + reward</td>
+<td align="left">Task-specific</td>
+<td align="left">Sample efficiency</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>I-JEPA</strong></td>
+<td align="left">ViT features</td>
+<td align="left">Masked patches</td>
+<td align="left">Images</td>
+<td align="left">Semantic representations</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>V-JEPA</strong></td>
+<td align="left">Temporal features</td>
+<td align="left">Future frames</td>
+<td align="left">Videos</td>
+<td align="left">Temporal understanding</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>DINO-WM</strong></td>
+<td align="left">Frozen DINOv2</td>
+<td align="left">Next features</td>
+<td align="left">Offline data</td>
+<td align="left">Zero-shot generalization</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Genie</strong></td>
+<td align="left">Discrete tokens</td>
+<td align="left">Next frame tokens</td>
+<td align="left">Unlabeled video</td>
+<td align="left">Generative worlds</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Cosmos</strong></td>
+<td align="left">Hybrid tokens</td>
+<td align="left">Video continuation</td>
+<td align="left">Curated video</td>
+<td align="left">Physical realism</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+<div id="progressive-refinement-from-coarse-to-fine" class="section level2 hasAnchor" number="8.9">
+<h2><span class="header-section-number">8.9</span> Progressive Refinement: From Coarse to Fine<a href="chapter-8-world-models.html#progressive-refinement-from-coarse-to-fine" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Modern world models increasingly adopt <strong>hierarchical</strong> or <strong>progressive</strong> prediction:</p>
+<div id="multi-scale-representations" class="section level3 hasAnchor" number="8.9.1">
+<h3><span class="header-section-number">8.9.1</span> Multi-Scale Representations<a href="chapter-8-world-models.html#multi-scale-representations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Different levels capture different abstractions:
+- <strong>Low-level</strong>: Pixel dynamics, textures
+- <strong>Mid-level</strong>: Object motion, interactions
+- <strong>High-level</strong>: Scene semantics, goals</p>
+</div>
+<div id="coarse-to-fine-generation" class="section level3 hasAnchor" number="8.9.2">
+<h3><span class="header-section-number">8.9.2</span> Coarse-to-Fine Generation<a href="chapter-8-world-models.html#coarse-to-fine-generation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li>Predict high-level plan/trajectory</li>
+<li>Refine with mid-level details</li>
+<li>Fill in low-level specifics</li>
+</ol>
+<p>This mirrors how humans plan: abstract goals → concrete actions → motor execution.</p>
+</div>
+<div id="benefits" class="section level3 hasAnchor" number="8.9.3">
+<h3><span class="header-section-number">8.9.3</span> Benefits<a href="chapter-8-world-models.html#benefits" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>Computational efficiency</strong>: Plan at appropriate resolution</li>
+<li><strong>Long-horizon reasoning</strong>: Abstract away irrelevant details</li>
+<li><strong>Robust planning</strong>: High-level plans transfer better</li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="future-directions-1" class="section level2 hasAnchor" number="8.10">
+<h2><span class="header-section-number">8.10</span> Future Directions<a href="chapter-8-world-models.html#future-directions-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="foundation-world-models" class="section level3 hasAnchor" number="8.10.1">
+<h3><span class="header-section-number">8.10.1</span> Foundation World Models<a href="chapter-8-world-models.html#foundation-world-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Pre-trained world models that:
+- Learn from internet-scale video
+- Transfer to diverse downstream tasks
+- Enable few-shot adaptation</p>
+</div>
+<div id="physical-understanding" class="section level3 hasAnchor" number="8.10.2">
+<h3><span class="header-section-number">8.10.2</span> Physical Understanding<a href="chapter-8-world-models.html#physical-understanding" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>World models that:
+- Respect conservation laws
+- Model rigid-body dynamics
+- Handle deformable objects
+- Understand causality</p>
+</div>
+<div id="multi-modal-worlds" class="section level3 hasAnchor" number="8.10.3">
+<h3><span class="header-section-number">8.10.3</span> Multi-Modal Worlds<a href="chapter-8-world-models.html#multi-modal-worlds" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Integrating:
+- Vision, audio, touch
+- Language grounding
+- Social dynamics</p>
+</div>
+<div id="embodied-training" class="section level3 hasAnchor" number="8.10.4">
+<h3><span class="header-section-number">8.10.4</span> Embodied Training<a href="chapter-8-world-models.html#embodied-training" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Using world models for:
+- Sim-to-real transfer
+- Safe exploration
+- Skill learning</p>
+<hr />
+</div>
+</div>
+<div id="summary-1" class="section level2 hasAnchor" number="8.11">
+<h2><span class="header-section-number">8.11</span> Summary<a href="chapter-8-world-models.html#summary-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>World models have evolved from a compelling idea to a practical paradigm:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Era</th>
+<th align="left">Key Development</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>2018</strong></td>
+<td align="left">Ha &amp; Schmidhuber: Learning to dream</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>2019-2023</strong></td>
+<td align="left">Dreamer series: Scalable imagination</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>2022-2023</strong></td>
+<td align="left">JEPA: Representation prediction</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>2024</strong></td>
+<td align="left">DINO-WM: Zero-shot with frozen features</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>2024</strong></td>
+<td align="left">Genie: Generative interactive worlds</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>2024</strong></td>
+<td align="left">Cosmos: Physical world simulation</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>2025</strong></td>
+<td align="left">Theoretical proof of necessity</td>
+</tr>
+</tbody>
+</table>
+<p>The trajectory is clear: world models are not just useful—they are essential for building generally capable AI systems.</p>
+<hr />
+<p><em>For further reading: Ha &amp; Schmidhuber “World Models” (2018), LeCun “A Path Towards Autonomous Machine Intelligence” (2022), Richens et al. “General Agents Contain World Models” (2025).</em></p>
 
-</div>
 </div>
 </div>
             </section>
@@ -559,8 +986,8 @@ where <span class="math inline">\(W_Q, W_K, W_V\)</span> are learnable weight ma
           </div>
         </div>
       </div>
-<a href="chapter-1-introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="chapter-3-transformers.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="chapter-7-active-inference.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapter-9-knowledge-distillation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
