@@ -35,8 +35,8 @@ rmd_files: [
   "03-Transformers.Rmd",
   "04-Image-Encoders.Rmd",
   "05-Generative-Models.Rmd",
-  "06-Markov-Decision-Processes.Rmd",
-  "07-Reinforcement-Learning.Rmd",
+  "06-Reinforcement-Learning.Rmd",
+  "07-Active-Inference.Rmd",
   "08-DINO-World-Models.Rmd",
   "09-JEPA-Architecture.Rmd",
   "10-Knowledge-Distillation.Rmd"

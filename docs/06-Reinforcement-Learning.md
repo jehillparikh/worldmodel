@@ -1,35 +1,158 @@
-# Chapter 7: Reinforcement Learning - Theory and Applications
+# Chapter 6: Reinforcement Learning
 
 > *"The key to artificial intelligence has always been the representation."*
 > — Jeff Hawkins
 
-Reinforcement Learning (RL) is the science of decision-making under uncertainty. Unlike supervised learning where we learn from labeled examples, RL agents learn by interacting with an environment, receiving feedback through rewards, and discovering optimal behaviors through trial and error.
+Reinforcement Learning (RL) is the science of decision-making under uncertainty. Unlike supervised learning where we learn from labeled examples, RL agents learn by interacting with an environment, receiving feedback through rewards, and discovering optimal behaviors through trial and error. This chapter provides a comprehensive treatment of RL, starting with the foundational Markov Decision Process framework.
 
-## Fundamentals of Reinforcement Learning
+---
 
-### Key Components
+## Markov Decision Processes
 
-The RL framework consists of several fundamental components:
+A **Markov Decision Process (MDP)** is the mathematical framework that underlies reinforcement learning. It provides a formal model for sequential decision-making where outcomes are partly random and partly controlled by an agent. MDPs are widely used in **reinforcement learning, robotics, finance, and game theory**.
 
-| Component | Symbol | Description |
-|:----------|:-------|:------------|
-| **Agent** | - | The decision-maker that interacts with the environment |
-| **Environment** | - | The external system the agent operates in |
-| **State** | $s \in S$ | A representation of the environment at time $t$ |
-| **Action** | $a \in A$ | A decision taken by the agent |
-| **Reward** | $r \in \mathbb{R}$ | Scalar feedback signal |
-| **Policy** | $\pi(a|s)$ | Probability of taking action $a$ in state $s$ |
-| **Value Function** | $V^\pi(s)$ | Expected cumulative reward from state $s$ |
-| **Q-Function** | $Q^\pi(s,a)$ | Expected cumulative reward for action $a$ in state $s$ |
-| **Discount Factor** | $\gamma \in [0,1]$ | Importance of future rewards |
+### Components of an MDP
 
-### The RL Objective
+An MDP consists of the following components:
 
-The goal is to find an optimal policy $\pi^*$ that maximizes expected cumulative discounted reward:
+- **States ($S$):** A set of all possible states the agent can be in.
+- **Actions ($A$):** A set of all possible actions the agent can take.
+- **Transition Probability ($P$):** The probability of moving from one state to another given an action.
+- **Reward Function ($R$):** The reward received for taking an action in a particular state.
+- **Policy ($\pi$):** A strategy that defines the action selection process in each state.
+- **Discount Factor ($\gamma$):** A factor that determines how much future rewards are valued compared to immediate rewards.
+
+Mathematically, an MDP is represented as a tuple:
 
 $$
-\pi^* = \arg\max_\pi \mathbb{E}_\pi \left[ \sum_{t=0}^{\infty} \gamma^t r_t \right]
+(S, A, P, R, \pi, \gamma)
 $$
+
+where:
+
+- $S$ is the set of states.
+- $A$ is the set of actions.
+- $P(s' | s, a)$ is the probability of transitioning from state $s$ to state $s'$ when taking action $a$.
+- $R(s, a)$ is the reward received after taking action $a$ in state $s$.
+- $\pi(a | s)$ is the policy, which defines the probability of taking action $a$ in state $s$.
+- $\gamma \in [0,1]$ is the discount factor.
+
+### State Transition Probability
+
+The probability of moving from state $s$ to state $s'$ after taking action $a$ is given by:
+
+$$
+P(s' | s, a) = \Pr(S_{t+1} = s' | S_t = s, A_t = a)
+$$
+
+This represents the **Markov Property**, meaning the next state **only depends on the current state and action**, not the previous history.
+
+### Policy in MDP
+
+A **policy ($\pi$)** defines the agent's behavior by mapping states to actions. Policies can be:
+
+- **Deterministic Policy ($\pi: S \to A$)**: The agent always takes a specific action in a given state.
+
+  $$a = \pi(s)$$
+
+- **Stochastic Policy ($\pi: S \times A \to [0,1]$)**: The agent chooses actions probabilistically.
+
+  $$\pi(a | s) = \Pr(A_t = a | S_t = s)$$
+
+### Optimal Policy
+
+An optimal policy $\pi^*$ maximizes the expected return:
+
+$$
+\pi^* = \arg\max_\pi V^\pi(s), \forall s \in S
+$$
+
+where $V^\pi(s)$ is the value function under policy $\pi$. The optimal policy leads to the highest cumulative rewards over time.
+
+---
+
+## The Bellman Equation
+
+The **Bellman Equation** provides a recursive formula for **value functions**, helping determine the **optimal policy** that maximizes expected cumulative rewards.
+
+### State-Value Function
+
+The **value function** of a state $s$ under a policy $\pi$ is:
+
+$$
+V^\pi(s) = \mathbb{E} \left[ \sum_{t=0}^{\infty} \gamma^t R_t \mid S_0 = s, \pi \right]
+$$
+
+Using the **Bellman equation**, we express the recursive relationship:
+
+$$
+V^\pi(s) = \sum_{a \in A} \pi(a | s) \sum_{s' \in S} P(s' | s, a) \left[ R(s, a) + \gamma V^\pi(s') \right]
+$$
+
+### Action-Value Function (Q-Function)
+
+The **Q-value function** measures the expected reward for taking an action $a$ in state $s$ and then following policy $\pi$:
+
+$$
+Q^\pi(s, a) = \mathbb{E} \left[ \sum_{t=0}^{\infty} \gamma^t R_t \mid S_0 = s, A_0 = a, \pi \right]
+$$
+
+The **Bellman equation for Q-values** is:
+
+$$
+Q^\pi(s, a) = R(s, a) + \gamma \sum_{s' \in S} P(s' | s, a) \sum_{a' \in A} \pi(a' | s') Q^\pi(s', a')
+$$
+
+### Bellman Optimality Equations
+
+The goal of reinforcement learning is to find the **optimal policy** that maximizes the expected cumulative reward. The **Bellman optimality equation** for the optimal state-value function is:
+
+$$
+V^*(s) = \max_{a \in A} \sum_{s' \in S} P(s' | s, a) \left[ R(s, a) + \gamma V^*(s') \right]
+$$
+
+Similarly, the **Bellman optimality equation for Q-values** is:
+
+$$
+Q^*(s, a) = R(s, a) + \gamma \sum_{s' \in S} P(s' | s, a) \max_{a' \in A} Q^*(s', a')
+$$
+
+---
+
+## Reward-Based Learning
+
+Reward-Based Learning is a fundamental concept in reinforcement learning where an agent learns to make decisions by receiving rewards for its actions. The agent's objective is to maximize the total cumulative reward over time.
+
+### Types of Rewards
+
+- **Immediate Rewards ($R(s, a)$):** A reward received immediately after taking action $a$ in state $s$.
+- **Delayed Rewards:** A reward that is given after multiple steps, requiring the agent to learn long-term strategies.
+- **Sparse Rewards:** Rewards that occur infrequently, making learning more challenging.
+- **Dense Rewards:** Frequent rewards that provide continuous feedback.
+
+### The Return
+
+To maximize cumulative rewards, agents use **return ($G_t$)**, which is the sum of discounted future rewards:
+
+$$
+G_t = R_t + \gamma R_{t+1} + \gamma^2 R_{t+2} + \cdots = \sum_{k=0}^{\infty} \gamma^k R_{t+k}
+$$
+
+### Exploration vs. Exploitation
+
+A key challenge in reward-based learning is balancing:
+
+- **Exploration:** Trying new actions to discover potentially better rewards.
+- **Exploitation:** Choosing known good actions to maximize immediate rewards.
+
+**Methods for Managing the Trade-off:**
+
+- **Epsilon-Greedy Strategy:** Randomly selects an action with probability $\epsilon$, otherwise chooses the best-known action.
+- **Upper Confidence Bound (UCB):** Prioritizes actions with uncertain rewards.
+- **Thompson Sampling:** Uses probability distributions to select actions.
+- **Boltzmann Exploration:** Selects actions based on softmax over Q-values.
+
+---
 
 ## Taxonomy of RL Algorithms
 
@@ -51,9 +174,87 @@ $$
 
 ---
 
-## Value-Based Methods
+## Model-Based Reinforcement Learning
 
-### Q-Learning
+Model-Based RL refers to methods where an agent **learns a model** of the environment and uses it for decision-making. This typically involves:
+
+1. **Learning the Transition Model ($P(s' | s, a)$)**: Predicting the next state given the current state and action.
+2. **Learning the Reward Model ($R(s, a)$)**: Estimating the reward for taking an action in a given state.
+3. **Planning**: Using the learned model to simulate trajectories and improve decision-making.
+
+### Dynamic Programming
+
+Uses Bellman equations to iteratively compute value functions, assuming a known model.
+
+**Value Iteration:**
+$$
+V_{k+1}(s) = \max_a \sum_{s'} P(s'|s,a) [R(s,a) + \gamma V_k(s')]
+$$
+
+**Policy Iteration:**
+1. Policy Evaluation: Compute $V^\pi$
+2. Policy Improvement: $\pi'(s) = \arg\max_a Q^\pi(s,a)$
+
+### Model Predictive Control (MPC)
+
+Uses a learned model to simulate future states and optimize actions:
+
+$$
+a_{0:H}^* = \arg\max_{a_{0:H}} \sum_{t=0}^{H} \gamma^t \hat{r}(s_t, a_t)
+$$
+
+At each step:
+1. Optimize action sequence using learned model
+2. Execute first action
+3. Re-plan at next step
+
+### Dyna-Q
+
+Combines model-free and model-based learning by integrating planning and learning:
+
+1. Take action, observe transition
+2. Update Q-values from real experience
+3. Update model from real experience
+4. Plan: Sample from model, update Q-values
+
+### Monte Carlo Tree Search (MCTS)
+
+MCTS is a search-based decision-making algorithm used in **game AI** and **planning problems**. It simulates future states by exploring the decision tree and backing up estimated rewards.
+
+**MCTS Steps:**
+
+1. **Selection**: Start from the root and select the most promising node based on UCB1:
+   $$
+   \text{UCT}(v) = \frac{w(v)}{n(v)} + c \sqrt{\frac{\ln N}{n(v)}}
+   $$
+
+2. **Expansion**: Add a new node to the tree when a promising unexplored action is found.
+
+3. **Simulation (Rollout)**: Play out random simulations to estimate the value of the new state.
+
+4. **Backpropagation**: Update the values of visited nodes based on the simulation outcome.
+
+**Applications of MCTS:**
+- AlphaGo (DeepMind)
+- Chess and board games
+- Robotics planning and decision-making
+
+### World Models (Dreamer)
+
+State-of-the-art model-based RL:
+1. **World Model**: Recurrent State-Space Model (RSSM)
+2. **Imagination**: Roll out trajectories in latent space
+3. **Actor-Critic**: Train on imagined trajectories
+
+---
+
+## Model-Free Reinforcement Learning
+
+Model-Free RL does not explicitly learn a model of the environment. Instead, the agent learns directly from experience by interacting with the environment and optimizing rewards.
+
+### Value-Based Methods
+
+#### Q-Learning
 
 Q-learning is a foundational off-policy algorithm that learns the optimal action-value function:
 
@@ -66,7 +267,7 @@ $$
 - Tabular: Works with discrete state-action spaces
 - Convergence: Guaranteed under certain conditions
 
-### SARSA (State-Action-Reward-State-Action)
+#### SARSA (State-Action-Reward-State-Action)
 
 SARSA is an on-policy variant that uses the actual next action:
 
@@ -76,7 +277,7 @@ $$
 
 **Difference from Q-learning:** Uses $Q(s', a')$ instead of $\max_{a'} Q(s', a')$, making it more conservative.
 
-### Deep Q-Networks (DQN)
+#### Deep Q-Networks (DQN)
 
 DQN revolutionized RL by using deep neural networks to approximate Q-values:
 
@@ -89,7 +290,7 @@ $$
 2. **Target Network**: Separate network $\theta^-$ updated periodically for stability
 3. **Frame Stacking**: Stack consecutive frames to capture motion
 
-### Double DQN
+#### Double DQN
 
 Addresses overestimation bias in DQN by decoupling action selection and evaluation:
 
@@ -97,7 +298,7 @@ $$
 Y = r + \gamma Q(s', \arg\max_{a'} Q(s', a'; \theta); \theta^-)
 $$
 
-### Dueling DQN
+#### Dueling DQN
 
 Separates Q-value into state value and advantage:
 
@@ -105,9 +306,7 @@ $$
 Q(s, a; \theta, \alpha, \beta) = V(s; \theta, \beta) + \left( A(s, a; \theta, \alpha) - \frac{1}{|A|} \sum_{a'} A(s, a'; \theta, \alpha) \right)
 $$
 
-This architecture learns which states are valuable without needing to learn the effect of each action.
-
-### Prioritized Experience Replay
+#### Prioritized Experience Replay
 
 Samples important transitions more frequently based on TD-error:
 
@@ -115,9 +314,7 @@ $$
 P(i) = \frac{p_i^\alpha}{\sum_k p_k^\alpha}, \quad p_i = |\delta_i| + \epsilon
 $$
 
-where $\delta_i$ is the TD-error for transition $i$.
-
-### Rainbow DQN
+#### Rainbow DQN
 
 Combines multiple improvements:
 - Double Q-learning
@@ -198,8 +395,6 @@ $$
 \max_\theta \mathbb{E}_t \left[ \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{old}}(a_t|s_t)} A_t \right] \quad \text{s.t.} \quad \mathbb{E}_t[D_{KL}(\pi_{\theta_{old}} || \pi_\theta)] \leq \delta
 $$
 
-Uses conjugate gradient and line search for optimization.
-
 ---
 
 ## Generalized Policy Optimization (GPO) Methods
@@ -239,12 +434,6 @@ $$
 \hat{A}_i = \frac{r(x, y_i) - \text{mean}(\{r(x, y_j)\}_{j=1}^G)}{\text{std}(\{r(x, y_j)\}_{j=1}^G)}
 $$
 
-**Key Innovations:**
-- Samples multiple responses per prompt
-- Normalizes rewards within each group
-- Reduces variance in advantage estimation
-- More stable than standard PPO for LLMs
-
 ### Identity Preference Optimization (IPO)
 
 IPO addresses the overfitting issues in DPO:
@@ -252,11 +441,6 @@ IPO addresses the overfitting issues in DPO:
 $$
 \mathcal{L}_{IPO}(\theta) = \mathbb{E}_{(x, y_w, y_l)} \left[ \left( \log \frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \log \frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)} - \frac{1}{2\beta} \right)^2 \right]
 $$
-
-**Benefits:**
-- Prevents reward hacking
-- More robust to noisy preferences
-- Better generalization
 
 ### Kahneman-Tversky Optimization (KTO)
 
@@ -266,16 +450,8 @@ $$
 \mathcal{L}_{KTO}(\theta) = \mathbb{E}_{x, y} \left[ w(y) \cdot \left( 1 - v_\theta(x, y) \right) \right]
 $$
 
-where the value function incorporates loss aversion:
-$$
-v_\theta(x, y) = \begin{cases}
-\sigma(\beta (r_\theta(x, y) - z_{ref})) & \text{if } y \text{ is desirable} \\
-\sigma(\beta \lambda (z_{ref} - r_\theta(x, y))) & \text{if } y \text{ is undesirable}
-\end{cases}
-$$
-
 **Key Features:**
-- Works with unpaired preference data (no need for $y_w$ vs $y_l$ pairs)
+- Works with unpaired preference data
 - Models loss aversion ($\lambda > 1$)
 - More data-efficient
 
@@ -285,11 +461,6 @@ ORPO combines SFT and preference optimization in a single stage:
 
 $$
 \mathcal{L}_{ORPO} = \mathcal{L}_{SFT} + \lambda \cdot \mathcal{L}_{OR}
-$$
-
-where the odds ratio loss is:
-$$
-\mathcal{L}_{OR} = -\log \sigma \left( \log \frac{\text{odds}_\theta(y_w|x)}{\text{odds}_\theta(y_l|x)} \right)
 $$
 
 **Advantages:**
@@ -329,28 +500,6 @@ $$
 | **KTO** | No | No | Yes | 2 |
 | **ORPO** | No | Yes | No | 1 |
 
-### Practical Recommendations
-
-**Choose DPO when:**
-- You have paired preference data
-- You want simple, stable training
-- Computational resources are limited
-
-**Choose GRPO when:**
-- Training large-scale models
-- You need reduced variance
-- You have a good reward model
-
-**Choose KTO when:**
-- You only have binary feedback (good/bad)
-- Data collection is expensive
-- Preferences are noisy
-
-**Choose ORPO when:**
-- You want end-to-end training
-- Memory is constrained
-- You're starting from a base model
-
 ---
 
 ## Actor-Critic Methods
@@ -367,12 +516,6 @@ $$
 - **Entropy Regularization**: Encourages exploration
 - **Twin Q-Networks**: Two critics to reduce overestimation
 - **Automatic Temperature Tuning**: Learns optimal $\alpha$
-
-**Updates:**
-
-Critic: $\mathcal{L}_Q = \mathbb{E} \left[ \left( Q(s,a) - (r + \gamma (Q_{target}(s', a') - \alpha \log \pi(a'|s'))) \right)^2 \right]$
-
-Actor: $\mathcal{L}_\pi = \mathbb{E}_{s \sim \mathcal{D}, a \sim \pi} \left[ \alpha \log \pi(a|s) - Q(s, a) \right]$
 
 ### Twin Delayed DDPG (TD3)
 
@@ -404,49 +547,6 @@ $$
 
 ---
 
-## Model-Based Reinforcement Learning
-
-### World Models
-
-Learn a model of the environment and use it for planning:
-
-$$
-\hat{s}_{t+1} = f_\theta(s_t, a_t)
-$$
-
-**Components:**
-1. **Dynamics Model**: Predicts next state
-2. **Reward Model**: Predicts reward
-3. **Planning**: Use model for lookahead (MPC, MCTS)
-
-### Dyna-Q
-
-Integrates learning and planning:
-1. Take action, observe transition
-2. Update Q-values from real experience
-3. Update model from real experience
-4. Plan: Sample from model, update Q-values
-
-### Model Predictive Control (MPC)
-
-At each step:
-1. Optimize action sequence using learned model
-2. Execute first action
-3. Re-plan at next step
-
-$$
-a_{0:H}^* = \arg\max_{a_{0:H}} \sum_{t=0}^{H} \gamma^t \hat{r}(s_t, a_t)
-$$
-
-### Dreamer
-
-State-of-the-art model-based RL:
-1. **World Model**: Recurrent State-Space Model (RSSM)
-2. **Imagination**: Roll out trajectories in latent space
-3. **Actor-Critic**: Train on imagined trajectories
-
----
-
 ## Exploration Strategies
 
 ### Epsilon-Greedy
@@ -470,14 +570,11 @@ Add curiosity-driven rewards:
 
 ### Noisy Networks
 
-Replace linear layers with noisy versions:
-$$
-y = (W + \sigma_{W} \odot \epsilon_W) x + (b + \sigma_b \odot \epsilon_b)
-$$
+Replace linear layers with noisy versions for parameter-space exploration.
 
 ---
 
-## Multi-Agent Reinforcement Learning (MARL)
+## Multi-Agent Reinforcement Learning
 
 ### Independent Learners
 
@@ -494,8 +591,6 @@ Factorizes joint Q-function:
 $$
 Q_{tot}(\boldsymbol{\tau}, \boldsymbol{a}) = f_\theta(Q_1(\tau_1, a_1), ..., Q_n(\tau_n, a_n))
 $$
-
-where $f_\theta$ is a monotonic mixing network.
 
 ---
 

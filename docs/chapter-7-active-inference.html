@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Chapter 4: Image Encoders | Foundations of World Models</title>
+  <title>Chapter 7 Chapter 7: Active Inference | Foundations of World Models</title>
   <meta name="description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Chapter 4: Image Encoders | Foundations of World Models" />
+  <meta property="og:title" content="Chapter 7 Chapter 7: Active Inference | Foundations of World Models" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
   <meta property="og:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="github-repo" content="jehillparikh/worldmodel" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Chapter 4: Image Encoders | Foundations of World Models" />
+  <meta name="twitter:title" content="Chapter 7 Chapter 7: Active Inference | Foundations of World Models" />
   
   <meta name="twitter:description" content="A comprehensive technical guide to World Models—the next frontier in artificial intelligence. This book explores the theoretical foundations and practical implementations of AI systems that can understand, predict, and plan in complex environments through internal simulations." />
   <meta name="twitter:image" content="https://jehillparikh.github.io/worldmodel/Images/worldmodel.png" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="chapter-3-transformers.html"/>
-<link rel="next" href="chapter-5-generative-models.html"/>
+<link rel="prev" href="chapter-6-reinforcement-learning.html"/>
+<link rel="next" href="chapter-8-dino-world-models.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -505,261 +505,380 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="chapter-4-image-encoders" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Chapter 4: Image Encoders<a href="chapter-4-image-encoders.html#chapter-4-image-encoders" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Image encoders have evolved significantly with the emergence of <strong>self-supervised learning</strong> techniques. Building on the <strong>Transformer</strong> architecture discussed in the previous chapter, we now explore how these mechanisms are applied to vision. Recent advancements like <strong>DINO</strong> and <strong>DINOv2</strong> have demonstrated strong performance in learning feature representations without labeled data.</p>
-<div id="vision-transformers-vits" class="section level2 hasAnchor" number="4.1">
-<h2><span class="header-section-number">4.1</span> Vision Transformers (ViTs)<a href="chapter-4-image-encoders.html#vision-transformers-vits" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>ViTs apply <strong>self-attention</strong> to image data, treating images as sequences of patches rather than using convolutional operations.</p>
-<div class="float">
-<img src="Images/Vision%20Transformer%20.png" title="Vision Transformer" alt="Vision Transformer" />
-<div class="figcaption">Vision Transformer</div>
+<div id="chapter-7-active-inference" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Chapter 7: Active Inference<a href="chapter-7-active-inference.html#chapter-7-active-inference" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<blockquote>
+<p><em>“The brain is a prediction machine.”</em>
+— Karl Friston</p>
+</blockquote>
+<p>Active Inference is a unified theory of brain function that extends the Free Energy Principle to action and decision-making. Unlike traditional reinforcement learning which separates perception from action, Active Inference treats both as aspects of the same underlying process: minimizing surprise (or equivalently, maximizing model evidence).</p>
+<hr />
+<div id="the-free-energy-principle" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> The Free Energy Principle<a href="chapter-7-active-inference.html#the-free-energy-principle" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The Free Energy Principle (FEP) proposes that all living systems minimize their <strong>variational free energy</strong>—a quantity that bounds surprise. This principle provides a normative framework for understanding perception, learning, and action.</p>
+<div id="surprise-and-self-organization" class="section level3 hasAnchor" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> Surprise and Self-Organization<a href="chapter-7-active-inference.html#surprise-and-self-organization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Living systems maintain their organization by occupying a limited set of states (their phenotype). From an information-theoretic perspective, this means minimizing <strong>surprise</strong>:</p>
+<p><span class="math display">\[
+\text{Surprise} = -\log p(o | m)
+\]</span></p>
+<p>where <span class="math inline">\(o\)</span> represents observations and <span class="math inline">\(m\)</span> is the agent’s generative model.</p>
 </div>
-<div id="patch-extraction-and-encoding" class="section level3 hasAnchor" number="4.1.1">
-<h3><span class="header-section-number">4.1.1</span> Patch Extraction and Encoding<a href="chapter-4-image-encoders.html#patch-extraction-and-encoding" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>An image is split into patches, flattened, and passed through a <strong>linear projection</strong>:</p>
-<p><span class="math display">\[X_{patch} = W_E \cdot X_{input} + b_E\]</span></p>
-<p>where <span class="math inline">\(W_E\)</span> is the embedding matrix and <span class="math inline">\(b_E\)</span> is a bias term. These embeddings are then processed using self-attention layers to extract contextual information.</p>
-</div>
-<div id="applications-of-vision-transformers-vits" class="section level3 hasAnchor" number="4.1.2">
-<h3><span class="header-section-number">4.1.2</span> Applications of Vision Transformers (ViTs)<a href="chapter-4-image-encoders.html#applications-of-vision-transformers-vits" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<table>
-<caption><span id="tab:vit-applications">Table 4.1: </span>Applications of Vision Transformers (ViTs)</caption>
-<colgroup>
-<col width="27%" />
-<col width="35%" />
-<col width="37%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Application</th>
-<th align="left">Description</th>
-<th align="left">Example.Use.Cases</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Image Classification</td>
-<td align="left">Categorizing images into different classes</td>
-<td align="left">ViTs trained on ImageNet outperform ResNets</td>
-</tr>
-<tr class="even">
-<td align="left">Object Detection &amp; Segmentation</td>
-<td align="left">Identifying and segmenting objects in images</td>
-<td align="left">DETR (Facebook AI) for autonomous driving and surveillance</td>
-</tr>
-<tr class="odd">
-<td align="left">Medical Image Analysis</td>
-<td align="left">Detecting diseases from medical scans</td>
-<td align="left">Cancer detection in pathology slides using ViTs</td>
-</tr>
-<tr class="even">
-<td align="left">Video Understanding &amp; Action Recognition</td>
-<td align="left">Recognizing actions in video frames</td>
-<td align="left">TimeSformer for video classification</td>
-</tr>
-<tr class="odd">
-<td align="left">Remote Sensing &amp; Satellite Image Processing</td>
-<td align="left">Land classification, disaster analysis</td>
-<td align="left">Urban planning, flood detection</td>
-</tr>
-<tr class="even">
-<td align="left">Image Generation &amp; Super-Resolution</td>
-<td align="left">Enhancing image quality and generating realistic images</td>
-<td align="left">DALL-E and Stable Diffusion for AI-generated art</td>
-</tr>
-<tr class="odd">
-<td align="left">Robotics &amp; Autonomous Navigation</td>
-<td align="left">Scene understanding for self-driving cars &amp; robots</td>
-<td align="left">ViTs used in autonomous robot perception modules</td>
-</tr>
-<tr class="even">
-<td align="left">Face Recognition &amp; Biometrics</td>
-<td align="left">Identity verification and surveillance</td>
-<td align="left">ViT-based facial recognition in low-light conditions</td>
-</tr>
-<tr class="odd">
-<td align="left">Optical Character Recognition (OCR)</td>
-<td align="left">Extracting text from images and documents</td>
-<td align="left">Google’s OCR for document scanning and language translation</td>
-</tr>
-<tr class="even">
-<td align="left">Fashion &amp; Retail</td>
-<td align="left">Virtual try-ons, fashion recommendations</td>
-<td align="left">Automated product tagging in e-commerce</td>
-</tr>
-</tbody>
-</table>
+<div id="variational-free-energy" class="section level3 hasAnchor" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> Variational Free Energy<a href="chapter-7-active-inference.html#variational-free-energy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Since surprise is often intractable to compute directly, we use <strong>variational free energy</strong> as an upper bound:</p>
+<p><span class="math display">\[
+F = \underbrace{D_{KL}[q(\theta) || p(\theta | o)]}_{\text{Divergence}} + \underbrace{(-\log p(o | m))}_{\text{Surprise}}
+\]</span></p>
+<p>Or equivalently:</p>
+<p><span class="math display">\[
+F = \underbrace{\mathbb{E}_q[\log q(\theta) - \log p(\theta)]}_{\text{Complexity}} - \underbrace{\mathbb{E}_q[\log p(o | \theta)]}_{\text{Accuracy}}
+\]</span></p>
+<p>This formulation reveals that minimizing free energy involves balancing <strong>accuracy</strong> (explaining observations) with <strong>complexity</strong> (staying close to prior beliefs).</p>
+<hr />
 </div>
 </div>
-<div id="contrastive-language-image-pretraining-clip" class="section level2 hasAnchor" number="4.2">
-<h2><span class="header-section-number">4.2</span> Contrastive Language-Image Pretraining (CLIP)<a href="chapter-4-image-encoders.html#contrastive-language-image-pretraining-clip" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>CLIP is a multimodal self-supervised learning model designed to learn joint representations of images and text. It is trained on a large dataset of image-text pairs using a contrastive learning approach.</p>
-<div id="architecture" class="section level3 hasAnchor" number="4.2.1">
-<h3><span class="header-section-number">4.2.1</span> Architecture<a href="chapter-4-image-encoders.html#architecture" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>CLIP consists of two main components:</p>
-<ul>
-<li>An <strong>image encoder</strong> (ResNet or Vision Transformer)</li>
-<li>A <strong>text encoder</strong> (Transformer-based model)</li>
-</ul>
-<p>Both encoders project images and text into a shared embedding space, where semantically similar images and text have higher similarity scores.</p>
-<div class="float">
-<img src="Images/CLIP.png" title="CLIP Model" alt="CLIP Model" />
-<div class="figcaption">CLIP Model</div>
-</div>
-</div>
-<div id="training-objective" class="section level3 hasAnchor" number="4.2.2">
-<h3><span class="header-section-number">4.2.2</span> Training Objective<a href="chapter-4-image-encoders.html#training-objective" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>CLIP uses a contrastive learning objective where it maximizes the cosine similarity between matching image-text pairs while minimizing similarity between mismatched pairs:</p>
-<p><span class="math display">\[\mathcal{L}_{CLIP} = - \sum_{i} \log \frac{e^{\cos(I_i, T_i)/\tau}}{\sum_j e^{\cos(I_i, T_j)/\tau}}\]</span></p>
-<p>where <span class="math inline">\(I_i\)</span> and <span class="math inline">\(T_i\)</span> are corresponding image-text pairs, and <span class="math inline">\(\tau\)</span> is a temperature parameter that controls the sharpness of the distribution.</p>
-</div>
-<div id="applications-of-clip" class="section level3 hasAnchor" number="4.2.3">
-<h3><span class="header-section-number">4.2.3</span> Applications of CLIP<a href="chapter-4-image-encoders.html#applications-of-clip" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li><strong>Zero-shot image classification</strong></li>
-<li><strong>Image retrieval and search</strong></li>
-<li><strong>Generating text-based descriptions of images</strong></li>
-<li><strong>Few-shot learning for downstream vision tasks</strong></li>
-</ul>
-<p>CLIP’s ability to understand images and text jointly makes it a powerful model for many vision-language applications.</p>
-</div>
-</div>
-<div id="dino-self-supervised-vision-encoding" class="section level2 hasAnchor" number="4.3">
-<h2><span class="header-section-number">4.3</span> DINO: Self-Supervised Vision Encoding<a href="chapter-4-image-encoders.html#dino-self-supervised-vision-encoding" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>DINO (Self-Distillation without Labels) is a <strong>self-supervised learning method</strong> that trains a <strong>student</strong> network to predict the output of a momentum <strong>teacher</strong> network.</p>
-<div class="float">
-<img src="Images/DINO.png" title="DINO" alt="DINO Architecture" />
-<div class="figcaption">DINO Architecture</div>
-</div>
-<div id="key-features-of-dino" class="section level3 hasAnchor" number="4.3.1">
-<h3><span class="header-section-number">4.3.1</span> Key Features of DINO<a href="chapter-4-image-encoders.html#key-features-of-dino" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li>Works with both CNNs and ViTs</li>
-<li>Learns representations using <strong>contrastive learning</strong></li>
-<li>Uses a momentum teacher-student setup</li>
-<li>Multi-crop augmentation for efficient feature learning</li>
-<li>Achieves competitive performance in unsupervised representation learning</li>
-</ul>
-</div>
-<div id="dino-training-process" class="section level3 hasAnchor" number="4.3.2">
-<h3><span class="header-section-number">4.3.2</span> DINO Training Process<a href="chapter-4-image-encoders.html#dino-training-process" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The DINO training process uses a self-supervised learning (SSL) approach that can be interpreted as a form of knowledge distillation without labels. It involves a student network and a teacher network that have the same architecture but different parameters.</p>
-<div id="training-steps" class="section level4 hasAnchor" number="4.3.2.1">
-<h4><span class="header-section-number">4.3.2.1</span> Training Steps<a href="chapter-4-image-encoders.html#training-steps" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="generative-models-in-active-inference" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Generative Models in Active Inference<a href="chapter-7-active-inference.html#generative-models-in-active-inference" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Active Inference agents maintain a <strong>generative model</strong> of how their observations are generated. This model captures both:</p>
 <ol style="list-style-type: decimal">
-<li><p><strong>Input and Augmentation</strong>: An input image is passed through two different random transformations, creating two distorted views. These views are fed into the student and teacher networks.</p></li>
-<li><p><strong>Student and Teacher Networks</strong>: The student network (<span class="math inline">\(g_{\theta_s}\)</span>) and the teacher network (<span class="math inline">\(g_{\theta_t}\)</span>) process the augmented images, outputting feature maps. The teacher network’s output is centered by subtracting the mean over the batch.</p></li>
-<li><p><strong>Loss Calculation</strong>: DINO minimizes the cross-entropy loss between teacher and student outputs:</p></li>
+<li><strong>Hidden states</strong> of the world</li>
+<li><strong>How actions influence future states</strong></li>
 </ol>
-<p><span class="math display">\[\mathcal{L}_{DINO} = - \sum_{i} p_i^T \log p_i^S\]</span></p>
-<p>where <span class="math inline">\(p_i^T\)</span> and <span class="math inline">\(p_i^S\)</span> are teacher and student predictions.</p>
-<ol start="4" style="list-style-type: decimal">
-<li><strong>Teacher Update</strong>: The teacher network’s parameters are updated using an exponential moving average (EMA) of the student network’s parameters:</li>
-</ol>
-<p><span class="math display">\[\theta_t \leftarrow m \cdot \theta_t + (1 - m) \cdot \theta_s\]</span></p>
-<ol start="5" style="list-style-type: decimal">
-<li><p><strong>Centering and Sharpening</strong>: The teacher network’s output is centered with a mean computed over the batch, and output sharpening is achieved by using a low temperature value in the teacher’s softmax normalization.</p></li>
-<li><p><strong>Multi-Crop Training</strong>: The student is fed multiple crops of an image, and it must align its local feature representations with those predicted by the teacher network for the global views of the image.</p></li>
-</ol>
-</div>
-</div>
-</div>
-<div id="dinov2-improved-vision-encoding" class="section level2 hasAnchor" number="4.4">
-<h2><span class="header-section-number">4.4</span> DINOv2: Improved Vision Encoding<a href="chapter-4-image-encoders.html#dinov2-improved-vision-encoding" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>DINOv2 extends DINO with <strong>Masked Image Modeling (MIM)</strong> and <strong>Self-Supervised Instance Discrimination</strong>, improving its ability to capture both local and global features.</p>
-<div id="key-improvements-in-dinov2" class="section level3 hasAnchor" number="4.4.1">
-<h3><span class="header-section-number">4.4.1</span> Key Improvements in DINOv2<a href="chapter-4-image-encoders.html#key-improvements-in-dinov2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="partially-observable-markov-decision-process-pomdp" class="section level3 hasAnchor" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> Partially Observable Markov Decision Process (POMDP)<a href="chapter-7-active-inference.html#partially-observable-markov-decision-process-pomdp" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The standard formulation uses a POMDP structure:</p>
 <ul>
-<li>Introduces <strong>masked image modeling (MIM)</strong> to learn local textures</li>
-<li>Uses <strong>multi-crop augmentation</strong> to enhance representation learning</li>
-<li>No reliance on <strong>text supervision</strong> (unlike CLIP)</li>
-<li>Improved transferability to <strong>dense prediction tasks</strong> (e.g., segmentation)</li>
-<li>Asymmetric teacher-student design for more effective training</li>
-<li>Incorporates KoLeo regularization to improve feature uniformity</li>
+<li><strong>Hidden States</strong>: <span class="math inline">\(s_t\)</span> (what the agent believes about the world)</li>
+<li><strong>Observations</strong>: <span class="math inline">\(o_t\)</span> (sensory input)</li>
+<li><strong>Actions</strong>: <span class="math inline">\(a_t\)</span> (motor output)</li>
+<li><strong>Policies</strong>: <span class="math inline">\(\pi\)</span> (sequences of actions)</li>
 </ul>
+<p>The generative model factorizes as:</p>
+<p><span class="math display">\[
+p(o_{1:T}, s_{1:T}, \pi) = p(\pi) \prod_{t=1}^{T} p(o_t | s_t) p(s_t | s_{t-1}, a_{t-1})
+\]</span></p>
 </div>
-<div id="masked-image-modeling-mim" class="section level3 hasAnchor" number="4.4.2">
-<h3><span class="header-section-number">4.4.2</span> Masked Image Modeling (MIM)<a href="chapter-4-image-encoders.html#masked-image-modeling-mim" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>MIM extends the concept of MLM to images by randomly masking patches in an image and training the model to reconstruct the missing information. The objective function for MIM is:</p>
-<p><span class="math display">\[\mathcal{L}_{MIM} = - \sum_{i \in M} \log P(I_i | I_{\backslash i})\]</span></p>
-<p>where <span class="math inline">\(I_i\)</span> represents the masked image patch, and <span class="math inline">\(I_{\backslash i}\)</span> denotes the observed patches.</p>
-</div>
-<div id="training-objectives" class="section level3 hasAnchor" number="4.4.3">
-<h3><span class="header-section-number">4.4.3</span> Training Objectives<a href="chapter-4-image-encoders.html#training-objectives" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>DINOv2 uses a <strong>hybrid objective</strong>:</p>
-<p><span class="math display">\[\mathcal{L}_{DINOv2} = \lambda_1 \mathcal{L}_{MIM} + \lambda_2 \mathcal{L}_{Instance}\]</span></p>
-<p>where:</p>
-<ul>
-<li><span class="math inline">\(\mathcal{L}_{MIM}\)</span> is the loss for <strong>masked image modeling</strong>, focusing on reconstructing masked patches</li>
-<li><span class="math inline">\(\mathcal{L}_{Instance}\)</span> is the loss for <strong>instance discrimination</strong>, ensuring robust feature alignment across augmentations</li>
-</ul>
-<p>DINOv2 leverages a <strong>vision-only training approach</strong>, making it highly effective for self-supervised learning in image-based tasks.</p>
+<div id="belief-updating" class="section level3 hasAnchor" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span> Belief Updating<a href="chapter-7-active-inference.html#belief-updating" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Perception corresponds to <strong>state estimation</strong>—inferring hidden states from observations:</p>
+<p><span class="math display">\[
+q(s_t) = \sigma(\log p(o_t | s_t) + \log p(s_t | s_{t-1}, a_{t-1}))
+\]</span></p>
+<p>where <span class="math inline">\(\sigma\)</span> is the softmax function ensuring beliefs form a proper distribution.</p>
+<hr />
 </div>
 </div>
-<div id="applications-of-dino-and-dinov2" class="section level2 hasAnchor" number="4.5">
-<h2><span class="header-section-number">4.5</span> Applications of DINO and DINOv2<a href="chapter-4-image-encoders.html#applications-of-dino-and-dinov2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>DINO and DINOv2 represent significant advances in <strong>self-supervised learning for vision tasks</strong>. Their ability to learn rich representations <strong>without labeled data</strong> makes them valuable for diverse applications:</p>
-<div id="core-applications" class="section level3 hasAnchor" number="4.5.1">
-<h3><span class="header-section-number">4.5.1</span> Core Applications<a href="chapter-4-image-encoders.html#core-applications" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="expected-free-energy" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Expected Free Energy<a href="chapter-7-active-inference.html#expected-free-energy" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The key innovation of Active Inference is using <strong>Expected Free Energy (EFE)</strong> to evaluate and select policies. EFE quantifies how much free energy a policy is expected to produce in the future:</p>
+<p><span class="math display">\[
+G(\pi) = \sum_{\tau} \mathbb{E}_{q(o_\tau, s_\tau | \pi)} [\log q(s_\tau | \pi) - \log p(o_\tau, s_\tau | \pi)]
+\]</span></p>
+<div id="decomposition-of-efe" class="section level3 hasAnchor" number="7.3.1">
+<h3><span class="header-section-number">7.3.1</span> Decomposition of EFE<a href="chapter-7-active-inference.html#decomposition-of-efe" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>EFE naturally decomposes into epistemic and instrumental components:</p>
+<p><span class="math display">\[
+G(\pi) = \underbrace{-\mathbb{E}_q[D_{KL}[q(s_\tau | o_\tau, \pi) || q(s_\tau | \pi)]]}_{\text{Epistemic Value (Information Gain)}} + \underbrace{\mathbb{E}_q[\log q(o_\tau) - \log p(o_\tau)]}_{\text{Pragmatic Value (Goal-Seeking)}}
+\]</span></p>
+<p><strong>Epistemic Value</strong>: Measures expected information gain—policies that reduce uncertainty about hidden states have low (negative) epistemic value.</p>
+<p><strong>Pragmatic Value</strong>: Measures alignment with preferred outcomes—policies leading to desired observations have low pragmatic value.</p>
+</div>
+<div id="alternative-decomposition" class="section level3 hasAnchor" number="7.3.2">
+<h3><span class="header-section-number">7.3.2</span> Alternative Decomposition<a href="chapter-7-active-inference.html#alternative-decomposition" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math display">\[
+G(\pi) = \underbrace{\mathbb{E}_q[H[p(o_\tau | s_\tau)]]}_{\text{Ambiguity}} + \underbrace{D_{KL}[q(o_\tau | \pi) || p(o_\tau)]}_{\text{Risk}}
+\]</span></p>
+<p><strong>Ambiguity</strong>: Expected uncertainty about observations given states.</p>
+<p><strong>Risk</strong>: Divergence between expected and preferred observations.</p>
+<hr />
+</div>
+</div>
+<div id="policy-selection" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Policy Selection<a href="chapter-7-active-inference.html#policy-selection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Policies are selected by treating them as hidden variables and inferring the most likely policy given the generative model:</p>
+<p><span class="math display">\[
+p(\pi) = \sigma(-\gamma \cdot G(\pi))
+\]</span></p>
+<p>where <span class="math inline">\(\gamma\)</span> is a precision parameter (inverse temperature) controlling the exploration-exploitation trade-off.</p>
+<div id="action-selection" class="section level3 hasAnchor" number="7.4.1">
+<h3><span class="header-section-number">7.4.1</span> Action Selection<a href="chapter-7-active-inference.html#action-selection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Given the posterior over policies, actions are selected by marginalizing:</p>
+<p><span class="math display">\[
+p(a_t) = \sum_{\pi} p(a_t | \pi) p(\pi)
+\]</span></p>
+<p>This naturally balances:
+- <strong>Exploitation</strong>: Selecting actions that achieve goals
+- <strong>Exploration</strong>: Selecting actions that resolve uncertainty</p>
+<hr />
+</div>
+</div>
+<div id="comparison-with-reinforcement-learning" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Comparison with Reinforcement Learning<a href="chapter-7-active-inference.html#comparison-with-reinforcement-learning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Active Inference and RL share many features but differ fundamentally in their approach:</p>
 <table>
 <colgroup>
-<col width="33%" />
-<col width="33%" />
-<col width="33%" />
+<col width="16%" />
+<col width="46%" />
+<col width="36%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">Application</th>
-<th align="left">Description</th>
-<th align="left">Key Results</th>
+<th align="left">Aspect</th>
+<th align="left">Reinforcement Learning</th>
+<th align="left">Active Inference</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><strong>Image Classification</strong></td>
-<td align="left">Categorizing images without labels</td>
-<td align="left">80.1% top-1 accuracy on ImageNet with ViT-Base</td>
+<td align="left"><strong>Objective</strong></td>
+<td align="left">Maximize cumulative reward</td>
+<td align="left">Minimize expected free energy</td>
 </tr>
 <tr class="even">
-<td align="left"><strong>Feature Extraction</strong></td>
-<td align="left">Learning robust visual features</td>
-<td align="left">78.3% top-1 with k-NN classifier (ViT-S/8)</td>
+<td align="left"><strong>Exploration</strong></td>
+<td align="left">Separate mechanism (ε-greedy, UCB)</td>
+<td align="left">Emergent from epistemic value</td>
 </tr>
 <tr class="odd">
-<td align="left"><strong>Object Discovery</strong></td>
-<td align="left">Semantic segmentation from features</td>
-<td align="left">Separates objects without supervision</td>
+<td align="left"><strong>Value Function</strong></td>
+<td align="left">Learned from rewards</td>
+<td align="left">Derived from generative model</td>
 </tr>
 <tr class="even">
-<td align="left"><strong>Image Retrieval</strong></td>
-<td align="left">Finding similar images</td>
-<td align="left">Outperforms supervised methods on GLDv2</td>
+<td align="left"><strong>Preferences</strong></td>
+<td align="left">Encoded as reward function</td>
+<td align="left">Encoded as prior over observations</td>
 </tr>
 <tr class="odd">
-<td align="left"><strong>Copy Detection</strong></td>
-<td align="left">Identifying distorted copies</td>
-<td align="left">Highly competitive performance</td>
+<td align="left"><strong>Model</strong></td>
+<td align="left">Optional (model-free methods exist)</td>
+<td align="left">Central to the framework</td>
 </tr>
 <tr class="even">
-<td align="left"><strong>Transfer Learning</strong></td>
-<td align="left">Adapting to downstream tasks</td>
-<td align="left">1-2% improvement over supervised pre-training</td>
+<td align="left"><strong>Uncertainty</strong></td>
+<td align="left">Often ignored or handled separately</td>
+<td align="left">Explicitly represented and used</td>
 </tr>
 </tbody>
 </table>
+<div id="reward-as-prior-preference" class="section level3 hasAnchor" number="7.5.1">
+<h3><span class="header-section-number">7.5.1</span> Reward as Prior Preference<a href="chapter-7-active-inference.html#reward-as-prior-preference" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In Active Inference, rewards are reconceptualized as <strong>prior preferences</strong> over observations:</p>
+<p><span class="math display">\[
+\log p(o) \propto r(o)
+\]</span></p>
+<p>This means goal-directed behavior emerges from minimizing the divergence between expected and preferred outcomes, rather than maximizing an external reward signal.</p>
 </div>
-<div id="medical-imaging-with-rad-dino" class="section level3 hasAnchor" number="4.5.2">
-<h3><span class="header-section-number">4.5.2</span> Medical Imaging with RAD-DINO<a href="chapter-4-image-encoders.html#medical-imaging-with-rad-dino" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>RAD-DINO, a model pre-trained using the DINOv2 framework, demonstrates that high-quality biomedical image encoders can be trained using only unimodal imaging data, without relying on text supervision.</p>
-<ul>
-<li><strong>Image Classification</strong>: Achieves similar or superior performance compared to language-supervised models</li>
-<li><strong>Semantic Segmentation</strong>: Performs well without large, densely annotated training datasets</li>
-<li><strong>Report Generation</strong>: Excels at generating accurate text reports from images</li>
-<li><strong>Demographic Prediction</strong>: More accurately predicts patient demographic information (e.g., sex, age)</li>
-</ul>
+<div id="information-seeking-behavior" class="section level3 hasAnchor" number="7.5.2">
+<h3><span class="header-section-number">7.5.2</span> Information-Seeking Behavior<a href="chapter-7-active-inference.html#information-seeking-behavior" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>One key advantage of Active Inference is that curiosity and exploration emerge naturally. The epistemic component of EFE drives the agent to seek information that reduces uncertainty about the world.</p>
+<hr />
+</div>
+</div>
+<div id="mathematical-formulation-1" class="section level2 hasAnchor" number="7.6">
+<h2><span class="header-section-number">7.6</span> Mathematical Formulation<a href="chapter-7-active-inference.html#mathematical-formulation-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="state-space-model" class="section level3 hasAnchor" number="7.6.1">
+<h3><span class="header-section-number">7.6.1</span> State-Space Model<a href="chapter-7-active-inference.html#state-space-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The generative model can be expressed as:</p>
+<p><strong>Likelihood (Observation Model):</strong>
+<span class="math display">\[
+p(o_t | s_t) = \text{Cat}(\mathbf{A} \cdot s_t)
+\]</span></p>
+<p><strong>Transition Model:</strong>
+<span class="math display">\[
+p(s_{t+1} | s_t, a_t) = \text{Cat}(\mathbf{B}_{a_t} \cdot s_t)
+\]</span></p>
+<p><strong>Prior over Initial States:</strong>
+<span class="math display">\[
+p(s_1) = \text{Cat}(\mathbf{D})
+\]</span></p>
+<p><strong>Prior over Policies:</strong>
+<span class="math display">\[
+p(\pi) = \sigma(-\gamma \cdot G(\pi)) \cdot p_0(\pi)
+\]</span></p>
+</div>
+<div id="message-passing" class="section level3 hasAnchor" number="7.6.2">
+<h3><span class="header-section-number">7.6.2</span> Message Passing<a href="chapter-7-active-inference.html#message-passing" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Inference in Active Inference can be implemented via <strong>message passing</strong> on factor graphs:</p>
+<p><span class="math display">\[
+\mu_{s_t} \propto \mathbf{A}^T o_t \odot \mathbf{B}_{a_{t-1}} \mu_{s_{t-1}} \odot \mathbf{B}_{a_t}^T \mu_{s_{t+1}}
+\]</span></p>
+<p>where <span class="math inline">\(\odot\)</span> denotes element-wise multiplication.</p>
+<hr />
+</div>
+</div>
+<div id="deep-active-inference" class="section level2 hasAnchor" number="7.7">
+<h2><span class="header-section-number">7.7</span> Deep Active Inference<a href="chapter-7-active-inference.html#deep-active-inference" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Recent work has extended Active Inference to work with deep neural networks for handling complex, high-dimensional observations.</p>
+<div id="variational-autoencoders-for-perception" class="section level3 hasAnchor" number="7.7.1">
+<h3><span class="header-section-number">7.7.1</span> Variational Autoencoders for Perception<a href="chapter-7-active-inference.html#variational-autoencoders-for-perception" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Use VAEs to learn the observation model:</p>
+<p><span class="math display">\[
+q_\phi(s | o) \approx p(s | o)
+\]</span></p>
+<p>The encoder maps observations to beliefs about hidden states.</p>
+</div>
+<div id="deep-transition-models" class="section level3 hasAnchor" number="7.7.2">
+<h3><span class="header-section-number">7.7.2</span> Deep Transition Models<a href="chapter-7-active-inference.html#deep-transition-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Learn transition dynamics using neural networks:</p>
+<p><span class="math display">\[
+p_\theta(s_{t+1} | s_t, a_t)
+\]</span></p>
+<p>This enables scaling to complex environments.</p>
+</div>
+<div id="amortized-policy-inference" class="section level3 hasAnchor" number="7.7.3">
+<h3><span class="header-section-number">7.7.3</span> Amortized Policy Inference<a href="chapter-7-active-inference.html#amortized-policy-inference" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Instead of computing EFE for all policies, learn a policy network:</p>
+<p><span class="math display">\[
+\pi_\psi(a | s) \approx \arg\min_\pi G(\pi | s)
+\]</span></p>
+<p>This enables tractable policy selection in continuous action spaces.</p>
+<hr />
+</div>
+</div>
+<div id="hierarchical-active-inference" class="section level2 hasAnchor" number="7.8">
+<h2><span class="header-section-number">7.8</span> Hierarchical Active Inference<a href="chapter-7-active-inference.html#hierarchical-active-inference" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Active Inference naturally extends to hierarchical models where higher levels encode slower temporal dynamics and more abstract representations.</p>
+<div id="temporal-hierarchy" class="section level3 hasAnchor" number="7.8.1">
+<h3><span class="header-section-number">7.8.1</span> Temporal Hierarchy<a href="chapter-7-active-inference.html#temporal-hierarchy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math display">\[
+p(o, s^{(1)}, s^{(2)}, ..., s^{(L)}) = p(o | s^{(1)}) \prod_{l=1}^{L-1} p(s^{(l)} | s^{(l+1)}) p(s^{(L)})
+\]</span></p>
+<p>Higher levels:
+- Operate on slower timescales
+- Encode more abstract goals
+- Provide context for lower levels</p>
+</div>
+<div id="goal-setting" class="section level3 hasAnchor" number="7.8.2">
+<h3><span class="header-section-number">7.8.2</span> Goal Setting<a href="chapter-7-active-inference.html#goal-setting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Higher levels can set goals for lower levels by specifying preferred observations:</p>
+<p><span class="math display">\[
+p(o^{(l)}) \leftarrow \text{message from level } l+1
+\]</span></p>
+<p>This enables hierarchical planning and multi-scale decision making.</p>
+<hr />
+</div>
+</div>
+<div id="applications" class="section level2 hasAnchor" number="7.9">
+<h2><span class="header-section-number">7.9</span> Applications<a href="chapter-7-active-inference.html#applications" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="robotics" class="section level3 hasAnchor" number="7.9.1">
+<h3><span class="header-section-number">7.9.1</span> Robotics<a href="chapter-7-active-inference.html#robotics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Active Inference provides a principled framework for robot control that:
+- Integrates perception and action
+- Handles uncertainty naturally
+- Enables curiosity-driven exploration</p>
+</div>
+<div id="neuroscience" class="section level3 hasAnchor" number="7.9.2">
+<h3><span class="header-section-number">7.9.2</span> Neuroscience<a href="chapter-7-active-inference.html#neuroscience" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Active Inference offers a unified account of:
+- Perception as inference
+- Attention as precision optimization
+- Action as prediction error minimization</p>
+</div>
+<div id="cognitive-science" class="section level3 hasAnchor" number="7.9.3">
+<h3><span class="header-section-number">7.9.3</span> Cognitive Science<a href="chapter-7-active-inference.html#cognitive-science" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The framework explains:
+- Curiosity and play
+- Intrinsic motivation
+- Goal-directed behavior</p>
+</div>
+<div id="artificial-intelligence" class="section level3 hasAnchor" number="7.9.4">
+<h3><span class="header-section-number">7.9.4</span> Artificial Intelligence<a href="chapter-7-active-inference.html#artificial-intelligence" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Potential applications include:
+- Embodied AI agents
+- Sample-efficient learning
+- Safe exploration in unknown environments</p>
+<hr />
+</div>
+</div>
+<div id="relationship-to-world-models" class="section level2 hasAnchor" number="7.10">
+<h2><span class="header-section-number">7.10</span> Relationship to World Models<a href="chapter-7-active-inference.html#relationship-to-world-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Active Inference is closely related to world model approaches in deep RL:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">World Models</th>
+<th align="left">Active Inference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Learn dynamics model</td>
+<td align="left">Learn generative model</td>
+</tr>
+<tr class="even">
+<td align="left">Plan in latent space</td>
+<td align="left">Evaluate policies via EFE</td>
+</tr>
+<tr class="odd">
+<td align="left">Maximize reward</td>
+<td align="left">Minimize free energy</td>
+</tr>
+<tr class="even">
+<td align="left">Separate exploration mechanism</td>
+<td align="left">Unified exploration-exploitation</td>
+</tr>
+</tbody>
+</table>
+<p>Both approaches emphasize:
+- <strong>Model-based reasoning</strong>: Using learned models for planning
+- <strong>Latent representations</strong>: Working in compressed state spaces
+- <strong>Prediction</strong>: Anticipating future observations</p>
+<p>The key difference is that Active Inference derives both perception and action from a single principle (free energy minimization), while world model approaches typically treat learning, planning, and exploration as separate problems.</p>
+<hr />
+</div>
+<div id="key-equations-summary" class="section level2 hasAnchor" number="7.11">
+<h2><span class="header-section-number">7.11</span> Key Equations Summary<a href="chapter-7-active-inference.html#key-equations-summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="47%" />
+<col width="52%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Concept</th>
+<th align="left">Equation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>Free Energy</strong></td>
+<td align="left"><span class="math inline">\(F = D_{KL}[q(\theta) \| p(\theta \| o)] - \log p(o)\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Expected Free Energy</strong></td>
+<td align="left"><span class="math inline">\(G(\pi) = \mathbb{E}_q[\log q(s_\tau \| \pi) - \log p(o_\tau, s_\tau \| \pi)]\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Policy Selection</strong></td>
+<td align="left"><span class="math inline">\(p(\pi) = \sigma(-\gamma \cdot G(\pi))\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><strong>Epistemic Value</strong></td>
+<td align="left"><span class="math inline">\(-D_{KL}[q(s \| o) \| q(s)]\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>Pragmatic Value</strong></td>
+<td align="left"><span class="math inline">\(D_{KL}[q(o) \| p(o)]\)</span></td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+<div id="future-directions" class="section level2 hasAnchor" number="7.12">
+<h2><span class="header-section-number">7.12</span> Future Directions<a href="chapter-7-active-inference.html#future-directions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Active Inference is an active area of research with several exciting directions:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Scalability</strong>: Extending to larger state and action spaces</li>
+<li><strong>Multi-agent systems</strong>: Active Inference for social cognition</li>
+<li><strong>Continual learning</strong>: Updating generative models over lifetimes</li>
+<li><strong>Hybrid approaches</strong>: Combining with deep RL techniques</li>
+<li><strong>Real-world robotics</strong>: Practical implementations for physical systems</li>
+</ol>
+<hr />
+<p><em>For further reading: Karl Friston’s work on the Free Energy Principle, and the Active Inference textbook by Parr, Pezzulo, and Friston.</em></p>
 
-</div>
 </div>
 </div>
             </section>
@@ -767,8 +886,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="chapter-3-transformers.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="chapter-5-generative-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="chapter-6-reinforcement-learning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapter-8-dino-world-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
